@@ -1,10 +1,14 @@
 *.jar
 *.pyc
 *.log
+
+db_pw.txt
+
 .venv
 .mypy_cache
+__pycache__
+
 redis
 postgres
-__pycache__
 tmp
-db_pw.txt
+client
