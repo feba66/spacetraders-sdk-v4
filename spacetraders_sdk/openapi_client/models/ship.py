@@ -21,6 +21,8 @@ import json
 
 from typing import List
 from pydantic import BaseModel, Field, StrictStr, conlist
+
+from spacetraders_sdk.json import default
 from .cooldown import Cooldown
 from .ship_cargo import ShipCargo
 from .ship_crew import ShipCrew
@@ -81,7 +83,7 @@ class Ship(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(self.to_dict(), default=default)
 
     @classmethod
     def from_json(cls, json_str: str) -> Ship:

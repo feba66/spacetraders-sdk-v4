@@ -21,6 +21,8 @@ import json
 
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictInt, conlist, constr
+
+from spacetraders_sdk.json import default
 from .shipyard_ship import ShipyardShip
 from .shipyard_ship_types_inner import ShipyardShipTypesInner
 from .shipyard_transaction import ShipyardTransaction
@@ -63,7 +65,7 @@ class Shipyard(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(self.to_dict(), default=default)
 
     @classmethod
     def from_json(cls, json_str: str) -> Shipyard:
