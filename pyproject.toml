@@ -1,0 +1,46 @@
+[project]
+name = "spacetraders-sdk"
+version = "4.0.0"
+description = ""
+license = { file = "LICENSE" }
+authors = [{ name = "Felix Baumkötter (feba66)", email = "feba66@web.de" }]
+readme = "README.md"
+requires-python = ">=3.10"
+keywords = [
+    "spacetraders",
+    "sdk",
+    "api",
+    "wrapper",
+    "spacetradersapi",
+    "spacetraders-sdk",
+    "spacetraders-sdk-python",
+    "spacetraders-sdk-py",
+]
+
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+urllib3 = ">= 1.25.3"
+# python-dateutil = ">=2.8.2"
+pydantic = "^1.10.5, <2"
+aenum = ">=3.1.11"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.10.0"
+pytest = ">=7.2.1"
+tox = ">=3.9.0"
+flake8 = ">=4.0.0"
+
+[tool.poetry]
+classifiers = [
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+]
+
+[project.urls]
+Repository = "https://github.com/feba66/spacetraders-sdk-v4"
+Issues = "https://github.com/feba66/spacetraders-sdk-v4/issues"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

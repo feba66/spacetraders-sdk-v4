@@ -1,0 +1,10 @@
+*.jar
+*.pyc
+*.log
+.venv
+.mypy_cache
+redis
+postgres
+__pycache__
+tmp
+db_pw.txt
