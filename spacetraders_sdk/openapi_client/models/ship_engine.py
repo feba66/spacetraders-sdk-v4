@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -21,30 +21,44 @@ import json
 
 from typing import Union
 from pydantic import BaseModel, Field, StrictStr, confloat, conint, validator
-from openapi_client.models.ship_requirements import ShipRequirements
+from .ship_requirements import ShipRequirements
+
 
 class ShipEngine(BaseModel):
     """
     The engine determines how quickly a ship travels between waypoints.  # noqa: E501
     """
+
     symbol: StrictStr = Field(default=..., description="The symbol of the engine.")
     name: StrictStr = Field(default=..., description="The name of the engine.")
     description: StrictStr = Field(default=..., description="The description of the engine.")
-    condition: Union[confloat(le=1, ge=0, strict=True), conint(le=1, ge=0, strict=True)] = Field(default=..., description="The repairable condition of a component. A value of 0 indicates the component needs significant repairs, while a value of 1 indicates the component is in near perfect condition. As the condition of a component is repaired, the overall integrity of the component decreases.")
-    integrity: Union[confloat(le=1, ge=0, strict=True), conint(le=1, ge=0, strict=True)] = Field(default=..., description="The overall integrity of the component, which determines the performance of the component. A value of 0 indicates that the component is almost completely degraded, while a value of 1 indicates that the component is in near perfect condition. The integrity of the component is non-repairable, and represents permanent wear over time.")
-    speed: conint(strict=True, ge=1) = Field(default=..., description="The speed stat of this engine. The higher the speed, the faster a ship can travel from one point to another. Reduces the time of arrival when navigating the ship.")
+    condition: Union[confloat(le=1, ge=0, strict=True), conint(le=1, ge=0, strict=True)] = Field(
+        default=...,
+        description="The repairable condition of a component. A value of 0 indicates the component needs significant repairs, while a value of 1 indicates the component is in near perfect condition. As the condition of a component is repaired, the overall integrity of the component decreases.",
+    )
+    integrity: Union[confloat(le=1, ge=0, strict=True), conint(le=1, ge=0, strict=True)] = Field(
+        default=...,
+        description="The overall integrity of the component, which determines the performance of the component. A value of 0 indicates that the component is almost completely degraded, while a value of 1 indicates that the component is in near perfect condition. The integrity of the component is non-repairable, and represents permanent wear over time.",
+    )
+    speed: conint(strict=True, ge=1) = Field(
+        default=...,
+        description="The speed stat of this engine. The higher the speed, the faster a ship can travel from one point to another. Reduces the time of arrival when navigating the ship.",
+    )
     requirements: ShipRequirements = Field(...)
     __properties = ["symbol", "name", "description", "condition", "integrity", "speed", "requirements"]
 
-    @validator('symbol')
+    @validator("symbol")
     def symbol_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('ENGINE_IMPULSE_DRIVE_I', 'ENGINE_ION_DRIVE_I', 'ENGINE_ION_DRIVE_II', 'ENGINE_HYPER_DRIVE_I'):
-            raise ValueError("must be one of enum values ('ENGINE_IMPULSE_DRIVE_I', 'ENGINE_ION_DRIVE_I', 'ENGINE_ION_DRIVE_II', 'ENGINE_HYPER_DRIVE_I')")
+        if value not in ("ENGINE_IMPULSE_DRIVE_I", "ENGINE_ION_DRIVE_I", "ENGINE_ION_DRIVE_II", "ENGINE_HYPER_DRIVE_I"):
+            raise ValueError(
+                "must be one of enum values ('ENGINE_IMPULSE_DRIVE_I', 'ENGINE_ION_DRIVE_I', 'ENGINE_ION_DRIVE_II', 'ENGINE_HYPER_DRIVE_I')"
+            )
         return value
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -63,13 +77,10 @@ class ShipEngine(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of requirements
         if self.requirements:
-            _dict['requirements'] = self.requirements.to_dict()
+            _dict["requirements"] = self.requirements.to_dict()
         return _dict
 
     @classmethod
@@ -81,15 +92,17 @@ class ShipEngine(BaseModel):
         if not isinstance(obj, dict):
             return ShipEngine.parse_obj(obj)
 
-        _obj = ShipEngine.parse_obj({
-            "symbol": obj.get("symbol"),
-            "name": obj.get("name"),
-            "description": obj.get("description"),
-            "condition": obj.get("condition"),
-            "integrity": obj.get("integrity"),
-            "speed": obj.get("speed"),
-            "requirements": ShipRequirements.from_dict(obj.get("requirements")) if obj.get("requirements") is not None else None
-        })
+        _obj = ShipEngine.parse_obj(
+            {
+                "symbol": obj.get("symbol"),
+                "name": obj.get("name"),
+                "description": obj.get("description"),
+                "condition": obj.get("condition"),
+                "integrity": obj.get("integrity"),
+                "speed": obj.get("speed"),
+                "requirements": (
+                    ShipRequirements.from_dict(obj.get("requirements")) if obj.get("requirements") is not None else None
+                ),
+            }
+        )
         return _obj
-
-

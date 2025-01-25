@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -21,19 +21,30 @@ import json
 
 from typing import List
 from pydantic import BaseModel, Field, conlist
-from openapi_client.models.get_status200_response_leaderboards_most_credits_inner import GetStatus200ResponseLeaderboardsMostCreditsInner
-from openapi_client.models.get_status200_response_leaderboards_most_submitted_charts_inner import GetStatus200ResponseLeaderboardsMostSubmittedChartsInner
+from .get_status200_response_leaderboards_most_credits_inner import (
+    GetStatus200ResponseLeaderboardsMostCreditsInner,
+)
+from .get_status200_response_leaderboards_most_submitted_charts_inner import (
+    GetStatus200ResponseLeaderboardsMostSubmittedChartsInner,
+)
+
 
 class GetStatus200ResponseLeaderboards(BaseModel):
     """
     GetStatus200ResponseLeaderboards
     """
-    most_credits: conlist(GetStatus200ResponseLeaderboardsMostCreditsInner) = Field(default=..., alias="mostCredits", description="Top agents with the most credits.")
-    most_submitted_charts: conlist(GetStatus200ResponseLeaderboardsMostSubmittedChartsInner) = Field(default=..., alias="mostSubmittedCharts", description="Top agents with the most charted submitted.")
+
+    most_credits: conlist(GetStatus200ResponseLeaderboardsMostCreditsInner) = Field(
+        default=..., alias="mostCredits", description="Top agents with the most credits."
+    )
+    most_submitted_charts: conlist(GetStatus200ResponseLeaderboardsMostSubmittedChartsInner) = Field(
+        default=..., alias="mostSubmittedCharts", description="Top agents with the most charted submitted."
+    )
     __properties = ["mostCredits", "mostSubmittedCharts"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,24 +63,21 @@ class GetStatus200ResponseLeaderboards(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in most_credits (list)
         _items = []
         if self.most_credits:
             for _item in self.most_credits:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['mostCredits'] = _items
+            _dict["mostCredits"] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in most_submitted_charts (list)
         _items = []
         if self.most_submitted_charts:
             for _item in self.most_submitted_charts:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['mostSubmittedCharts'] = _items
+            _dict["mostSubmittedCharts"] = _items
         return _dict
 
     @classmethod
@@ -81,10 +89,21 @@ class GetStatus200ResponseLeaderboards(BaseModel):
         if not isinstance(obj, dict):
             return GetStatus200ResponseLeaderboards.parse_obj(obj)
 
-        _obj = GetStatus200ResponseLeaderboards.parse_obj({
-            "most_credits": [GetStatus200ResponseLeaderboardsMostCreditsInner.from_dict(_item) for _item in obj.get("mostCredits")] if obj.get("mostCredits") is not None else None,
-            "most_submitted_charts": [GetStatus200ResponseLeaderboardsMostSubmittedChartsInner.from_dict(_item) for _item in obj.get("mostSubmittedCharts")] if obj.get("mostSubmittedCharts") is not None else None
-        })
+        _obj = GetStatus200ResponseLeaderboards.parse_obj(
+            {
+                "most_credits": (
+                    [GetStatus200ResponseLeaderboardsMostCreditsInner.from_dict(_item) for _item in obj.get("mostCredits")]
+                    if obj.get("mostCredits") is not None
+                    else None
+                ),
+                "most_submitted_charts": (
+                    [
+                        GetStatus200ResponseLeaderboardsMostSubmittedChartsInner.from_dict(_item)
+                        for _item in obj.get("mostSubmittedCharts")
+                    ]
+                    if obj.get("mostSubmittedCharts") is not None
+                    else None
+                ),
+            }
+        )
         return _obj
-
-

@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -24,24 +24,21 @@ from pydantic import Field, StrictStr, conint
 
 from typing import Any, Optional
 
-from openapi_client.models.get_construction200_response import GetConstruction200Response
-from openapi_client.models.get_jump_gate200_response import GetJumpGate200Response
-from openapi_client.models.get_market200_response import GetMarket200Response
-from openapi_client.models.get_shipyard200_response import GetShipyard200Response
-from openapi_client.models.get_system200_response import GetSystem200Response
-from openapi_client.models.get_system_waypoints200_response import GetSystemWaypoints200Response
-from openapi_client.models.get_systems200_response import GetSystems200Response
-from openapi_client.models.get_waypoint200_response import GetWaypoint200Response
-from openapi_client.models.supply_construction201_response import SupplyConstruction201Response
-from openapi_client.models.supply_construction_request import SupplyConstructionRequest
-from openapi_client.models.waypoint_type import WaypointType
+from spacetraders_sdk.openapi_client.models.get_construction200_response import GetConstruction200Response
+from spacetraders_sdk.openapi_client.models.get_jump_gate200_response import GetJumpGate200Response
+from spacetraders_sdk.openapi_client.models.get_market200_response import GetMarket200Response
+from spacetraders_sdk.openapi_client.models.get_shipyard200_response import GetShipyard200Response
+from spacetraders_sdk.openapi_client.models.get_system200_response import GetSystem200Response
+from spacetraders_sdk.openapi_client.models.get_system_waypoints200_response import GetSystemWaypoints200Response
+from spacetraders_sdk.openapi_client.models.get_systems200_response import GetSystems200Response
+from spacetraders_sdk.openapi_client.models.get_waypoint200_response import GetWaypoint200Response
+from spacetraders_sdk.openapi_client.models.supply_construction201_response import SupplyConstruction201Response
+from spacetraders_sdk.openapi_client.models.supply_construction_request import SupplyConstructionRequest
+from spacetraders_sdk.openapi_client.models.waypoint_type import WaypointType
 
-from openapi_client.api_client import ApiClient
-from openapi_client.api_response import ApiResponse
-from openapi_client.exceptions import (  # noqa: F401
-    ApiTypeError,
-    ApiValueError
-)
+from spacetraders_sdk.openapi_client.api_client import ApiClient
+from spacetraders_sdk.openapi_client.api_response import ApiResponse
+from spacetraders_sdk.openapi_client.exceptions import ApiTypeError, ApiValueError  # noqa: F401
 
 
 class SystemsApi:
@@ -57,7 +54,12 @@ class SystemsApi:
         self.api_client = api_client
 
     @validate_arguments
-    def get_construction(self, system_symbol : Annotated[StrictStr, Field(..., description="The system symbol")], waypoint_symbol : Annotated[StrictStr, Field(..., description="The waypoint symbol")], **kwargs) -> GetConstruction200Response:  # noqa: E501
+    def get_construction(
+        self,
+        system_symbol: Annotated[StrictStr, Field(..., description="The system symbol")],
+        waypoint_symbol: Annotated[StrictStr, Field(..., description="The waypoint symbol")],
+        **kwargs,
+    ) -> GetConstruction200Response:  # noqa: E501
         """Get Construction Site  # noqa: E501
 
         Get construction details for a waypoint. Requires a waypoint with a property of `isUnderConstruction` to be true.  # noqa: E501
@@ -82,14 +84,19 @@ class SystemsApi:
                  returns the request thread.
         :rtype: GetConstruction200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_construction_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_construction_with_http_info(system_symbol, waypoint_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_construction_with_http_info(self, system_symbol : Annotated[StrictStr, Field(..., description="The system symbol")], waypoint_symbol : Annotated[StrictStr, Field(..., description="The waypoint symbol")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_construction_with_http_info(
+        self,
+        system_symbol: Annotated[StrictStr, Field(..., description="The system symbol")],
+        waypoint_symbol: Annotated[StrictStr, Field(..., description="The waypoint symbol")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get Construction Site  # noqa: E501
 
         Get construction details for a waypoint. Requires a waypoint with a property of `isUnderConstruction` to be true.  # noqa: E501
@@ -130,65 +137,58 @@ class SystemsApi:
 
         _params = locals()
 
-        _all_params = [
-            'system_symbol',
-            'waypoint_symbol'
-        ]
+        _all_params = ["system_symbol", "waypoint_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_construction" % _key
-                )
+                raise ApiTypeError("Got an unexpected keyword argument '%s'" " to method get_construction" % _key)
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['system_symbol'] is not None:
-            _path_params['systemSymbol'] = _params['system_symbol']
+        if _params["system_symbol"] is not None:
+            _path_params["systemSymbol"] = _params["system_symbol"]
 
-        if _params['waypoint_symbol'] is not None:
-            _path_params['waypointSymbol'] = _params['waypoint_symbol']
-
+        if _params["waypoint_symbol"] is not None:
+            _path_params["waypointSymbol"] = _params["waypoint_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(["application/json"])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetConstruction200Response",
+            "200": "GetConstruction200Response",
         }
 
         return self.api_client.call_api(
-            '/systems/{systemSymbol}/waypoints/{waypointSymbol}/construction', 'GET',
+            "/systems/{systemSymbol}/waypoints/{waypointSymbol}/construction",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -197,15 +197,21 @@ class SystemsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_jump_gate(self, system_symbol : Annotated[StrictStr, Field(..., description="The system symbol")], waypoint_symbol : Annotated[StrictStr, Field(..., description="The waypoint symbol")], **kwargs) -> GetJumpGate200Response:  # noqa: E501
+    def get_jump_gate(
+        self,
+        system_symbol: Annotated[StrictStr, Field(..., description="The system symbol")],
+        waypoint_symbol: Annotated[StrictStr, Field(..., description="The waypoint symbol")],
+        **kwargs,
+    ) -> GetJumpGate200Response:  # noqa: E501
         """Get Jump Gate  # noqa: E501
 
         Get jump gate details for a waypoint. Requires a waypoint of type `JUMP_GATE` to use.  Waypoints connected to this jump gate can be   # noqa: E501
@@ -230,14 +236,19 @@ class SystemsApi:
                  returns the request thread.
         :rtype: GetJumpGate200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_jump_gate_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_jump_gate_with_http_info(system_symbol, waypoint_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_jump_gate_with_http_info(self, system_symbol : Annotated[StrictStr, Field(..., description="The system symbol")], waypoint_symbol : Annotated[StrictStr, Field(..., description="The waypoint symbol")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_jump_gate_with_http_info(
+        self,
+        system_symbol: Annotated[StrictStr, Field(..., description="The system symbol")],
+        waypoint_symbol: Annotated[StrictStr, Field(..., description="The waypoint symbol")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get Jump Gate  # noqa: E501
 
         Get jump gate details for a waypoint. Requires a waypoint of type `JUMP_GATE` to use.  Waypoints connected to this jump gate can be   # noqa: E501
@@ -278,65 +289,58 @@ class SystemsApi:
 
         _params = locals()
 
-        _all_params = [
-            'system_symbol',
-            'waypoint_symbol'
-        ]
+        _all_params = ["system_symbol", "waypoint_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_jump_gate" % _key
-                )
+                raise ApiTypeError("Got an unexpected keyword argument '%s'" " to method get_jump_gate" % _key)
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['system_symbol'] is not None:
-            _path_params['systemSymbol'] = _params['system_symbol']
+        if _params["system_symbol"] is not None:
+            _path_params["systemSymbol"] = _params["system_symbol"]
 
-        if _params['waypoint_symbol'] is not None:
-            _path_params['waypointSymbol'] = _params['waypoint_symbol']
-
+        if _params["waypoint_symbol"] is not None:
+            _path_params["waypointSymbol"] = _params["waypoint_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(["application/json"])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetJumpGate200Response",
+            "200": "GetJumpGate200Response",
         }
 
         return self.api_client.call_api(
-            '/systems/{systemSymbol}/waypoints/{waypointSymbol}/jump-gate', 'GET',
+            "/systems/{systemSymbol}/waypoints/{waypointSymbol}/jump-gate",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -345,15 +349,21 @@ class SystemsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_market(self, system_symbol : Annotated[StrictStr, Field(..., description="The system symbol")], waypoint_symbol : Annotated[StrictStr, Field(..., description="The waypoint symbol")], **kwargs) -> GetMarket200Response:  # noqa: E501
+    def get_market(
+        self,
+        system_symbol: Annotated[StrictStr, Field(..., description="The system symbol")],
+        waypoint_symbol: Annotated[StrictStr, Field(..., description="The waypoint symbol")],
+        **kwargs,
+    ) -> GetMarket200Response:  # noqa: E501
         """Get Market  # noqa: E501
 
         Retrieve imports, exports and exchange data from a marketplace. Requires a waypoint that has the `Marketplace` trait to use.  Send a ship to the waypoint to access trade good prices and recent transactions. Refer to the [Market Overview page](https://docs.spacetraders.io/game-concepts/markets) to gain better a understanding of the market in the game.  # noqa: E501
@@ -378,14 +388,19 @@ class SystemsApi:
                  returns the request thread.
         :rtype: GetMarket200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_market_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_market_with_http_info(system_symbol, waypoint_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_market_with_http_info(self, system_symbol : Annotated[StrictStr, Field(..., description="The system symbol")], waypoint_symbol : Annotated[StrictStr, Field(..., description="The waypoint symbol")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_market_with_http_info(
+        self,
+        system_symbol: Annotated[StrictStr, Field(..., description="The system symbol")],
+        waypoint_symbol: Annotated[StrictStr, Field(..., description="The waypoint symbol")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get Market  # noqa: E501
 
         Retrieve imports, exports and exchange data from a marketplace. Requires a waypoint that has the `Marketplace` trait to use.  Send a ship to the waypoint to access trade good prices and recent transactions. Refer to the [Market Overview page](https://docs.spacetraders.io/game-concepts/markets) to gain better a understanding of the market in the game.  # noqa: E501
@@ -426,65 +441,58 @@ class SystemsApi:
 
         _params = locals()
 
-        _all_params = [
-            'system_symbol',
-            'waypoint_symbol'
-        ]
+        _all_params = ["system_symbol", "waypoint_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_market" % _key
-                )
+                raise ApiTypeError("Got an unexpected keyword argument '%s'" " to method get_market" % _key)
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['system_symbol'] is not None:
-            _path_params['systemSymbol'] = _params['system_symbol']
+        if _params["system_symbol"] is not None:
+            _path_params["systemSymbol"] = _params["system_symbol"]
 
-        if _params['waypoint_symbol'] is not None:
-            _path_params['waypointSymbol'] = _params['waypoint_symbol']
-
+        if _params["waypoint_symbol"] is not None:
+            _path_params["waypointSymbol"] = _params["waypoint_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(["application/json"])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetMarket200Response",
+            "200": "GetMarket200Response",
         }
 
         return self.api_client.call_api(
-            '/systems/{systemSymbol}/waypoints/{waypointSymbol}/market', 'GET',
+            "/systems/{systemSymbol}/waypoints/{waypointSymbol}/market",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -493,15 +501,21 @@ class SystemsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_shipyard(self, system_symbol : Annotated[StrictStr, Field(..., description="The system symbol")], waypoint_symbol : Annotated[StrictStr, Field(..., description="The waypoint symbol")], **kwargs) -> GetShipyard200Response:  # noqa: E501
+    def get_shipyard(
+        self,
+        system_symbol: Annotated[StrictStr, Field(..., description="The system symbol")],
+        waypoint_symbol: Annotated[StrictStr, Field(..., description="The waypoint symbol")],
+        **kwargs,
+    ) -> GetShipyard200Response:  # noqa: E501
         """Get Shipyard  # noqa: E501
 
         Get the shipyard for a waypoint. Requires a waypoint that has the `Shipyard` trait to use. Send a ship to the waypoint to access data on ships that are currently available for purchase and recent transactions.  # noqa: E501
@@ -526,14 +540,19 @@ class SystemsApi:
                  returns the request thread.
         :rtype: GetShipyard200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_shipyard_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_shipyard_with_http_info(system_symbol, waypoint_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_shipyard_with_http_info(self, system_symbol : Annotated[StrictStr, Field(..., description="The system symbol")], waypoint_symbol : Annotated[StrictStr, Field(..., description="The waypoint symbol")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_shipyard_with_http_info(
+        self,
+        system_symbol: Annotated[StrictStr, Field(..., description="The system symbol")],
+        waypoint_symbol: Annotated[StrictStr, Field(..., description="The waypoint symbol")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get Shipyard  # noqa: E501
 
         Get the shipyard for a waypoint. Requires a waypoint that has the `Shipyard` trait to use. Send a ship to the waypoint to access data on ships that are currently available for purchase and recent transactions.  # noqa: E501
@@ -574,65 +593,58 @@ class SystemsApi:
 
         _params = locals()
 
-        _all_params = [
-            'system_symbol',
-            'waypoint_symbol'
-        ]
+        _all_params = ["system_symbol", "waypoint_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_shipyard" % _key
-                )
+                raise ApiTypeError("Got an unexpected keyword argument '%s'" " to method get_shipyard" % _key)
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['system_symbol'] is not None:
-            _path_params['systemSymbol'] = _params['system_symbol']
+        if _params["system_symbol"] is not None:
+            _path_params["systemSymbol"] = _params["system_symbol"]
 
-        if _params['waypoint_symbol'] is not None:
-            _path_params['waypointSymbol'] = _params['waypoint_symbol']
-
+        if _params["waypoint_symbol"] is not None:
+            _path_params["waypointSymbol"] = _params["waypoint_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(["application/json"])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetShipyard200Response",
+            "200": "GetShipyard200Response",
         }
 
         return self.api_client.call_api(
-            '/systems/{systemSymbol}/waypoints/{waypointSymbol}/shipyard', 'GET',
+            "/systems/{systemSymbol}/waypoints/{waypointSymbol}/shipyard",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -641,15 +653,18 @@ class SystemsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_system(self, system_symbol : Annotated[StrictStr, Field(..., description="The system symbol")], **kwargs) -> GetSystem200Response:  # noqa: E501
+    def get_system(
+        self, system_symbol: Annotated[StrictStr, Field(..., description="The system symbol")], **kwargs
+    ) -> GetSystem200Response:  # noqa: E501
         """Get System  # noqa: E501
 
         Get the details of a system.  # noqa: E501
@@ -672,14 +687,16 @@ class SystemsApi:
                  returns the request thread.
         :rtype: GetSystem200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_system_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_system_with_http_info(system_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_system_with_http_info(self, system_symbol : Annotated[StrictStr, Field(..., description="The system symbol")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_system_with_http_info(
+        self, system_symbol: Annotated[StrictStr, Field(..., description="The system symbol")], **kwargs
+    ) -> ApiResponse:  # noqa: E501
         """Get System  # noqa: E501
 
         Get the details of a system.  # noqa: E501
@@ -718,61 +735,55 @@ class SystemsApi:
 
         _params = locals()
 
-        _all_params = [
-            'system_symbol'
-        ]
+        _all_params = ["system_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_system" % _key
-                )
+                raise ApiTypeError("Got an unexpected keyword argument '%s'" " to method get_system" % _key)
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['system_symbol'] is not None:
-            _path_params['systemSymbol'] = _params['system_symbol']
-
+        if _params["system_symbol"] is not None:
+            _path_params["systemSymbol"] = _params["system_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(["application/json"])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetSystem200Response",
+            "200": "GetSystem200Response",
         }
 
         return self.api_client.call_api(
-            '/systems/{systemSymbol}', 'GET',
+            "/systems/{systemSymbol}",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -781,15 +792,26 @@ class SystemsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_system_waypoints(self, system_symbol : Annotated[StrictStr, Field(..., description="The system symbol")], page : Annotated[Optional[conint(strict=True, ge=1)], Field(description="What entry offset to request")] = None, limit : Annotated[Optional[conint(strict=True, le=20, ge=1)], Field(description="How many entries to return per page")] = None, type : Annotated[Optional[WaypointType], Field(description="Filter waypoints by type.")] = None, traits : Annotated[Optional[Any], Field(description="Filter waypoints by one or more traits.")] = None, **kwargs) -> GetSystemWaypoints200Response:  # noqa: E501
+    def get_system_waypoints(
+        self,
+        system_symbol: Annotated[StrictStr, Field(..., description="The system symbol")],
+        page: Annotated[Optional[conint(strict=True, ge=1)], Field(description="What entry offset to request")] = None,
+        limit: Annotated[
+            Optional[conint(strict=True, le=20, ge=1)], Field(description="How many entries to return per page")
+        ] = None,
+        type: Annotated[Optional[WaypointType], Field(description="Filter waypoints by type.")] = None,
+        traits: Annotated[Optional[Any], Field(description="Filter waypoints by one or more traits.")] = None,
+        **kwargs,
+    ) -> GetSystemWaypoints200Response:  # noqa: E501
         """List Waypoints in System  # noqa: E501
 
         Return a paginated list of all of the waypoints for a given system.  If a waypoint is uncharted, it will return the `Uncharted` trait instead of its actual traits.  # noqa: E501
@@ -820,14 +842,24 @@ class SystemsApi:
                  returns the request thread.
         :rtype: GetSystemWaypoints200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_system_waypoints_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_system_waypoints_with_http_info(system_symbol, page, limit, type, traits, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_system_waypoints_with_http_info(self, system_symbol : Annotated[StrictStr, Field(..., description="The system symbol")], page : Annotated[Optional[conint(strict=True, ge=1)], Field(description="What entry offset to request")] = None, limit : Annotated[Optional[conint(strict=True, le=20, ge=1)], Field(description="How many entries to return per page")] = None, type : Annotated[Optional[WaypointType], Field(description="Filter waypoints by type.")] = None, traits : Annotated[Optional[Any], Field(description="Filter waypoints by one or more traits.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_system_waypoints_with_http_info(
+        self,
+        system_symbol: Annotated[StrictStr, Field(..., description="The system symbol")],
+        page: Annotated[Optional[conint(strict=True, ge=1)], Field(description="What entry offset to request")] = None,
+        limit: Annotated[
+            Optional[conint(strict=True, le=20, ge=1)], Field(description="How many entries to return per page")
+        ] = None,
+        type: Annotated[Optional[WaypointType], Field(description="Filter waypoints by type.")] = None,
+        traits: Annotated[Optional[Any], Field(description="Filter waypoints by one or more traits.")] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """List Waypoints in System  # noqa: E501
 
         Return a paginated list of all of the waypoints for a given system.  If a waypoint is uncharted, it will return the `Uncharted` trait instead of its actual traits.  # noqa: E501
@@ -874,77 +906,67 @@ class SystemsApi:
 
         _params = locals()
 
-        _all_params = [
-            'system_symbol',
-            'page',
-            'limit',
-            'type',
-            'traits'
-        ]
+        _all_params = ["system_symbol", "page", "limit", "type", "traits"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_system_waypoints" % _key
-                )
+                raise ApiTypeError("Got an unexpected keyword argument '%s'" " to method get_system_waypoints" % _key)
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['system_symbol'] is not None:
-            _path_params['systemSymbol'] = _params['system_symbol']
-
+        if _params["system_symbol"] is not None:
+            _path_params["systemSymbol"] = _params["system_symbol"]
 
         # process the query parameters
         _query_params = []
-        if _params.get('page') is not None:  # noqa: E501
-            _query_params.append(('page', _params['page']))
+        if _params.get("page") is not None:  # noqa: E501
+            _query_params.append(("page", _params["page"]))
 
-        if _params.get('limit') is not None:  # noqa: E501
-            _query_params.append(('limit', _params['limit']))
+        if _params.get("limit") is not None:  # noqa: E501
+            _query_params.append(("limit", _params["limit"]))
 
-        if _params.get('type') is not None:  # noqa: E501
-            _query_params.append(('type', _params['type'].value))
+        if _params.get("type") is not None:  # noqa: E501
+            _query_params.append(("type", _params["type"].value))
 
-        if _params.get('traits') is not None:  # noqa: E501
-            _query_params.append(('traits', _params['traits']))
+        if _params.get("traits") is not None:  # noqa: E501
+            _query_params.append(("traits", _params["traits"]))
 
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(["application/json"])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetSystemWaypoints200Response",
+            "200": "GetSystemWaypoints200Response",
         }
 
         return self.api_client.call_api(
-            '/systems/{systemSymbol}/waypoints', 'GET',
+            "/systems/{systemSymbol}/waypoints",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -953,15 +975,23 @@ class SystemsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_systems(self, page : Annotated[Optional[conint(strict=True, ge=1)], Field(description="What entry offset to request")] = None, limit : Annotated[Optional[conint(strict=True, le=20, ge=1)], Field(description="How many entries to return per page")] = None, **kwargs) -> GetSystems200Response:  # noqa: E501
+    def get_systems(
+        self,
+        page: Annotated[Optional[conint(strict=True, ge=1)], Field(description="What entry offset to request")] = None,
+        limit: Annotated[
+            Optional[conint(strict=True, le=20, ge=1)], Field(description="How many entries to return per page")
+        ] = None,
+        **kwargs,
+    ) -> GetSystems200Response:  # noqa: E501
         """List Systems  # noqa: E501
 
         Return a paginated list of all systems.  # noqa: E501
@@ -986,14 +1016,21 @@ class SystemsApi:
                  returns the request thread.
         :rtype: GetSystems200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_systems_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_systems_with_http_info(page, limit, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_systems_with_http_info(self, page : Annotated[Optional[conint(strict=True, ge=1)], Field(description="What entry offset to request")] = None, limit : Annotated[Optional[conint(strict=True, le=20, ge=1)], Field(description="How many entries to return per page")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_systems_with_http_info(
+        self,
+        page: Annotated[Optional[conint(strict=True, ge=1)], Field(description="What entry offset to request")] = None,
+        limit: Annotated[
+            Optional[conint(strict=True, le=20, ge=1)], Field(description="How many entries to return per page")
+        ] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """List Systems  # noqa: E501
 
         Return a paginated list of all systems.  # noqa: E501
@@ -1034,31 +1071,25 @@ class SystemsApi:
 
         _params = locals()
 
-        _all_params = [
-            'page',
-            'limit'
-        ]
+        _all_params = ["page", "limit"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_systems" % _key
-                )
+                raise ApiTypeError("Got an unexpected keyword argument '%s'" " to method get_systems" % _key)
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
@@ -1067,32 +1098,32 @@ class SystemsApi:
 
         # process the query parameters
         _query_params = []
-        if _params.get('page') is not None:  # noqa: E501
-            _query_params.append(('page', _params['page']))
+        if _params.get("page") is not None:  # noqa: E501
+            _query_params.append(("page", _params["page"]))
 
-        if _params.get('limit') is not None:  # noqa: E501
-            _query_params.append(('limit', _params['limit']))
+        if _params.get("limit") is not None:  # noqa: E501
+            _query_params.append(("limit", _params["limit"]))
 
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(["application/json"])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetSystems200Response",
+            "200": "GetSystems200Response",
         }
 
         return self.api_client.call_api(
-            '/systems', 'GET',
+            "/systems",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -1101,15 +1132,21 @@ class SystemsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_waypoint(self, system_symbol : Annotated[StrictStr, Field(..., description="The system symbol")], waypoint_symbol : Annotated[StrictStr, Field(..., description="The waypoint symbol")], **kwargs) -> GetWaypoint200Response:  # noqa: E501
+    def get_waypoint(
+        self,
+        system_symbol: Annotated[StrictStr, Field(..., description="The system symbol")],
+        waypoint_symbol: Annotated[StrictStr, Field(..., description="The waypoint symbol")],
+        **kwargs,
+    ) -> GetWaypoint200Response:  # noqa: E501
         """Get Waypoint  # noqa: E501
 
         View the details of a waypoint.  If the waypoint is uncharted, it will return the 'Uncharted' trait instead of its actual traits.  # noqa: E501
@@ -1134,14 +1171,19 @@ class SystemsApi:
                  returns the request thread.
         :rtype: GetWaypoint200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_waypoint_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_waypoint_with_http_info(system_symbol, waypoint_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_waypoint_with_http_info(self, system_symbol : Annotated[StrictStr, Field(..., description="The system symbol")], waypoint_symbol : Annotated[StrictStr, Field(..., description="The waypoint symbol")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_waypoint_with_http_info(
+        self,
+        system_symbol: Annotated[StrictStr, Field(..., description="The system symbol")],
+        waypoint_symbol: Annotated[StrictStr, Field(..., description="The waypoint symbol")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get Waypoint  # noqa: E501
 
         View the details of a waypoint.  If the waypoint is uncharted, it will return the 'Uncharted' trait instead of its actual traits.  # noqa: E501
@@ -1182,65 +1224,58 @@ class SystemsApi:
 
         _params = locals()
 
-        _all_params = [
-            'system_symbol',
-            'waypoint_symbol'
-        ]
+        _all_params = ["system_symbol", "waypoint_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_waypoint" % _key
-                )
+                raise ApiTypeError("Got an unexpected keyword argument '%s'" " to method get_waypoint" % _key)
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['system_symbol'] is not None:
-            _path_params['systemSymbol'] = _params['system_symbol']
+        if _params["system_symbol"] is not None:
+            _path_params["systemSymbol"] = _params["system_symbol"]
 
-        if _params['waypoint_symbol'] is not None:
-            _path_params['waypointSymbol'] = _params['waypoint_symbol']
-
+        if _params["waypoint_symbol"] is not None:
+            _path_params["waypointSymbol"] = _params["waypoint_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(["application/json"])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetWaypoint200Response",
+            "200": "GetWaypoint200Response",
         }
 
         return self.api_client.call_api(
-            '/systems/{systemSymbol}/waypoints/{waypointSymbol}', 'GET',
+            "/systems/{systemSymbol}/waypoints/{waypointSymbol}",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -1249,15 +1284,22 @@ class SystemsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def supply_construction(self, system_symbol : Annotated[StrictStr, Field(..., description="The system symbol")], waypoint_symbol : Annotated[StrictStr, Field(..., description="The waypoint symbol")], supply_construction_request : Optional[SupplyConstructionRequest] = None, **kwargs) -> SupplyConstruction201Response:  # noqa: E501
+    def supply_construction(
+        self,
+        system_symbol: Annotated[StrictStr, Field(..., description="The system symbol")],
+        waypoint_symbol: Annotated[StrictStr, Field(..., description="The waypoint symbol")],
+        supply_construction_request: Optional[SupplyConstructionRequest] = None,
+        **kwargs,
+    ) -> SupplyConstruction201Response:  # noqa: E501
         """Supply Construction Site  # noqa: E501
 
         Supply a construction site with the specified good. Requires a waypoint with a property of `isUnderConstruction` to be true.  The good must be in your ship's cargo. The good will be removed from your ship's cargo and added to the construction site's materials.  # noqa: E501
@@ -1271,7 +1313,7 @@ class SystemsApi:
         :type system_symbol: str
         :param waypoint_symbol: The waypoint symbol (required)
         :type waypoint_symbol: str
-        :param supply_construction_request: 
+        :param supply_construction_request:
         :type supply_construction_request: SupplyConstructionRequest
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1284,14 +1326,22 @@ class SystemsApi:
                  returns the request thread.
         :rtype: SupplyConstruction201Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the supply_construction_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.supply_construction_with_http_info(system_symbol, waypoint_symbol, supply_construction_request, **kwargs)  # noqa: E501
+        return self.supply_construction_with_http_info(
+            system_symbol, waypoint_symbol, supply_construction_request, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def supply_construction_with_http_info(self, system_symbol : Annotated[StrictStr, Field(..., description="The system symbol")], waypoint_symbol : Annotated[StrictStr, Field(..., description="The waypoint symbol")], supply_construction_request : Optional[SupplyConstructionRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def supply_construction_with_http_info(
+        self,
+        system_symbol: Annotated[StrictStr, Field(..., description="The system symbol")],
+        waypoint_symbol: Annotated[StrictStr, Field(..., description="The waypoint symbol")],
+        supply_construction_request: Optional[SupplyConstructionRequest] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Supply Construction Site  # noqa: E501
 
         Supply a construction site with the specified good. Requires a waypoint with a property of `isUnderConstruction` to be true.  The good must be in your ship's cargo. The good will be removed from your ship's cargo and added to the construction site's materials.  # noqa: E501
@@ -1305,7 +1355,7 @@ class SystemsApi:
         :type system_symbol: str
         :param waypoint_symbol: The waypoint symbol (required)
         :type waypoint_symbol: str
-        :param supply_construction_request: 
+        :param supply_construction_request:
         :type supply_construction_request: SupplyConstructionRequest
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1334,76 +1384,66 @@ class SystemsApi:
 
         _params = locals()
 
-        _all_params = [
-            'system_symbol',
-            'waypoint_symbol',
-            'supply_construction_request'
-        ]
+        _all_params = ["system_symbol", "waypoint_symbol", "supply_construction_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method supply_construction" % _key
-                )
+                raise ApiTypeError("Got an unexpected keyword argument '%s'" " to method supply_construction" % _key)
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['system_symbol'] is not None:
-            _path_params['systemSymbol'] = _params['system_symbol']
+        if _params["system_symbol"] is not None:
+            _path_params["systemSymbol"] = _params["system_symbol"]
 
-        if _params['waypoint_symbol'] is not None:
-            _path_params['waypointSymbol'] = _params['waypoint_symbol']
-
+        if _params["waypoint_symbol"] is not None:
+            _path_params["waypointSymbol"] = _params["waypoint_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['supply_construction_request'] is not None:
-            _body_params = _params['supply_construction_request']
+        if _params["supply_construction_request"] is not None:
+            _body_params = _params["supply_construction_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(["application/json"])  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get("_content_type", self.api_client.select_header_content_type(["application/json"]))
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '201': "SupplyConstruction201Response",
+            "201": "SupplyConstruction201Response",
         }
 
         return self.api_client.call_api(
-            '/systems/{systemSymbol}/waypoints/{waypointSymbol}/construction/supply', 'POST',
+            "/systems/{systemSymbol}/waypoints/{waypointSymbol}/construction/supply",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -1412,9 +1452,10 @@ class SystemsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )

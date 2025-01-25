@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -19,16 +19,19 @@ import re  # noqa: F401
 import json
 
 
-
 from pydantic import BaseModel, Field, StrictInt, constr
-from openapi_client.models.system_type import SystemType
+from .system_type import SystemType
+
 
 class ScannedSystem(BaseModel):
     """
     Details of a system was that scanned.  # noqa: E501
     """
+
     symbol: constr(strict=True, min_length=1) = Field(default=..., description="Symbol of the system.")
-    sector_symbol: constr(strict=True, min_length=1) = Field(default=..., alias="sectorSymbol", description="Symbol of the system's sector.")
+    sector_symbol: constr(strict=True, min_length=1) = Field(
+        default=..., alias="sectorSymbol", description="Symbol of the system's sector."
+    )
     type: SystemType = Field(...)
     x: StrictInt = Field(default=..., description="Position in the universe in the x axis.")
     y: StrictInt = Field(default=..., description="Position in the universe in the y axis.")
@@ -37,6 +40,7 @@ class ScannedSystem(BaseModel):
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -55,10 +59,7 @@ class ScannedSystem(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -70,14 +71,14 @@ class ScannedSystem(BaseModel):
         if not isinstance(obj, dict):
             return ScannedSystem.parse_obj(obj)
 
-        _obj = ScannedSystem.parse_obj({
-            "symbol": obj.get("symbol"),
-            "sector_symbol": obj.get("sectorSymbol"),
-            "type": obj.get("type"),
-            "x": obj.get("x"),
-            "y": obj.get("y"),
-            "distance": obj.get("distance")
-        })
+        _obj = ScannedSystem.parse_obj(
+            {
+                "symbol": obj.get("symbol"),
+                "sector_symbol": obj.get("sectorSymbol"),
+                "type": obj.get("type"),
+                "x": obj.get("x"),
+                "y": obj.get("y"),
+                "distance": obj.get("distance"),
+            }
+        )
         return _obj
-
-

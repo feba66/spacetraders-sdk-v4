@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -24,18 +24,30 @@ from pydantic import Field, StrictStr, conint
 
 from typing import Optional
 
-from openapi_client.models.accept_contract200_response import AcceptContract200Response
-from openapi_client.models.deliver_contract200_response import DeliverContract200Response
-from openapi_client.models.deliver_contract_request import DeliverContractRequest
-from openapi_client.models.fulfill_contract200_response import FulfillContract200Response
-from openapi_client.models.get_contract200_response import GetContract200Response
-from openapi_client.models.get_contracts200_response import GetContracts200Response
+from spacetraders_sdk.openapi_client.models.accept_contract200_response import (
+    AcceptContract200Response,
+)
+from spacetraders_sdk.openapi_client.models.deliver_contract200_response import (
+    DeliverContract200Response,
+)
+from spacetraders_sdk.openapi_client.models.deliver_contract_request import (
+    DeliverContractRequest,
+)
+from spacetraders_sdk.openapi_client.models.fulfill_contract200_response import (
+    FulfillContract200Response,
+)
+from spacetraders_sdk.openapi_client.models.get_contract200_response import (
+    GetContract200Response,
+)
+from spacetraders_sdk.openapi_client.models.get_contracts200_response import (
+    GetContracts200Response,
+)
 
-from openapi_client.api_client import ApiClient
-from openapi_client.api_response import ApiResponse
-from openapi_client.exceptions import (  # noqa: F401
+from spacetraders_sdk.openapi_client.api_client import ApiClient
+from spacetraders_sdk.openapi_client.api_response import ApiResponse
+from spacetraders_sdk.openapi_client.exceptions import (  # noqa: F401
     ApiTypeError,
-    ApiValueError
+    ApiValueError,
 )
 
 
@@ -52,7 +64,13 @@ class ContractsApi:
         self.api_client = api_client
 
     @validate_arguments
-    def accept_contract(self, contract_id : Annotated[StrictStr, Field(..., description="The contract ID to accept.")], **kwargs) -> AcceptContract200Response:  # noqa: E501
+    def accept_contract(
+        self,
+        contract_id: Annotated[
+            StrictStr, Field(..., description="The contract ID to accept.")
+        ],
+        **kwargs,
+    ) -> AcceptContract200Response:  # noqa: E501
         """Accept Contract  # noqa: E501
 
         Accept a contract by ID.   You can only accept contracts that were offered to you, were not accepted yet, and whose deadlines has not passed yet.  # noqa: E501
@@ -75,14 +93,20 @@ class ContractsApi:
                  returns the request thread.
         :rtype: AcceptContract200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the accept_contract_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.accept_contract_with_http_info(contract_id, **kwargs)  # noqa: E501
+        return self.accept_contract_with_http_info(contract_id, **kwargs)  # type: ignore
 
     @validate_arguments
-    def accept_contract_with_http_info(self, contract_id : Annotated[StrictStr, Field(..., description="The contract ID to accept.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def accept_contract_with_http_info(
+        self,
+        contract_id: Annotated[
+            StrictStr, Field(..., description="The contract ID to accept.")
+        ],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Accept Contract  # noqa: E501
 
         Accept a contract by ID.   You can only accept contracts that were offered to you, were not accepted yet, and whose deadlines has not passed yet.  # noqa: E501
@@ -121,61 +145,60 @@ class ContractsApi:
 
         _params = locals()
 
-        _all_params = [
-            'contract_id'
-        ]
+        _all_params = ["contract_id"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method accept_contract" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
-        _collection_formats = {}
+        _collection_formats = {}  # type: ignore
 
         # process the path parameters
         _path_params = {}
-        if _params['contract_id'] is not None:
-            _path_params['contractId'] = _params['contract_id']
-
+        if _params["contract_id"] is not None:
+            _path_params["contractId"] = _params["contract_id"]
 
         # process the query parameters
-        _query_params = []
+        _query_params = []  # type: ignore
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
+        _form_params = []  # type: ignore
+        _files = {}  # type: ignore
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "AcceptContract200Response",
+            "200": "AcceptContract200Response",
         }
 
         return self.api_client.call_api(
-            '/my/contracts/{contractId}/accept', 'POST',
+            "/my/contracts/{contractId}/accept",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -184,15 +207,23 @@ class ContractsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def deliver_contract(self, contract_id : Annotated[StrictStr, Field(..., description="The ID of the contract.")], deliver_contract_request : Optional[DeliverContractRequest] = None, **kwargs) -> DeliverContract200Response:  # noqa: E501
+    def deliver_contract(
+        self,
+        contract_id: Annotated[
+            StrictStr, Field(..., description="The ID of the contract.")
+        ],
+        deliver_contract_request: Optional[DeliverContractRequest] = None,
+        **kwargs,
+    ) -> DeliverContract200Response:  # noqa: E501
         """Deliver Cargo to Contract  # noqa: E501
 
         Deliver cargo to a contract.  In order to use this API, a ship must be at the delivery location (denoted in the delivery terms as `destinationSymbol` of a contract) and must have a number of units of a good required by this contract in its cargo.  Cargo that was delivered will be removed from the ship's cargo.  # noqa: E501
@@ -204,7 +235,7 @@ class ContractsApi:
 
         :param contract_id: The ID of the contract. (required)
         :type contract_id: str
-        :param deliver_contract_request: 
+        :param deliver_contract_request:
         :type deliver_contract_request: DeliverContractRequest
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -217,14 +248,23 @@ class ContractsApi:
                  returns the request thread.
         :rtype: DeliverContract200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the deliver_contract_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.deliver_contract_with_http_info(contract_id, deliver_contract_request, **kwargs)  # noqa: E501
+        return self.deliver_contract_with_http_info(
+            contract_id, deliver_contract_request, **kwargs
+        )  # type: ignore
 
     @validate_arguments
-    def deliver_contract_with_http_info(self, contract_id : Annotated[StrictStr, Field(..., description="The ID of the contract.")], deliver_contract_request : Optional[DeliverContractRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def deliver_contract_with_http_info(
+        self,
+        contract_id: Annotated[
+            StrictStr, Field(..., description="The ID of the contract.")
+        ],
+        deliver_contract_request: Optional[DeliverContractRequest] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Deliver Cargo to Contract  # noqa: E501
 
         Deliver cargo to a contract.  In order to use this API, a ship must be at the delivery location (denoted in the delivery terms as `destinationSymbol` of a contract) and must have a number of units of a good required by this contract in its cargo.  Cargo that was delivered will be removed from the ship's cargo.  # noqa: E501
@@ -236,7 +276,7 @@ class ContractsApi:
 
         :param contract_id: The ID of the contract. (required)
         :type contract_id: str
-        :param deliver_contract_request: 
+        :param deliver_contract_request:
         :type deliver_contract_request: DeliverContractRequest
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -265,72 +305,71 @@ class ContractsApi:
 
         _params = locals()
 
-        _all_params = [
-            'contract_id',
-            'deliver_contract_request'
-        ]
+        _all_params = ["contract_id", "deliver_contract_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method deliver_contract" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
-        _collection_formats = {}
+        _collection_formats = {}  # type: ignore
 
         # process the path parameters
         _path_params = {}
-        if _params['contract_id'] is not None:
-            _path_params['contractId'] = _params['contract_id']
-
+        if _params["contract_id"] is not None:
+            _path_params["contractId"] = _params["contract_id"]
 
         # process the query parameters
-        _query_params = []
+        _query_params = []  # type: ignore
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
+        _form_params = []  # type: ignore
+        _files = {}  # type: ignore
         # process the body parameter
         _body_params = None
-        if _params['deliver_contract_request'] is not None:
-            _body_params = _params['deliver_contract_request']
+        if _params["deliver_contract_request"] is not None:
+            _body_params = _params["deliver_contract_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "DeliverContract200Response",
+            "200": "DeliverContract200Response",
         }
 
         return self.api_client.call_api(
-            '/my/contracts/{contractId}/deliver', 'POST',
+            "/my/contracts/{contractId}/deliver",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -339,15 +378,22 @@ class ContractsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def fulfill_contract(self, contract_id : Annotated[StrictStr, Field(..., description="The ID of the contract to fulfill.")], **kwargs) -> FulfillContract200Response:  # noqa: E501
+    def fulfill_contract(
+        self,
+        contract_id: Annotated[
+            StrictStr, Field(..., description="The ID of the contract to fulfill.")
+        ],
+        **kwargs,
+    ) -> FulfillContract200Response:  # noqa: E501
         """Fulfill Contract  # noqa: E501
 
         Fulfill a contract. Can only be used on contracts that have all of their delivery terms fulfilled.  # noqa: E501
@@ -370,14 +416,20 @@ class ContractsApi:
                  returns the request thread.
         :rtype: FulfillContract200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the fulfill_contract_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.fulfill_contract_with_http_info(contract_id, **kwargs)  # noqa: E501
+        return self.fulfill_contract_with_http_info(contract_id, **kwargs)  # type: ignore
 
     @validate_arguments
-    def fulfill_contract_with_http_info(self, contract_id : Annotated[StrictStr, Field(..., description="The ID of the contract to fulfill.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def fulfill_contract_with_http_info(
+        self,
+        contract_id: Annotated[
+            StrictStr, Field(..., description="The ID of the contract to fulfill.")
+        ],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Fulfill Contract  # noqa: E501
 
         Fulfill a contract. Can only be used on contracts that have all of their delivery terms fulfilled.  # noqa: E501
@@ -416,61 +468,60 @@ class ContractsApi:
 
         _params = locals()
 
-        _all_params = [
-            'contract_id'
-        ]
+        _all_params = ["contract_id"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method fulfill_contract" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
-        _collection_formats = {}
+        _collection_formats = {}  # type: ignore
 
         # process the path parameters
         _path_params = {}
-        if _params['contract_id'] is not None:
-            _path_params['contractId'] = _params['contract_id']
-
+        if _params["contract_id"] is not None:
+            _path_params["contractId"] = _params["contract_id"]
 
         # process the query parameters
-        _query_params = []
+        _query_params = []  # type: ignore
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
+        _form_params = []  # type: ignore
+        _files = {}  # type: ignore
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "FulfillContract200Response",
+            "200": "FulfillContract200Response",
         }
 
         return self.api_client.call_api(
-            '/my/contracts/{contractId}/fulfill', 'POST',
+            "/my/contracts/{contractId}/fulfill",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -479,15 +530,20 @@ class ContractsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_contract(self, contract_id : Annotated[StrictStr, Field(..., description="The contract ID")], **kwargs) -> GetContract200Response:  # noqa: E501
+    def get_contract(
+        self,
+        contract_id: Annotated[StrictStr, Field(..., description="The contract ID")],
+        **kwargs,
+    ) -> GetContract200Response:  # noqa: E501
         """Get Contract  # noqa: E501
 
         Get the details of a contract by ID.  # noqa: E501
@@ -510,14 +566,18 @@ class ContractsApi:
                  returns the request thread.
         :rtype: GetContract200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_contract_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.get_contract_with_http_info(contract_id, **kwargs)  # noqa: E501
+        return self.get_contract_with_http_info(contract_id, **kwargs)  # type: ignore
 
     @validate_arguments
-    def get_contract_with_http_info(self, contract_id : Annotated[StrictStr, Field(..., description="The contract ID")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_contract_with_http_info(
+        self,
+        contract_id: Annotated[StrictStr, Field(..., description="The contract ID")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get Contract  # noqa: E501
 
         Get the details of a contract by ID.  # noqa: E501
@@ -556,61 +616,60 @@ class ContractsApi:
 
         _params = locals()
 
-        _all_params = [
-            'contract_id'
-        ]
+        _all_params = ["contract_id"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_contract" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
-        _collection_formats = {}
+        _collection_formats = {}  # type: ignore
 
         # process the path parameters
         _path_params = {}
-        if _params['contract_id'] is not None:
-            _path_params['contractId'] = _params['contract_id']
-
+        if _params["contract_id"] is not None:
+            _path_params["contractId"] = _params["contract_id"]
 
         # process the query parameters
-        _query_params = []
+        _query_params = []  # type: ignore
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
+        _form_params = []  # type: ignore
+        _files = {}  # type: ignore
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetContract200Response",
+            "200": "GetContract200Response",
         }
 
         return self.api_client.call_api(
-            '/my/contracts/{contractId}', 'GET',
+            "/my/contracts/{contractId}",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -619,15 +678,27 @@ class ContractsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_contracts(self, page : Annotated[Optional[conint(strict=True, ge=1)], Field(description="What entry offset to request")] = None, limit : Annotated[Optional[conint(strict=True, le=20, ge=1)], Field(description="How many entries to return per page")] = None, **kwargs) -> GetContracts200Response:  # noqa: E501
+    def get_contracts(
+        self,
+        page: Annotated[  # type: ignore
+            Optional[conint(strict=True, ge=1)],
+            Field(description="What entry offset to request"),
+        ] = None,
+        limit: Annotated[  # type: ignore
+            Optional[conint(strict=True, le=20, ge=1)],
+            Field(description="How many entries to return per page"),
+        ] = None,
+        **kwargs,
+    ) -> GetContracts200Response:  # noqa: E501
         """List Contracts  # noqa: E501
 
         Return a paginated list of all your contracts.  # noqa: E501
@@ -652,14 +723,25 @@ class ContractsApi:
                  returns the request thread.
         :rtype: GetContracts200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_contracts_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.get_contracts_with_http_info(page, limit, **kwargs)  # noqa: E501
+        return self.get_contracts_with_http_info(page, limit, **kwargs)  # type: ignore
 
     @validate_arguments
-    def get_contracts_with_http_info(self, page : Annotated[Optional[conint(strict=True, ge=1)], Field(description="What entry offset to request")] = None, limit : Annotated[Optional[conint(strict=True, le=20, ge=1)], Field(description="How many entries to return per page")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_contracts_with_http_info(
+        self,
+        page: Annotated[  # type: ignore
+            Optional[conint(strict=True, ge=1)],
+            Field(description="What entry offset to request"),
+        ] = None,
+        limit: Annotated[  # type: ignore
+            Optional[conint(strict=True, le=20, ge=1)],
+            Field(description="How many entries to return per page"),
+        ] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """List Contracts  # noqa: E501
 
         Return a paginated list of all your contracts.  # noqa: E501
@@ -700,65 +782,64 @@ class ContractsApi:
 
         _params = locals()
 
-        _all_params = [
-            'page',
-            'limit'
-        ]
+        _all_params = ["page", "limit"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_contracts" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
-        _collection_formats = {}
+        _collection_formats = {}  # type: ignore
 
         # process the path parameters
-        _path_params = {}
+        _path_params = {}  # type: ignore
 
         # process the query parameters
         _query_params = []
-        if _params.get('page') is not None:  # noqa: E501
-            _query_params.append(('page', _params['page']))
+        if _params.get("page") is not None:  # noqa: E501
+            _query_params.append(("page", _params["page"]))
 
-        if _params.get('limit') is not None:  # noqa: E501
-            _query_params.append(('limit', _params['limit']))
+        if _params.get("limit") is not None:  # noqa: E501
+            _query_params.append(("limit", _params["limit"]))
 
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
+        _form_params = []  # type: ignore
+        _files = {}  # type: ignore
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetContracts200Response",
+            "200": "GetContracts200Response",
         }
 
         return self.api_client.call_api(
-            '/my/contracts', 'GET',
+            "/my/contracts",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -767,9 +848,10 @@ class ContractsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )

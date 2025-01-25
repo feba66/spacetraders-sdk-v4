@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -21,16 +21,18 @@ import json
 
 from typing import List
 from pydantic import BaseModel, Field, StrictStr, conlist
-from openapi_client.models.get_status200_response_announcements_inner import GetStatus200ResponseAnnouncementsInner
-from openapi_client.models.get_status200_response_leaderboards import GetStatus200ResponseLeaderboards
-from openapi_client.models.get_status200_response_links_inner import GetStatus200ResponseLinksInner
-from openapi_client.models.get_status200_response_server_resets import GetStatus200ResponseServerResets
-from openapi_client.models.get_status200_response_stats import GetStatus200ResponseStats
+from .get_status200_response_announcements_inner import GetStatus200ResponseAnnouncementsInner
+from .get_status200_response_leaderboards import GetStatus200ResponseLeaderboards
+from .get_status200_response_links_inner import GetStatus200ResponseLinksInner
+from .get_status200_response_server_resets import GetStatus200ResponseServerResets
+from .get_status200_response_stats import GetStatus200ResponseStats
+
 
 class GetStatus200Response(BaseModel):
     """
     GetStatus200Response
     """
+
     status: StrictStr = Field(default=..., description="The current status of the game server.")
     version: StrictStr = Field(default=..., description="The current version of the API.")
     reset_date: StrictStr = Field(default=..., alias="resetDate", description="The date when the game server was last reset.")
@@ -40,10 +42,21 @@ class GetStatus200Response(BaseModel):
     server_resets: GetStatus200ResponseServerResets = Field(default=..., alias="serverResets")
     announcements: conlist(GetStatus200ResponseAnnouncementsInner) = Field(...)
     links: conlist(GetStatus200ResponseLinksInner) = Field(...)
-    __properties = ["status", "version", "resetDate", "description", "stats", "leaderboards", "serverResets", "announcements", "links"]
+    __properties = [
+        "status",
+        "version",
+        "resetDate",
+        "description",
+        "stats",
+        "leaderboards",
+        "serverResets",
+        "announcements",
+        "links",
+    ]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -62,33 +75,30 @@ class GetStatus200Response(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of stats
         if self.stats:
-            _dict['stats'] = self.stats.to_dict()
+            _dict["stats"] = self.stats.to_dict()
         # override the default output from pydantic by calling `to_dict()` of leaderboards
         if self.leaderboards:
-            _dict['leaderboards'] = self.leaderboards.to_dict()
+            _dict["leaderboards"] = self.leaderboards.to_dict()
         # override the default output from pydantic by calling `to_dict()` of server_resets
         if self.server_resets:
-            _dict['serverResets'] = self.server_resets.to_dict()
+            _dict["serverResets"] = self.server_resets.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in announcements (list)
         _items = []
         if self.announcements:
             for _item in self.announcements:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['announcements'] = _items
+            _dict["announcements"] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in links (list)
         _items = []
         if self.links:
             for _item in self.links:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['links'] = _items
+            _dict["links"] = _items
         return _dict
 
     @classmethod
@@ -100,17 +110,33 @@ class GetStatus200Response(BaseModel):
         if not isinstance(obj, dict):
             return GetStatus200Response.parse_obj(obj)
 
-        _obj = GetStatus200Response.parse_obj({
-            "status": obj.get("status"),
-            "version": obj.get("version"),
-            "reset_date": obj.get("resetDate"),
-            "description": obj.get("description"),
-            "stats": GetStatus200ResponseStats.from_dict(obj.get("stats")) if obj.get("stats") is not None else None,
-            "leaderboards": GetStatus200ResponseLeaderboards.from_dict(obj.get("leaderboards")) if obj.get("leaderboards") is not None else None,
-            "server_resets": GetStatus200ResponseServerResets.from_dict(obj.get("serverResets")) if obj.get("serverResets") is not None else None,
-            "announcements": [GetStatus200ResponseAnnouncementsInner.from_dict(_item) for _item in obj.get("announcements")] if obj.get("announcements") is not None else None,
-            "links": [GetStatus200ResponseLinksInner.from_dict(_item) for _item in obj.get("links")] if obj.get("links") is not None else None
-        })
+        _obj = GetStatus200Response.parse_obj(
+            {
+                "status": obj.get("status"),
+                "version": obj.get("version"),
+                "reset_date": obj.get("resetDate"),
+                "description": obj.get("description"),
+                "stats": GetStatus200ResponseStats.from_dict(obj.get("stats")) if obj.get("stats") is not None else None,
+                "leaderboards": (
+                    GetStatus200ResponseLeaderboards.from_dict(obj.get("leaderboards"))
+                    if obj.get("leaderboards") is not None
+                    else None
+                ),
+                "server_resets": (
+                    GetStatus200ResponseServerResets.from_dict(obj.get("serverResets"))
+                    if obj.get("serverResets") is not None
+                    else None
+                ),
+                "announcements": (
+                    [GetStatus200ResponseAnnouncementsInner.from_dict(_item) for _item in obj.get("announcements")]
+                    if obj.get("announcements") is not None
+                    else None
+                ),
+                "links": (
+                    [GetStatus200ResponseLinksInner.from_dict(_item) for _item in obj.get("links")]
+                    if obj.get("links") is not None
+                    else None
+                ),
+            }
+        )
         return _obj
-
-

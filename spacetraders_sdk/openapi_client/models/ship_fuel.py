@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -21,19 +21,24 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel, Field, conint
-from openapi_client.models.ship_fuel_consumed import ShipFuelConsumed
+from .ship_fuel_consumed import ShipFuelConsumed
+
 
 class ShipFuel(BaseModel):
     """
     Details of the ship's fuel tanks including how much fuel was consumed during the last transit or action.  # noqa: E501
     """
+
     current: conint(strict=True, ge=0) = Field(default=..., description="The current amount of fuel in the ship's tanks.")
-    capacity: conint(strict=True, ge=0) = Field(default=..., description="The maximum amount of fuel the ship's tanks can hold.")
+    capacity: conint(strict=True, ge=0) = Field(
+        default=..., description="The maximum amount of fuel the ship's tanks can hold."
+    )
     consumed: Optional[ShipFuelConsumed] = None
     __properties = ["current", "capacity", "consumed"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,13 +57,10 @@ class ShipFuel(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of consumed
         if self.consumed:
-            _dict['consumed'] = self.consumed.to_dict()
+            _dict["consumed"] = self.consumed.to_dict()
         return _dict
 
     @classmethod
@@ -70,11 +72,11 @@ class ShipFuel(BaseModel):
         if not isinstance(obj, dict):
             return ShipFuel.parse_obj(obj)
 
-        _obj = ShipFuel.parse_obj({
-            "current": obj.get("current"),
-            "capacity": obj.get("capacity"),
-            "consumed": ShipFuelConsumed.from_dict(obj.get("consumed")) if obj.get("consumed") is not None else None
-        })
+        _obj = ShipFuel.parse_obj(
+            {
+                "current": obj.get("current"),
+                "capacity": obj.get("capacity"),
+                "consumed": ShipFuelConsumed.from_dict(obj.get("consumed")) if obj.get("consumed") is not None else None,
+            }
+        )
         return _obj
-
-

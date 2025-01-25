@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -21,16 +21,18 @@ import re  # noqa: F401
 
 from typing import Any, List, Optional
 from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
-from openapi_client.models.ship_condition_event import ShipConditionEvent
+from .ship_condition_event import ShipConditionEvent
 from typing import Union, Any, List, TYPE_CHECKING
 from pydantic import StrictStr, Field
 
 EXTRACTRESOURCES201RESPONSEDATAEVENTSINNER_ONE_OF_SCHEMAS = ["ShipConditionEvent"]
 
+
 class ExtractResources201ResponseDataEventsInner(BaseModel):
     """
     ExtractResources201ResponseDataEventsInner
     """
+
     # data type: ShipConditionEvent
     oneof_schema_1_validator: Optional[ShipConditionEvent] = None
     if TYPE_CHECKING:
@@ -52,7 +54,7 @@ class ExtractResources201ResponseDataEventsInner(BaseModel):
         else:
             super().__init__(**kwargs)
 
-    @validator('actual_instance')
+    @validator("actual_instance")
     def actual_instance_must_validate_oneof(cls, v):
         instance = ExtractResources201ResponseDataEventsInner.construct()
         error_messages = []
@@ -64,10 +66,16 @@ class ExtractResources201ResponseDataEventsInner(BaseModel):
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in ExtractResources201ResponseDataEventsInner with oneOf schemas: ShipConditionEvent. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "Multiple matches found when setting `actual_instance` in ExtractResources201ResponseDataEventsInner with oneOf schemas: ShipConditionEvent. Details: "
+                + ", ".join(error_messages)
+            )
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in ExtractResources201ResponseDataEventsInner with oneOf schemas: ShipConditionEvent. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "No match found when setting `actual_instance` in ExtractResources201ResponseDataEventsInner with oneOf schemas: ShipConditionEvent. Details: "
+                + ", ".join(error_messages)
+            )
         else:
             return v
 
@@ -91,10 +99,16 @@ class ExtractResources201ResponseDataEventsInner(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into ExtractResources201ResponseDataEventsInner with oneOf schemas: ShipConditionEvent. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "Multiple matches found when deserializing the JSON string into ExtractResources201ResponseDataEventsInner with oneOf schemas: ShipConditionEvent. Details: "
+                + ", ".join(error_messages)
+            )
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into ExtractResources201ResponseDataEventsInner with oneOf schemas: ShipConditionEvent. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "No match found when deserializing the JSON string into ExtractResources201ResponseDataEventsInner with oneOf schemas: ShipConditionEvent. Details: "
+                + ", ".join(error_messages)
+            )
         else:
             return instance
 
@@ -124,5 +138,3 @@ class ExtractResources201ResponseDataEventsInner(BaseModel):
     def to_str(self) -> str:
         """Returns the string representation of the actual instance"""
         return pprint.pformat(self.dict())
-
-

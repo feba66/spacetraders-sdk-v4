@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -22,18 +22,29 @@ from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, Field, conint, constr
 
+
 class Cooldown(BaseModel):
     """
     A cooldown is a period of time in which a ship cannot perform certain actions.  # noqa: E501
     """
-    ship_symbol: constr(strict=True, min_length=1) = Field(default=..., alias="shipSymbol", description="The symbol of the ship that is on cooldown")
-    total_seconds: conint(strict=True, ge=0) = Field(default=..., alias="totalSeconds", description="The total duration of the cooldown in seconds")
-    remaining_seconds: conint(strict=True, ge=0) = Field(default=..., alias="remainingSeconds", description="The remaining duration of the cooldown in seconds")
-    expiration: Optional[datetime] = Field(default=None, description="The date and time when the cooldown expires in ISO 8601 format")
+
+    ship_symbol: constr(strict=True, min_length=1) = Field(
+        default=..., alias="shipSymbol", description="The symbol of the ship that is on cooldown"
+    )
+    total_seconds: conint(strict=True, ge=0) = Field(
+        default=..., alias="totalSeconds", description="The total duration of the cooldown in seconds"
+    )
+    remaining_seconds: conint(strict=True, ge=0) = Field(
+        default=..., alias="remainingSeconds", description="The remaining duration of the cooldown in seconds"
+    )
+    expiration: Optional[datetime] = Field(
+        default=None, description="The date and time when the cooldown expires in ISO 8601 format"
+    )
     __properties = ["shipSymbol", "totalSeconds", "remainingSeconds", "expiration"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,10 +63,7 @@ class Cooldown(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -67,12 +75,12 @@ class Cooldown(BaseModel):
         if not isinstance(obj, dict):
             return Cooldown.parse_obj(obj)
 
-        _obj = Cooldown.parse_obj({
-            "ship_symbol": obj.get("shipSymbol"),
-            "total_seconds": obj.get("totalSeconds"),
-            "remaining_seconds": obj.get("remainingSeconds"),
-            "expiration": obj.get("expiration")
-        })
+        _obj = Cooldown.parse_obj(
+            {
+                "ship_symbol": obj.get("shipSymbol"),
+                "total_seconds": obj.get("totalSeconds"),
+                "remaining_seconds": obj.get("remainingSeconds"),
+                "expiration": obj.get("expiration"),
+            }
+        )
         return _obj
-
-

@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -21,15 +21,17 @@ import json
 
 from typing import List
 from pydantic import BaseModel, Field, conlist
-from openapi_client.models.cooldown import Cooldown
-from openapi_client.models.extract_resources201_response_data_events_inner import ExtractResources201ResponseDataEventsInner
-from openapi_client.models.ship_cargo import ShipCargo
-from openapi_client.models.siphon import Siphon
+from .cooldown import Cooldown
+from .extract_resources201_response_data_events_inner import ExtractResources201ResponseDataEventsInner
+from .ship_cargo import ShipCargo
+from .siphon import Siphon
+
 
 class SiphonResources201ResponseData(BaseModel):
     """
     SiphonResources201ResponseData
     """
+
     cooldown: Cooldown = Field(...)
     siphon: Siphon = Field(...)
     cargo: ShipCargo = Field(...)
@@ -38,6 +40,7 @@ class SiphonResources201ResponseData(BaseModel):
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -56,26 +59,23 @@ class SiphonResources201ResponseData(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of cooldown
         if self.cooldown:
-            _dict['cooldown'] = self.cooldown.to_dict()
+            _dict["cooldown"] = self.cooldown.to_dict()
         # override the default output from pydantic by calling `to_dict()` of siphon
         if self.siphon:
-            _dict['siphon'] = self.siphon.to_dict()
+            _dict["siphon"] = self.siphon.to_dict()
         # override the default output from pydantic by calling `to_dict()` of cargo
         if self.cargo:
-            _dict['cargo'] = self.cargo.to_dict()
+            _dict["cargo"] = self.cargo.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in events (list)
         _items = []
         if self.events:
             for _item in self.events:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['events'] = _items
+            _dict["events"] = _items
         return _dict
 
     @classmethod
@@ -87,12 +87,16 @@ class SiphonResources201ResponseData(BaseModel):
         if not isinstance(obj, dict):
             return SiphonResources201ResponseData.parse_obj(obj)
 
-        _obj = SiphonResources201ResponseData.parse_obj({
-            "cooldown": Cooldown.from_dict(obj.get("cooldown")) if obj.get("cooldown") is not None else None,
-            "siphon": Siphon.from_dict(obj.get("siphon")) if obj.get("siphon") is not None else None,
-            "cargo": ShipCargo.from_dict(obj.get("cargo")) if obj.get("cargo") is not None else None,
-            "events": [ExtractResources201ResponseDataEventsInner.from_dict(_item) for _item in obj.get("events")] if obj.get("events") is not None else None
-        })
+        _obj = SiphonResources201ResponseData.parse_obj(
+            {
+                "cooldown": Cooldown.from_dict(obj.get("cooldown")) if obj.get("cooldown") is not None else None,
+                "siphon": Siphon.from_dict(obj.get("siphon")) if obj.get("siphon") is not None else None,
+                "cargo": ShipCargo.from_dict(obj.get("cargo")) if obj.get("cargo") is not None else None,
+                "events": (
+                    [ExtractResources201ResponseDataEventsInner.from_dict(_item) for _item in obj.get("events")]
+                    if obj.get("events") is not None
+                    else None
+                ),
+            }
+        )
         return _obj
-
-

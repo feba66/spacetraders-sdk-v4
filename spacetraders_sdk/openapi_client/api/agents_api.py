@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -24,14 +24,18 @@ from pydantic import Field, StrictStr, conint
 
 from typing import Optional
 
-from openapi_client.models.get_agents200_response import GetAgents200Response
-from openapi_client.models.get_my_agent200_response import GetMyAgent200Response
+from spacetraders_sdk.openapi_client.models.get_agents200_response import (
+    GetAgents200Response,
+)
+from spacetraders_sdk.openapi_client.models.get_my_agent200_response import (
+    GetMyAgent200Response,
+)
 
-from openapi_client.api_client import ApiClient
-from openapi_client.api_response import ApiResponse
-from openapi_client.exceptions import (  # noqa: F401
+from spacetraders_sdk.openapi_client.api_client import ApiClient
+from spacetraders_sdk.openapi_client.api_response import ApiResponse
+from spacetraders_sdk.openapi_client.exceptions import (  # noqa: F401
     ApiTypeError,
-    ApiValueError
+    ApiValueError,
 )
 
 
@@ -48,7 +52,11 @@ class AgentsApi:
         self.api_client = api_client
 
     @validate_arguments
-    def get_agent(self, agent_symbol : Annotated[StrictStr, Field(..., description="The agent symbol")], **kwargs) -> GetMyAgent200Response:  # noqa: E501
+    def get_agent(
+        self,
+        agent_symbol: Annotated[StrictStr, Field(..., description="The agent symbol")],
+        **kwargs,
+    ) -> GetMyAgent200Response:  # noqa: E501
         """Get Public Agent  # noqa: E501
 
         Fetch agent details.  # noqa: E501
@@ -71,14 +79,18 @@ class AgentsApi:
                  returns the request thread.
         :rtype: GetMyAgent200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_agent_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.get_agent_with_http_info(agent_symbol, **kwargs)  # noqa: E501
+        return self.get_agent_with_http_info(agent_symbol, **kwargs)  # type: ignore
 
     @validate_arguments
-    def get_agent_with_http_info(self, agent_symbol : Annotated[StrictStr, Field(..., description="The agent symbol")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_agent_with_http_info(
+        self,
+        agent_symbol: Annotated[StrictStr, Field(..., description="The agent symbol")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get Public Agent  # noqa: E501
 
         Fetch agent details.  # noqa: E501
@@ -117,61 +129,60 @@ class AgentsApi:
 
         _params = locals()
 
-        _all_params = [
-            'agent_symbol'
-        ]
+        _all_params = ["agent_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_agent" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
-        _collection_formats = {}
+        _collection_formats = {}  # type: ignore
 
         # process the path parameters
         _path_params = {}
-        if _params['agent_symbol'] is not None:
-            _path_params['agentSymbol'] = _params['agent_symbol']
-
+        if _params["agent_symbol"] is not None:
+            _path_params["agentSymbol"] = _params["agent_symbol"]
 
         # process the query parameters
-        _query_params = []
+        _query_params = []  # type: ignore
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
+        _form_params = []  # type: ignore
+        _files = {}  # type: ignore
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetMyAgent200Response",
+            "200": "GetMyAgent200Response",
         }
 
         return self.api_client.call_api(
-            '/agents/{agentSymbol}', 'GET',
+            "/agents/{agentSymbol}",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -180,15 +191,27 @@ class AgentsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_agents(self, page : Annotated[Optional[conint(strict=True, ge=1)], Field(description="What entry offset to request")] = None, limit : Annotated[Optional[conint(strict=True, le=20, ge=1)], Field(description="How many entries to return per page")] = None, **kwargs) -> GetAgents200Response:  # noqa: E501
+    def get_agents(
+        self,
+        page: Annotated[  # type: ignore
+            Optional[conint(strict=True, ge=1)],
+            Field(description="What entry offset to request"),
+        ] = None,
+        limit: Annotated[  # type: ignore
+            Optional[conint(strict=True, le=20, ge=1)],
+            Field(description="How many entries to return per page"),
+        ] = None,
+        **kwargs,
+    ) -> GetAgents200Response:  # noqa: E501
         """List Agents  # noqa: E501
 
         Fetch agents details.  # noqa: E501
@@ -213,14 +236,25 @@ class AgentsApi:
                  returns the request thread.
         :rtype: GetAgents200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_agents_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.get_agents_with_http_info(page, limit, **kwargs)  # noqa: E501
+        return self.get_agents_with_http_info(page, limit, **kwargs)  # type: ignore
 
     @validate_arguments
-    def get_agents_with_http_info(self, page : Annotated[Optional[conint(strict=True, ge=1)], Field(description="What entry offset to request")] = None, limit : Annotated[Optional[conint(strict=True, le=20, ge=1)], Field(description="How many entries to return per page")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_agents_with_http_info(
+        self,
+        page: Annotated[  # type: ignore
+            Optional[conint(strict=True, ge=1)],
+            Field(description="What entry offset to request"),
+        ] = None,
+        limit: Annotated[  # type: ignore
+            Optional[conint(strict=True, le=20, ge=1)],
+            Field(description="How many entries to return per page"),
+        ] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """List Agents  # noqa: E501
 
         Fetch agents details.  # noqa: E501
@@ -261,65 +295,64 @@ class AgentsApi:
 
         _params = locals()
 
-        _all_params = [
-            'page',
-            'limit'
-        ]
+        _all_params = ["page", "limit"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_agents" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
-        _collection_formats = {}
+        _collection_formats = {}  # type: ignore
 
         # process the path parameters
-        _path_params = {}
+        _path_params = {}  # type: ignore
 
         # process the query parameters
         _query_params = []
-        if _params.get('page') is not None:  # noqa: E501
-            _query_params.append(('page', _params['page']))
+        if _params.get("page") is not None:  # noqa: E501
+            _query_params.append(("page", _params["page"]))
 
-        if _params.get('limit') is not None:  # noqa: E501
-            _query_params.append(('limit', _params['limit']))
+        if _params.get("limit") is not None:  # noqa: E501
+            _query_params.append(("limit", _params["limit"]))
 
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
+        _form_params = []  # type: ignore
+        _files = {}  # type: ignore
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetAgents200Response",
+            "200": "GetAgents200Response",
         }
 
         return self.api_client.call_api(
-            '/agents', 'GET',
+            "/agents",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -328,12 +361,13 @@ class AgentsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
     def get_my_agent(self, **kwargs) -> GetMyAgent200Response:  # noqa: E501
@@ -357,11 +391,11 @@ class AgentsApi:
                  returns the request thread.
         :rtype: GetMyAgent200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_my_agent_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.get_my_agent_with_http_info(**kwargs)  # noqa: E501
+        return self.get_my_agent_with_http_info(**kwargs)  # type: ignore
 
     @validate_arguments
     def get_my_agent_with_http_info(self, **kwargs) -> ApiResponse:  # noqa: E501
@@ -401,57 +435,58 @@ class AgentsApi:
 
         _params = locals()
 
-        _all_params = [
-        ]
+        _all_params = []
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_my_agent" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
-        _collection_formats = {}
+        _collection_formats = {}  # type: ignore
 
         # process the path parameters
-        _path_params = {}
+        _path_params = {}  # type: ignore
 
         # process the query parameters
-        _query_params = []
+        _query_params = []  # type: ignore
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
+        _form_params = []  # type: ignore
+        _files = {}  # type: ignore
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetMyAgent200Response",
+            "200": "GetMyAgent200Response",
         }
 
         return self.api_client.call_api(
-            '/my/agent', 'GET',
+            "/my/agent",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -460,9 +495,10 @@ class AgentsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )

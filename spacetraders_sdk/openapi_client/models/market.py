@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -21,24 +21,41 @@ import json
 
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictStr, conlist
-from openapi_client.models.market_trade_good import MarketTradeGood
-from openapi_client.models.market_transaction import MarketTransaction
-from openapi_client.models.trade_good import TradeGood
+from .market_trade_good import MarketTradeGood
+from .market_transaction import MarketTransaction
+from .trade_good import TradeGood
+
 
 class Market(BaseModel):
     """
-      # noqa: E501
+    # noqa: E501
     """
-    symbol: StrictStr = Field(default=..., description="The symbol of the market. The symbol is the same as the waypoint where the market is located.")
+
+    symbol: StrictStr = Field(
+        default=...,
+        description="The symbol of the market. The symbol is the same as the waypoint where the market is located.",
+    )
     exports: conlist(TradeGood) = Field(default=..., description="The list of goods that are exported from this market.")
-    imports: conlist(TradeGood) = Field(default=..., description="The list of goods that are sought as imports in this market.")
-    exchange: conlist(TradeGood) = Field(default=..., description="The list of goods that are bought and sold between agents at this market.")
-    transactions: Optional[conlist(MarketTransaction)] = Field(default=None, description="The list of recent transactions at this market. Visible only when a ship is present at the market.")
-    trade_goods: Optional[conlist(MarketTradeGood)] = Field(default=None, alias="tradeGoods", description="The list of goods that are traded at this market. Visible only when a ship is present at the market.")
+    imports: conlist(TradeGood) = Field(
+        default=..., description="The list of goods that are sought as imports in this market."
+    )
+    exchange: conlist(TradeGood) = Field(
+        default=..., description="The list of goods that are bought and sold between agents at this market."
+    )
+    transactions: Optional[conlist(MarketTransaction)] = Field(
+        default=None,
+        description="The list of recent transactions at this market. Visible only when a ship is present at the market.",
+    )
+    trade_goods: Optional[conlist(MarketTradeGood)] = Field(
+        default=None,
+        alias="tradeGoods",
+        description="The list of goods that are traded at this market. Visible only when a ship is present at the market.",
+    )
     __properties = ["symbol", "exports", "imports", "exchange", "transactions", "tradeGoods"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -57,45 +74,42 @@ class Market(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in exports (list)
         _items = []
         if self.exports:
             for _item in self.exports:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['exports'] = _items
+            _dict["exports"] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in imports (list)
         _items = []
         if self.imports:
             for _item in self.imports:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['imports'] = _items
+            _dict["imports"] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in exchange (list)
         _items = []
         if self.exchange:
             for _item in self.exchange:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['exchange'] = _items
+            _dict["exchange"] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in transactions (list)
         _items = []
         if self.transactions:
             for _item in self.transactions:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['transactions'] = _items
+            _dict["transactions"] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in trade_goods (list)
         _items = []
         if self.trade_goods:
             for _item in self.trade_goods:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['tradeGoods'] = _items
+            _dict["tradeGoods"] = _items
         return _dict
 
     @classmethod
@@ -107,14 +121,28 @@ class Market(BaseModel):
         if not isinstance(obj, dict):
             return Market.parse_obj(obj)
 
-        _obj = Market.parse_obj({
-            "symbol": obj.get("symbol"),
-            "exports": [TradeGood.from_dict(_item) for _item in obj.get("exports")] if obj.get("exports") is not None else None,
-            "imports": [TradeGood.from_dict(_item) for _item in obj.get("imports")] if obj.get("imports") is not None else None,
-            "exchange": [TradeGood.from_dict(_item) for _item in obj.get("exchange")] if obj.get("exchange") is not None else None,
-            "transactions": [MarketTransaction.from_dict(_item) for _item in obj.get("transactions")] if obj.get("transactions") is not None else None,
-            "trade_goods": [MarketTradeGood.from_dict(_item) for _item in obj.get("tradeGoods")] if obj.get("tradeGoods") is not None else None
-        })
+        _obj = Market.parse_obj(
+            {
+                "symbol": obj.get("symbol"),
+                "exports": (
+                    [TradeGood.from_dict(_item) for _item in obj.get("exports")] if obj.get("exports") is not None else None
+                ),
+                "imports": (
+                    [TradeGood.from_dict(_item) for _item in obj.get("imports")] if obj.get("imports") is not None else None
+                ),
+                "exchange": (
+                    [TradeGood.from_dict(_item) for _item in obj.get("exchange")] if obj.get("exchange") is not None else None
+                ),
+                "transactions": (
+                    [MarketTransaction.from_dict(_item) for _item in obj.get("transactions")]
+                    if obj.get("transactions") is not None
+                    else None
+                ),
+                "trade_goods": (
+                    [MarketTradeGood.from_dict(_item) for _item in obj.get("tradeGoods")]
+                    if obj.get("tradeGoods") is not None
+                    else None
+                ),
+            }
+        )
         return _obj
-
-

@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -21,19 +21,26 @@ import json
 
 from typing import List
 from pydantic import BaseModel, Field, conint, conlist
-from openapi_client.models.ship_cargo_item import ShipCargoItem
+from .ship_cargo_item import ShipCargoItem
+
 
 class ShipCargo(BaseModel):
     """
     Ship cargo details.  # noqa: E501
     """
-    capacity: conint(strict=True, ge=0) = Field(default=..., description="The max number of items that can be stored in the cargo hold.")
-    units: conint(strict=True, ge=0) = Field(default=..., description="The number of items currently stored in the cargo hold.")
+
+    capacity: conint(strict=True, ge=0) = Field(
+        default=..., description="The max number of items that can be stored in the cargo hold."
+    )
+    units: conint(strict=True, ge=0) = Field(
+        default=..., description="The number of items currently stored in the cargo hold."
+    )
     inventory: conlist(ShipCargoItem) = Field(default=..., description="The items currently in the cargo hold.")
     __properties = ["capacity", "units", "inventory"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,17 +59,14 @@ class ShipCargo(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in inventory (list)
         _items = []
         if self.inventory:
             for _item in self.inventory:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['inventory'] = _items
+            _dict["inventory"] = _items
         return _dict
 
     @classmethod
@@ -74,11 +78,15 @@ class ShipCargo(BaseModel):
         if not isinstance(obj, dict):
             return ShipCargo.parse_obj(obj)
 
-        _obj = ShipCargo.parse_obj({
-            "capacity": obj.get("capacity"),
-            "units": obj.get("units"),
-            "inventory": [ShipCargoItem.from_dict(_item) for _item in obj.get("inventory")] if obj.get("inventory") is not None else None
-        })
+        _obj = ShipCargo.parse_obj(
+            {
+                "capacity": obj.get("capacity"),
+                "units": obj.get("units"),
+                "inventory": (
+                    [ShipCargoItem.from_dict(_item) for _item in obj.get("inventory")]
+                    if obj.get("inventory") is not None
+                    else None
+                ),
+            }
+        )
         return _obj
-
-

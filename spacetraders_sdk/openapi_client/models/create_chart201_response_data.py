@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -19,21 +19,23 @@ import re  # noqa: F401
 import json
 
 
-
 from pydantic import BaseModel, Field
-from openapi_client.models.chart import Chart
-from openapi_client.models.waypoint import Waypoint
+from .chart import Chart
+from .waypoint import Waypoint
+
 
 class CreateChart201ResponseData(BaseModel):
     """
     CreateChart201ResponseData
     """
+
     chart: Chart = Field(...)
     waypoint: Waypoint = Field(...)
     __properties = ["chart", "waypoint"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -52,16 +54,13 @@ class CreateChart201ResponseData(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of chart
         if self.chart:
-            _dict['chart'] = self.chart.to_dict()
+            _dict["chart"] = self.chart.to_dict()
         # override the default output from pydantic by calling `to_dict()` of waypoint
         if self.waypoint:
-            _dict['waypoint'] = self.waypoint.to_dict()
+            _dict["waypoint"] = self.waypoint.to_dict()
         return _dict
 
     @classmethod
@@ -73,10 +72,10 @@ class CreateChart201ResponseData(BaseModel):
         if not isinstance(obj, dict):
             return CreateChart201ResponseData.parse_obj(obj)
 
-        _obj = CreateChart201ResponseData.parse_obj({
-            "chart": Chart.from_dict(obj.get("chart")) if obj.get("chart") is not None else None,
-            "waypoint": Waypoint.from_dict(obj.get("waypoint")) if obj.get("waypoint") is not None else None
-        })
+        _obj = CreateChart201ResponseData.parse_obj(
+            {
+                "chart": Chart.from_dict(obj.get("chart")) if obj.get("chart") is not None else None,
+                "waypoint": Waypoint.from_dict(obj.get("waypoint")) if obj.get("waypoint") is not None else None,
+            }
+        )
         return _obj
-
-

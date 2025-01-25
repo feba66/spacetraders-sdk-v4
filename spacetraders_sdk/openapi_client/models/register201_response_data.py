@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -19,17 +19,18 @@ import re  # noqa: F401
 import json
 
 
-
 from pydantic import BaseModel, Field, StrictStr
-from openapi_client.models.agent import Agent
-from openapi_client.models.contract import Contract
-from openapi_client.models.faction import Faction
-from openapi_client.models.ship import Ship
+from .agent import Agent
+from .contract import Contract
+from .faction import Faction
+from .ship import Ship
+
 
 class Register201ResponseData(BaseModel):
     """
     Register201ResponseData
     """
+
     agent: Agent = Field(...)
     contract: Contract = Field(...)
     faction: Faction = Field(...)
@@ -39,6 +40,7 @@ class Register201ResponseData(BaseModel):
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -57,22 +59,19 @@ class Register201ResponseData(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of agent
         if self.agent:
-            _dict['agent'] = self.agent.to_dict()
+            _dict["agent"] = self.agent.to_dict()
         # override the default output from pydantic by calling `to_dict()` of contract
         if self.contract:
-            _dict['contract'] = self.contract.to_dict()
+            _dict["contract"] = self.contract.to_dict()
         # override the default output from pydantic by calling `to_dict()` of faction
         if self.faction:
-            _dict['faction'] = self.faction.to_dict()
+            _dict["faction"] = self.faction.to_dict()
         # override the default output from pydantic by calling `to_dict()` of ship
         if self.ship:
-            _dict['ship'] = self.ship.to_dict()
+            _dict["ship"] = self.ship.to_dict()
         return _dict
 
     @classmethod
@@ -84,13 +83,13 @@ class Register201ResponseData(BaseModel):
         if not isinstance(obj, dict):
             return Register201ResponseData.parse_obj(obj)
 
-        _obj = Register201ResponseData.parse_obj({
-            "agent": Agent.from_dict(obj.get("agent")) if obj.get("agent") is not None else None,
-            "contract": Contract.from_dict(obj.get("contract")) if obj.get("contract") is not None else None,
-            "faction": Faction.from_dict(obj.get("faction")) if obj.get("faction") is not None else None,
-            "ship": Ship.from_dict(obj.get("ship")) if obj.get("ship") is not None else None,
-            "token": obj.get("token")
-        })
+        _obj = Register201ResponseData.parse_obj(
+            {
+                "agent": Agent.from_dict(obj.get("agent")) if obj.get("agent") is not None else None,
+                "contract": Contract.from_dict(obj.get("contract")) if obj.get("contract") is not None else None,
+                "faction": Faction.from_dict(obj.get("faction")) if obj.get("faction") is not None else None,
+                "ship": Ship.from_dict(obj.get("ship")) if obj.get("ship") is not None else None,
+                "token": obj.get("token"),
+            }
+        )
         return _obj
-
-

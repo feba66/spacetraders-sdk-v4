@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -21,16 +21,18 @@ import re  # noqa: F401
 
 from typing import Any, List, Optional
 from pydantic import BaseModel, Field, StrictStr, ValidationError, conlist, validator
-from openapi_client.models.waypoint_trait_symbol import WaypointTraitSymbol
+from .waypoint_trait_symbol import WaypointTraitSymbol
 from typing import Union, Any, List, TYPE_CHECKING
 from pydantic import StrictStr, Field
 
 GETSYSTEMWAYPOINTSTRAITSPARAMETER_ONE_OF_SCHEMAS = ["List[WaypointTraitSymbol]", "WaypointTraitSymbol"]
 
+
 class GetSystemWaypointsTraitsParameter(BaseModel):
     """
     GetSystemWaypointsTraitsParameter
     """
+
     # data type: WaypointTraitSymbol
     oneof_schema_1_validator: Optional[WaypointTraitSymbol] = None
     # data type: List[WaypointTraitSymbol]
@@ -54,7 +56,7 @@ class GetSystemWaypointsTraitsParameter(BaseModel):
         else:
             super().__init__(**kwargs)
 
-    @validator('actual_instance')
+    @validator("actual_instance")
     def actual_instance_must_validate_oneof(cls, v):
         instance = GetSystemWaypointsTraitsParameter.construct()
         error_messages = []
@@ -72,10 +74,16 @@ class GetSystemWaypointsTraitsParameter(BaseModel):
             error_messages.append(str(e))
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in GetSystemWaypointsTraitsParameter with oneOf schemas: List[WaypointTraitSymbol], WaypointTraitSymbol. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "Multiple matches found when setting `actual_instance` in GetSystemWaypointsTraitsParameter with oneOf schemas: List[WaypointTraitSymbol], WaypointTraitSymbol. Details: "
+                + ", ".join(error_messages)
+            )
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in GetSystemWaypointsTraitsParameter with oneOf schemas: List[WaypointTraitSymbol], WaypointTraitSymbol. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "No match found when setting `actual_instance` in GetSystemWaypointsTraitsParameter with oneOf schemas: List[WaypointTraitSymbol], WaypointTraitSymbol. Details: "
+                + ", ".join(error_messages)
+            )
         else:
             return v
 
@@ -108,10 +116,16 @@ class GetSystemWaypointsTraitsParameter(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into GetSystemWaypointsTraitsParameter with oneOf schemas: List[WaypointTraitSymbol], WaypointTraitSymbol. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "Multiple matches found when deserializing the JSON string into GetSystemWaypointsTraitsParameter with oneOf schemas: List[WaypointTraitSymbol], WaypointTraitSymbol. Details: "
+                + ", ".join(error_messages)
+            )
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into GetSystemWaypointsTraitsParameter with oneOf schemas: List[WaypointTraitSymbol], WaypointTraitSymbol. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "No match found when deserializing the JSON string into GetSystemWaypointsTraitsParameter with oneOf schemas: List[WaypointTraitSymbol], WaypointTraitSymbol. Details: "
+                + ", ".join(error_messages)
+            )
         else:
             return instance
 
@@ -141,5 +155,3 @@ class GetSystemWaypointsTraitsParameter(BaseModel):
     def to_str(self) -> str:
         """Returns the string representation of the actual instance"""
         return pprint.pformat(self.dict())
-
-

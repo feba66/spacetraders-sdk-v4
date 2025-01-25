@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -21,23 +21,28 @@ import json
 
 from typing import List
 from pydantic import BaseModel, Field, StrictStr, conlist
-from openapi_client.models.cooldown import Cooldown
-from openapi_client.models.ship_cargo import ShipCargo
-from openapi_client.models.ship_crew import ShipCrew
-from openapi_client.models.ship_engine import ShipEngine
-from openapi_client.models.ship_frame import ShipFrame
-from openapi_client.models.ship_fuel import ShipFuel
-from openapi_client.models.ship_module import ShipModule
-from openapi_client.models.ship_mount import ShipMount
-from openapi_client.models.ship_nav import ShipNav
-from openapi_client.models.ship_reactor import ShipReactor
-from openapi_client.models.ship_registration import ShipRegistration
+from .cooldown import Cooldown
+from .ship_cargo import ShipCargo
+from .ship_crew import ShipCrew
+from .ship_engine import ShipEngine
+from .ship_frame import ShipFrame
+from .ship_fuel import ShipFuel
+from .ship_module import ShipModule
+from .ship_mount import ShipMount
+from .ship_nav import ShipNav
+from .ship_reactor import ShipReactor
+from .ship_registration import ShipRegistration
+
 
 class Ship(BaseModel):
     """
     Ship details.  # noqa: E501
     """
-    symbol: StrictStr = Field(default=..., description="The globally unique identifier of the ship in the following format: `[AGENT_SYMBOL]-[HEX_ID]`")
+
+    symbol: StrictStr = Field(
+        default=...,
+        description="The globally unique identifier of the ship in the following format: `[AGENT_SYMBOL]-[HEX_ID]`",
+    )
     registration: ShipRegistration = Field(...)
     nav: ShipNav = Field(...)
     crew: ShipCrew = Field(...)
@@ -49,10 +54,24 @@ class Ship(BaseModel):
     mounts: conlist(ShipMount) = Field(default=..., description="Mounts installed in this ship.")
     cargo: ShipCargo = Field(...)
     fuel: ShipFuel = Field(...)
-    __properties = ["symbol", "registration", "nav", "crew", "frame", "reactor", "engine", "cooldown", "modules", "mounts", "cargo", "fuel"]
+    __properties = [
+        "symbol",
+        "registration",
+        "nav",
+        "crew",
+        "frame",
+        "reactor",
+        "engine",
+        "cooldown",
+        "modules",
+        "mounts",
+        "cargo",
+        "fuel",
+    ]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -71,51 +90,48 @@ class Ship(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of registration
         if self.registration:
-            _dict['registration'] = self.registration.to_dict()
+            _dict["registration"] = self.registration.to_dict()
         # override the default output from pydantic by calling `to_dict()` of nav
         if self.nav:
-            _dict['nav'] = self.nav.to_dict()
+            _dict["nav"] = self.nav.to_dict()
         # override the default output from pydantic by calling `to_dict()` of crew
         if self.crew:
-            _dict['crew'] = self.crew.to_dict()
+            _dict["crew"] = self.crew.to_dict()
         # override the default output from pydantic by calling `to_dict()` of frame
         if self.frame:
-            _dict['frame'] = self.frame.to_dict()
+            _dict["frame"] = self.frame.to_dict()
         # override the default output from pydantic by calling `to_dict()` of reactor
         if self.reactor:
-            _dict['reactor'] = self.reactor.to_dict()
+            _dict["reactor"] = self.reactor.to_dict()
         # override the default output from pydantic by calling `to_dict()` of engine
         if self.engine:
-            _dict['engine'] = self.engine.to_dict()
+            _dict["engine"] = self.engine.to_dict()
         # override the default output from pydantic by calling `to_dict()` of cooldown
         if self.cooldown:
-            _dict['cooldown'] = self.cooldown.to_dict()
+            _dict["cooldown"] = self.cooldown.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in modules (list)
         _items = []
         if self.modules:
             for _item in self.modules:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['modules'] = _items
+            _dict["modules"] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in mounts (list)
         _items = []
         if self.mounts:
             for _item in self.mounts:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['mounts'] = _items
+            _dict["mounts"] = _items
         # override the default output from pydantic by calling `to_dict()` of cargo
         if self.cargo:
-            _dict['cargo'] = self.cargo.to_dict()
+            _dict["cargo"] = self.cargo.to_dict()
         # override the default output from pydantic by calling `to_dict()` of fuel
         if self.fuel:
-            _dict['fuel'] = self.fuel.to_dict()
+            _dict["fuel"] = self.fuel.to_dict()
         return _dict
 
     @classmethod
@@ -127,20 +143,26 @@ class Ship(BaseModel):
         if not isinstance(obj, dict):
             return Ship.parse_obj(obj)
 
-        _obj = Ship.parse_obj({
-            "symbol": obj.get("symbol"),
-            "registration": ShipRegistration.from_dict(obj.get("registration")) if obj.get("registration") is not None else None,
-            "nav": ShipNav.from_dict(obj.get("nav")) if obj.get("nav") is not None else None,
-            "crew": ShipCrew.from_dict(obj.get("crew")) if obj.get("crew") is not None else None,
-            "frame": ShipFrame.from_dict(obj.get("frame")) if obj.get("frame") is not None else None,
-            "reactor": ShipReactor.from_dict(obj.get("reactor")) if obj.get("reactor") is not None else None,
-            "engine": ShipEngine.from_dict(obj.get("engine")) if obj.get("engine") is not None else None,
-            "cooldown": Cooldown.from_dict(obj.get("cooldown")) if obj.get("cooldown") is not None else None,
-            "modules": [ShipModule.from_dict(_item) for _item in obj.get("modules")] if obj.get("modules") is not None else None,
-            "mounts": [ShipMount.from_dict(_item) for _item in obj.get("mounts")] if obj.get("mounts") is not None else None,
-            "cargo": ShipCargo.from_dict(obj.get("cargo")) if obj.get("cargo") is not None else None,
-            "fuel": ShipFuel.from_dict(obj.get("fuel")) if obj.get("fuel") is not None else None
-        })
+        _obj = Ship.parse_obj(
+            {
+                "symbol": obj.get("symbol"),
+                "registration": (
+                    ShipRegistration.from_dict(obj.get("registration")) if obj.get("registration") is not None else None
+                ),
+                "nav": ShipNav.from_dict(obj.get("nav")) if obj.get("nav") is not None else None,
+                "crew": ShipCrew.from_dict(obj.get("crew")) if obj.get("crew") is not None else None,
+                "frame": ShipFrame.from_dict(obj.get("frame")) if obj.get("frame") is not None else None,
+                "reactor": ShipReactor.from_dict(obj.get("reactor")) if obj.get("reactor") is not None else None,
+                "engine": ShipEngine.from_dict(obj.get("engine")) if obj.get("engine") is not None else None,
+                "cooldown": Cooldown.from_dict(obj.get("cooldown")) if obj.get("cooldown") is not None else None,
+                "modules": (
+                    [ShipModule.from_dict(_item) for _item in obj.get("modules")] if obj.get("modules") is not None else None
+                ),
+                "mounts": (
+                    [ShipMount.from_dict(_item) for _item in obj.get("mounts")] if obj.get("mounts") is not None else None
+                ),
+                "cargo": ShipCargo.from_dict(obj.get("cargo")) if obj.get("cargo") is not None else None,
+                "fuel": ShipFuel.from_dict(obj.get("fuel")) if obj.get("fuel") is not None else None,
+            }
+        )
         return _obj
-
-

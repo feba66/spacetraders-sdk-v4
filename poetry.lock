@@ -61,6 +61,18 @@ jupyter = ["ipython (>=7.8.0)", "tokenize-rt (>=3.2.0)"]
 uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
+name = "burstylimiter"
+version = "0.1.1"
+description = "A Bursty Ratelimiter for Python. It allows two Limiters with different rates to be combined. Started as a limiter for my SpaceTradersAPI client."
+optional = false
+python-versions = ">=3.10"
+groups = ["main"]
+files = [
+    {file = "burstylimiter-0.1.1-py3-none-any.whl", hash = "sha256:f4b000907075824c17879b484d190502d1e243450501cebec8c9b387567c78d3"},
+    {file = "burstylimiter-0.1.1.tar.gz", hash = "sha256:a4a6ecefcff75178466bde73e7fa0afd258f150f4f1bf9f08daeec98462667f6"},
+]
+
+[[package]]
 name = "cachetools"
 version = "5.5.1"
 description = "Extensible memoizing collections and decorators"
@@ -1146,4 +1158,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "093ef6e829963032c30d6139e11d7473a90a8807de253cc696c25b037a1c24c0"
+content-hash = "a48e3b3d22f8034d8f6f4416682c80099e74da45cc4396d7cf3f774037b96d6e"

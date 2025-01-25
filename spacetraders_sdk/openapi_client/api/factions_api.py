@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -24,14 +24,18 @@ from pydantic import Field, StrictStr, conint
 
 from typing import Optional
 
-from openapi_client.models.get_faction200_response import GetFaction200Response
-from openapi_client.models.get_factions200_response import GetFactions200Response
+from spacetraders_sdk.openapi_client.models.get_faction200_response import (
+    GetFaction200Response,
+)
+from spacetraders_sdk.openapi_client.models.get_factions200_response import (
+    GetFactions200Response,
+)
 
-from openapi_client.api_client import ApiClient
-from openapi_client.api_response import ApiResponse
-from openapi_client.exceptions import (  # noqa: F401
+from spacetraders_sdk.openapi_client.api_client import ApiClient
+from spacetraders_sdk.openapi_client.api_response import ApiResponse
+from spacetraders_sdk.openapi_client.exceptions import (  # noqa: F401
     ApiTypeError,
-    ApiValueError
+    ApiValueError,
 )
 
 
@@ -48,7 +52,13 @@ class FactionsApi:
         self.api_client = api_client
 
     @validate_arguments
-    def get_faction(self, faction_symbol : Annotated[StrictStr, Field(..., description="The faction symbol")], **kwargs) -> GetFaction200Response:  # noqa: E501
+    def get_faction(
+        self,
+        faction_symbol: Annotated[
+            StrictStr, Field(..., description="The faction symbol")
+        ],
+        **kwargs,
+    ) -> GetFaction200Response:  # noqa: E501
         """Get Faction  # noqa: E501
 
         View the details of a faction.  # noqa: E501
@@ -71,14 +81,20 @@ class FactionsApi:
                  returns the request thread.
         :rtype: GetFaction200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_faction_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.get_faction_with_http_info(faction_symbol, **kwargs)  # noqa: E501
+        return self.get_faction_with_http_info(faction_symbol, **kwargs)  # type: ignore
 
     @validate_arguments
-    def get_faction_with_http_info(self, faction_symbol : Annotated[StrictStr, Field(..., description="The faction symbol")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_faction_with_http_info(
+        self,
+        faction_symbol: Annotated[
+            StrictStr, Field(..., description="The faction symbol")
+        ],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get Faction  # noqa: E501
 
         View the details of a faction.  # noqa: E501
@@ -117,61 +133,60 @@ class FactionsApi:
 
         _params = locals()
 
-        _all_params = [
-            'faction_symbol'
-        ]
+        _all_params = ["faction_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_faction" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
-        _collection_formats = {}
+        _collection_formats = {}  # type: ignore
 
         # process the path parameters
         _path_params = {}
-        if _params['faction_symbol'] is not None:
-            _path_params['factionSymbol'] = _params['faction_symbol']
-
+        if _params["faction_symbol"] is not None:
+            _path_params["factionSymbol"] = _params["faction_symbol"]
 
         # process the query parameters
-        _query_params = []
+        _query_params = []  # type: ignore
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
+        _form_params = []  # type: ignore
+        _files = {}  # type: ignore
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetFaction200Response",
+            "200": "GetFaction200Response",
         }
 
         return self.api_client.call_api(
-            '/factions/{factionSymbol}', 'GET',
+            "/factions/{factionSymbol}",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -180,15 +195,27 @@ class FactionsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_factions(self, page : Annotated[Optional[conint(strict=True, ge=1)], Field(description="What entry offset to request")] = None, limit : Annotated[Optional[conint(strict=True, le=20, ge=1)], Field(description="How many entries to return per page")] = None, **kwargs) -> GetFactions200Response:  # noqa: E501
+    def get_factions(
+        self,
+        page: Annotated[  # type: ignore
+            Optional[conint(strict=True, ge=1)],
+            Field(description="What entry offset to request"),
+        ] = None,
+        limit: Annotated[  # type: ignore
+            Optional[conint(strict=True, le=20, ge=1)],
+            Field(description="How many entries to return per page"),
+        ] = None,
+        **kwargs,
+    ) -> GetFactions200Response:  # noqa: E501
         """List Factions  # noqa: E501
 
         Return a paginated list of all the factions in the game.  # noqa: E501
@@ -213,14 +240,25 @@ class FactionsApi:
                  returns the request thread.
         :rtype: GetFactions200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_factions_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.get_factions_with_http_info(page, limit, **kwargs)  # noqa: E501
+        return self.get_factions_with_http_info(page, limit, **kwargs)  # type: ignore
 
     @validate_arguments
-    def get_factions_with_http_info(self, page : Annotated[Optional[conint(strict=True, ge=1)], Field(description="What entry offset to request")] = None, limit : Annotated[Optional[conint(strict=True, le=20, ge=1)], Field(description="How many entries to return per page")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_factions_with_http_info(
+        self,
+        page: Annotated[  # type: ignore
+            Optional[conint(strict=True, ge=1)],
+            Field(description="What entry offset to request"),
+        ] = None,
+        limit: Annotated[  # type: ignore
+            Optional[conint(strict=True, le=20, ge=1)],
+            Field(description="How many entries to return per page"),
+        ] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """List Factions  # noqa: E501
 
         Return a paginated list of all the factions in the game.  # noqa: E501
@@ -261,65 +299,64 @@ class FactionsApi:
 
         _params = locals()
 
-        _all_params = [
-            'page',
-            'limit'
-        ]
+        _all_params = ["page", "limit"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_factions" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
-        _collection_formats = {}
+        _collection_formats = {}  # type: ignore
 
         # process the path parameters
-        _path_params = {}
+        _path_params = {}  # type: ignore
 
         # process the query parameters
         _query_params = []
-        if _params.get('page') is not None:  # noqa: E501
-            _query_params.append(('page', _params['page']))
+        if _params.get("page") is not None:  # noqa: E501
+            _query_params.append(("page", _params["page"]))
 
-        if _params.get('limit') is not None:  # noqa: E501
-            _query_params.append(('limit', _params['limit']))
+        if _params.get("limit") is not None:  # noqa: E501
+            _query_params.append(("limit", _params["limit"]))
 
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
+        _form_params = []  # type: ignore
+        _files = {}  # type: ignore
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetFactions200Response",
+            "200": "GetFactions200Response",
         }
 
         return self.api_client.call_api(
-            '/factions', 'GET',
+            "/factions",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -328,9 +365,10 @@ class FactionsApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )

@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -21,32 +21,43 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, conint, validator
-from openapi_client.models.activity_level import ActivityLevel
-from openapi_client.models.supply_level import SupplyLevel
-from openapi_client.models.trade_symbol import TradeSymbol
+from .activity_level import ActivityLevel
+from .supply_level import SupplyLevel
+from .trade_symbol import TradeSymbol
+
 
 class MarketTradeGood(BaseModel):
     """
     MarketTradeGood
     """
+
     symbol: TradeSymbol = Field(...)
     type: StrictStr = Field(default=..., description="The type of trade good (export, import, or exchange).")
-    trade_volume: conint(strict=True, ge=1) = Field(default=..., alias="tradeVolume", description="This is the maximum number of units that can be purchased or sold at this market in a single trade for this good. Trade volume also gives an indication of price volatility. A market with a low trade volume will have large price swings, while high trade volume will be more resilient to price changes.")
+    trade_volume: conint(strict=True, ge=1) = Field(
+        default=...,
+        alias="tradeVolume",
+        description="This is the maximum number of units that can be purchased or sold at this market in a single trade for this good. Trade volume also gives an indication of price volatility. A market with a low trade volume will have large price swings, while high trade volume will be more resilient to price changes.",
+    )
     supply: SupplyLevel = Field(...)
     activity: Optional[ActivityLevel] = None
-    purchase_price: conint(strict=True, ge=0) = Field(default=..., alias="purchasePrice", description="The price at which this good can be purchased from the market.")
-    sell_price: conint(strict=True, ge=0) = Field(default=..., alias="sellPrice", description="The price at which this good can be sold to the market.")
+    purchase_price: conint(strict=True, ge=0) = Field(
+        default=..., alias="purchasePrice", description="The price at which this good can be purchased from the market."
+    )
+    sell_price: conint(strict=True, ge=0) = Field(
+        default=..., alias="sellPrice", description="The price at which this good can be sold to the market."
+    )
     __properties = ["symbol", "type", "tradeVolume", "supply", "activity", "purchasePrice", "sellPrice"]
 
-    @validator('type')
+    @validator("type")
     def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('EXPORT', 'IMPORT', 'EXCHANGE'):
+        if value not in ("EXPORT", "IMPORT", "EXCHANGE"):
             raise ValueError("must be one of enum values ('EXPORT', 'IMPORT', 'EXCHANGE')")
         return value
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -65,10 +76,7 @@ class MarketTradeGood(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -80,15 +88,15 @@ class MarketTradeGood(BaseModel):
         if not isinstance(obj, dict):
             return MarketTradeGood.parse_obj(obj)
 
-        _obj = MarketTradeGood.parse_obj({
-            "symbol": obj.get("symbol"),
-            "type": obj.get("type"),
-            "trade_volume": obj.get("tradeVolume"),
-            "supply": obj.get("supply"),
-            "activity": obj.get("activity"),
-            "purchase_price": obj.get("purchasePrice"),
-            "sell_price": obj.get("sellPrice")
-        })
+        _obj = MarketTradeGood.parse_obj(
+            {
+                "symbol": obj.get("symbol"),
+                "type": obj.get("type"),
+                "trade_volume": obj.get("tradeVolume"),
+                "supply": obj.get("supply"),
+                "activity": obj.get("activity"),
+                "purchase_price": obj.get("purchasePrice"),
+                "sell_price": obj.get("sellPrice"),
+            }
+        )
         return _obj
-
-

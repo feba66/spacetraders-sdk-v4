@@ -6,6 +6,7 @@ db_pw.txt
 
 .venv
 .mypy_cache
+.pytest_cache
 __pycache__
 
 redis

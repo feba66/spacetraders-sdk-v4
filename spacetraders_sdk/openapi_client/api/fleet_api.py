@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -24,58 +24,137 @@ from pydantic import Field, StrictStr, conint
 
 from typing import Optional
 
-from openapi_client.models.create_chart201_response import CreateChart201Response
-from openapi_client.models.create_ship_ship_scan201_response import CreateShipShipScan201Response
-from openapi_client.models.create_ship_system_scan201_response import CreateShipSystemScan201Response
-from openapi_client.models.create_ship_waypoint_scan201_response import CreateShipWaypointScan201Response
-from openapi_client.models.create_survey201_response import CreateSurvey201Response
-from openapi_client.models.dock_ship200_response import DockShip200Response
-from openapi_client.models.extract_resources201_response import ExtractResources201Response
-from openapi_client.models.extract_resources_request import ExtractResourcesRequest
-from openapi_client.models.get_mounts200_response import GetMounts200Response
-from openapi_client.models.get_my_ship200_response import GetMyShip200Response
-from openapi_client.models.get_my_ship_cargo200_response import GetMyShipCargo200Response
-from openapi_client.models.get_my_ships200_response import GetMyShips200Response
-from openapi_client.models.get_repair_ship200_response import GetRepairShip200Response
-from openapi_client.models.get_scrap_ship200_response import GetScrapShip200Response
-from openapi_client.models.get_ship_cooldown200_response import GetShipCooldown200Response
-from openapi_client.models.get_ship_nav200_response import GetShipNav200Response
-from openapi_client.models.install_mount201_response import InstallMount201Response
-from openapi_client.models.install_mount_request import InstallMountRequest
-from openapi_client.models.jettison200_response import Jettison200Response
-from openapi_client.models.jettison_request import JettisonRequest
-from openapi_client.models.jump_ship200_response import JumpShip200Response
-from openapi_client.models.jump_ship_request import JumpShipRequest
-from openapi_client.models.navigate_ship200_response import NavigateShip200Response
-from openapi_client.models.navigate_ship_request import NavigateShipRequest
-from openapi_client.models.negotiate_contract200_response import NegotiateContract200Response
-from openapi_client.models.orbit_ship200_response import OrbitShip200Response
-from openapi_client.models.patch_ship_nav_request import PatchShipNavRequest
-from openapi_client.models.purchase_cargo201_response import PurchaseCargo201Response
-from openapi_client.models.purchase_cargo_request import PurchaseCargoRequest
-from openapi_client.models.purchase_ship201_response import PurchaseShip201Response
-from openapi_client.models.purchase_ship_request import PurchaseShipRequest
-from openapi_client.models.refuel_ship200_response import RefuelShip200Response
-from openapi_client.models.refuel_ship_request import RefuelShipRequest
-from openapi_client.models.remove_mount201_response import RemoveMount201Response
-from openapi_client.models.remove_mount_request import RemoveMountRequest
-from openapi_client.models.repair_ship200_response import RepairShip200Response
-from openapi_client.models.scrap_ship200_response import ScrapShip200Response
-from openapi_client.models.sell_cargo201_response import SellCargo201Response
-from openapi_client.models.sell_cargo_request import SellCargoRequest
-from openapi_client.models.ship_refine201_response import ShipRefine201Response
-from openapi_client.models.ship_refine_request import ShipRefineRequest
-from openapi_client.models.siphon_resources201_response import SiphonResources201Response
-from openapi_client.models.survey import Survey
-from openapi_client.models.transfer_cargo200_response import TransferCargo200Response
-from openapi_client.models.transfer_cargo_request import TransferCargoRequest
-from openapi_client.models.warp_ship200_response import WarpShip200Response
-
-from openapi_client.api_client import ApiClient
-from openapi_client.api_response import ApiResponse
-from openapi_client.exceptions import (  # noqa: F401
+from spacetraders_sdk.openapi_client.models.create_chart201_response import (
+    CreateChart201Response,
+)
+from spacetraders_sdk.openapi_client.models.create_ship_ship_scan201_response import (
+    CreateShipShipScan201Response,
+)
+from spacetraders_sdk.openapi_client.models.create_ship_system_scan201_response import (
+    CreateShipSystemScan201Response,
+)
+from spacetraders_sdk.openapi_client.models.create_ship_waypoint_scan201_response import (
+    CreateShipWaypointScan201Response,
+)
+from spacetraders_sdk.openapi_client.models.create_survey201_response import (
+    CreateSurvey201Response,
+)
+from spacetraders_sdk.openapi_client.models.dock_ship200_response import (
+    DockShip200Response,
+)
+from spacetraders_sdk.openapi_client.models.extract_resources201_response import (
+    ExtractResources201Response,
+)
+from spacetraders_sdk.openapi_client.models.extract_resources_request import (
+    ExtractResourcesRequest,
+)
+from spacetraders_sdk.openapi_client.models.get_mounts200_response import (
+    GetMounts200Response,
+)
+from spacetraders_sdk.openapi_client.models.get_my_ship200_response import (
+    GetMyShip200Response,
+)
+from spacetraders_sdk.openapi_client.models.get_my_ship_cargo200_response import (
+    GetMyShipCargo200Response,
+)
+from spacetraders_sdk.openapi_client.models.get_my_ships200_response import (
+    GetMyShips200Response,
+)
+from spacetraders_sdk.openapi_client.models.get_repair_ship200_response import (
+    GetRepairShip200Response,
+)
+from spacetraders_sdk.openapi_client.models.get_scrap_ship200_response import (
+    GetScrapShip200Response,
+)
+from spacetraders_sdk.openapi_client.models.get_ship_cooldown200_response import (
+    GetShipCooldown200Response,
+)
+from spacetraders_sdk.openapi_client.models.get_ship_nav200_response import (
+    GetShipNav200Response,
+)
+from spacetraders_sdk.openapi_client.models.install_mount201_response import (
+    InstallMount201Response,
+)
+from spacetraders_sdk.openapi_client.models.install_mount_request import (
+    InstallMountRequest,
+)
+from spacetraders_sdk.openapi_client.models.jettison200_response import (
+    Jettison200Response,
+)
+from spacetraders_sdk.openapi_client.models.jettison_request import JettisonRequest
+from spacetraders_sdk.openapi_client.models.jump_ship200_response import (
+    JumpShip200Response,
+)
+from spacetraders_sdk.openapi_client.models.jump_ship_request import JumpShipRequest
+from spacetraders_sdk.openapi_client.models.navigate_ship200_response import (
+    NavigateShip200Response,
+)
+from spacetraders_sdk.openapi_client.models.navigate_ship_request import (
+    NavigateShipRequest,
+)
+from spacetraders_sdk.openapi_client.models.negotiate_contract200_response import (
+    NegotiateContract200Response,
+)
+from spacetraders_sdk.openapi_client.models.orbit_ship200_response import (
+    OrbitShip200Response,
+)
+from spacetraders_sdk.openapi_client.models.patch_ship_nav_request import (
+    PatchShipNavRequest,
+)
+from spacetraders_sdk.openapi_client.models.purchase_cargo201_response import (
+    PurchaseCargo201Response,
+)
+from spacetraders_sdk.openapi_client.models.purchase_cargo_request import (
+    PurchaseCargoRequest,
+)
+from spacetraders_sdk.openapi_client.models.purchase_ship201_response import (
+    PurchaseShip201Response,
+)
+from spacetraders_sdk.openapi_client.models.purchase_ship_request import (
+    PurchaseShipRequest,
+)
+from spacetraders_sdk.openapi_client.models.refuel_ship200_response import (
+    RefuelShip200Response,
+)
+from spacetraders_sdk.openapi_client.models.refuel_ship_request import RefuelShipRequest
+from spacetraders_sdk.openapi_client.models.remove_mount201_response import (
+    RemoveMount201Response,
+)
+from spacetraders_sdk.openapi_client.models.remove_mount_request import (
+    RemoveMountRequest,
+)
+from spacetraders_sdk.openapi_client.models.repair_ship200_response import (
+    RepairShip200Response,
+)
+from spacetraders_sdk.openapi_client.models.scrap_ship200_response import (
+    ScrapShip200Response,
+)
+from spacetraders_sdk.openapi_client.models.sell_cargo201_response import (
+    SellCargo201Response,
+)
+from spacetraders_sdk.openapi_client.models.sell_cargo_request import SellCargoRequest
+from spacetraders_sdk.openapi_client.models.ship_refine201_response import (
+    ShipRefine201Response,
+)
+from spacetraders_sdk.openapi_client.models.ship_refine_request import ShipRefineRequest
+from spacetraders_sdk.openapi_client.models.siphon_resources201_response import (
+    SiphonResources201Response,
+)
+from spacetraders_sdk.openapi_client.models.survey import Survey
+from spacetraders_sdk.openapi_client.models.transfer_cargo200_response import (
+    TransferCargo200Response,
+)
+from spacetraders_sdk.openapi_client.models.transfer_cargo_request import (
+    TransferCargoRequest,
+)
+from spacetraders_sdk.openapi_client.models.warp_ship200_response import (
+    WarpShip200Response,
+)
+from spacetraders_sdk.openapi_client.api_client import ApiClient
+from spacetraders_sdk.openapi_client.api_response import ApiResponse
+from spacetraders_sdk.openapi_client.exceptions import (  # noqa: F401
     ApiTypeError,
-    ApiValueError
+    ApiValueError,
 )
 
 
@@ -92,7 +171,13 @@ class FleetApi:
         self.api_client = api_client
 
     @validate_arguments
-    def create_chart(self, ship_symbol : Annotated[StrictStr, Field(..., description="The symbol of the ship.")], **kwargs) -> CreateChart201Response:  # noqa: E501
+    def create_chart(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The symbol of the ship.")
+        ],
+        **kwargs,
+    ) -> CreateChart201Response:  # noqa: E501
         """Create Chart  # noqa: E501
 
         Command a ship to chart the waypoint at its current location.  Most waypoints in the universe are uncharted by default. These waypoints have their traits hidden until they have been charted by a ship.  Charting a waypoint will record your agent as the one who created the chart, and all other agents would also be able to see the waypoint's traits.  # noqa: E501
@@ -115,14 +200,20 @@ class FleetApi:
                  returns the request thread.
         :rtype: CreateChart201Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the create_chart_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.create_chart_with_http_info(ship_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def create_chart_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The symbol of the ship.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def create_chart_with_http_info(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The symbol of the ship.")
+        ],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Create Chart  # noqa: E501
 
         Command a ship to chart the waypoint at its current location.  Most waypoints in the universe are uncharted by default. These waypoints have their traits hidden until they have been charted by a ship.  Charting a waypoint will record your agent as the one who created the chart, and all other agents would also be able to see the waypoint's traits.  # noqa: E501
@@ -161,61 +252,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_chart" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '201': "CreateChart201Response",
+            "201": "CreateChart201Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/chart', 'POST',
+            "/my/ships/{shipSymbol}/chart",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -224,15 +314,20 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def create_ship_ship_scan(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> CreateShipShipScan201Response:  # noqa: E501
+    def create_ship_ship_scan(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> CreateShipShipScan201Response:  # noqa: E501
         """Scan Ships  # noqa: E501
 
         Scan for nearby ships, retrieving information for all ships in range.  Requires a ship to have the `Sensor Array` mount installed to use.  The ship will enter a cooldown after using this function, during which it cannot execute certain actions.  # noqa: E501
@@ -255,14 +350,20 @@ class FleetApi:
                  returns the request thread.
         :rtype: CreateShipShipScan201Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the create_ship_ship_scan_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.create_ship_ship_scan_with_http_info(ship_symbol, **kwargs)  # noqa: E501
+        return self.create_ship_ship_scan_with_http_info(
+            ship_symbol, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def create_ship_ship_scan_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def create_ship_ship_scan_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Scan Ships  # noqa: E501
 
         Scan for nearby ships, retrieving information for all ships in range.  Requires a ship to have the `Sensor Array` mount installed to use.  The ship will enter a cooldown after using this function, during which it cannot execute certain actions.  # noqa: E501
@@ -301,61 +402,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_ship_ship_scan" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '201': "CreateShipShipScan201Response",
+            "201": "CreateShipShipScan201Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/scan/ships', 'POST',
+            "/my/ships/{shipSymbol}/scan/ships",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -364,15 +464,20 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def create_ship_system_scan(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> CreateShipSystemScan201Response:  # noqa: E501
+    def create_ship_system_scan(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> CreateShipSystemScan201Response:  # noqa: E501
         """Scan Systems  # noqa: E501
 
         Scan for nearby systems, retrieving information on the systems' distance from the ship and their waypoints. Requires a ship to have the `Sensor Array` mount installed to use.  The ship will enter a cooldown after using this function, during which it cannot execute certain actions.  # noqa: E501
@@ -395,14 +500,20 @@ class FleetApi:
                  returns the request thread.
         :rtype: CreateShipSystemScan201Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the create_ship_system_scan_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.create_ship_system_scan_with_http_info(ship_symbol, **kwargs)  # noqa: E501
+        return self.create_ship_system_scan_with_http_info(
+            ship_symbol, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def create_ship_system_scan_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def create_ship_system_scan_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Scan Systems  # noqa: E501
 
         Scan for nearby systems, retrieving information on the systems' distance from the ship and their waypoints. Requires a ship to have the `Sensor Array` mount installed to use.  The ship will enter a cooldown after using this function, during which it cannot execute certain actions.  # noqa: E501
@@ -441,61 +552,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_ship_system_scan" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '201': "CreateShipSystemScan201Response",
+            "201": "CreateShipSystemScan201Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/scan/systems', 'POST',
+            "/my/ships/{shipSymbol}/scan/systems",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -504,15 +614,20 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def create_ship_waypoint_scan(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> CreateShipWaypointScan201Response:  # noqa: E501
+    def create_ship_waypoint_scan(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> CreateShipWaypointScan201Response:  # noqa: E501
         """Scan Waypoints  # noqa: E501
 
         Scan for nearby waypoints, retrieving detailed information on each waypoint in range. Scanning uncharted waypoints will allow you to ignore their uncharted state and will list the waypoints' traits.  Requires a ship to have the `Sensor Array` mount installed to use.  The ship will enter a cooldown after using this function, during which it cannot execute certain actions.  # noqa: E501
@@ -535,14 +650,20 @@ class FleetApi:
                  returns the request thread.
         :rtype: CreateShipWaypointScan201Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the create_ship_waypoint_scan_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.create_ship_waypoint_scan_with_http_info(ship_symbol, **kwargs)  # noqa: E501
+        return self.create_ship_waypoint_scan_with_http_info(
+            ship_symbol, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def create_ship_waypoint_scan_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def create_ship_waypoint_scan_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Scan Waypoints  # noqa: E501
 
         Scan for nearby waypoints, retrieving detailed information on each waypoint in range. Scanning uncharted waypoints will allow you to ignore their uncharted state and will list the waypoints' traits.  Requires a ship to have the `Sensor Array` mount installed to use.  The ship will enter a cooldown after using this function, during which it cannot execute certain actions.  # noqa: E501
@@ -581,61 +702,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_ship_waypoint_scan" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '201': "CreateShipWaypointScan201Response",
+            "201": "CreateShipWaypointScan201Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/scan/waypoints', 'POST',
+            "/my/ships/{shipSymbol}/scan/waypoints",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -644,15 +764,22 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def create_survey(self, ship_symbol : Annotated[StrictStr, Field(..., description="The symbol of the ship.")], **kwargs) -> CreateSurvey201Response:  # noqa: E501
+    def create_survey(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The symbol of the ship.")
+        ],
+        **kwargs,
+    ) -> CreateSurvey201Response:  # noqa: E501
         """Create Survey  # noqa: E501
 
         Create surveys on a waypoint that can be extracted such as asteroid fields. A survey focuses on specific types of deposits from the extracted location. When ships extract using this survey, they are guaranteed to procure a high amount of one of the goods in the survey.  In order to use a survey, send the entire survey details in the body of the extract request.  Each survey may have multiple deposits, and if a symbol shows up more than once, that indicates a higher chance of extracting that resource.  Your ship will enter a cooldown after surveying in which it is unable to perform certain actions. Surveys will eventually expire after a period of time or will be exhausted after being extracted several times based on the survey's size. Multiple ships can use the same survey for extraction.  A ship must have the `Surveyor` mount installed in order to use this function.  # noqa: E501
@@ -675,14 +802,20 @@ class FleetApi:
                  returns the request thread.
         :rtype: CreateSurvey201Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the create_survey_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.create_survey_with_http_info(ship_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def create_survey_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The symbol of the ship.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def create_survey_with_http_info(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The symbol of the ship.")
+        ],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Create Survey  # noqa: E501
 
         Create surveys on a waypoint that can be extracted such as asteroid fields. A survey focuses on specific types of deposits from the extracted location. When ships extract using this survey, they are guaranteed to procure a high amount of one of the goods in the survey.  In order to use a survey, send the entire survey details in the body of the extract request.  Each survey may have multiple deposits, and if a symbol shows up more than once, that indicates a higher chance of extracting that resource.  Your ship will enter a cooldown after surveying in which it is unable to perform certain actions. Surveys will eventually expire after a period of time or will be exhausted after being extracted several times based on the survey's size. Multiple ships can use the same survey for extraction.  A ship must have the `Surveyor` mount installed in order to use this function.  # noqa: E501
@@ -721,61 +854,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_survey" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '201': "CreateSurvey201Response",
+            "201": "CreateSurvey201Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/survey', 'POST',
+            "/my/ships/{shipSymbol}/survey",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -784,15 +916,22 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def dock_ship(self, ship_symbol : Annotated[StrictStr, Field(..., description="The symbol of the ship.")], **kwargs) -> DockShip200Response:  # noqa: E501
+    def dock_ship(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The symbol of the ship.")
+        ],
+        **kwargs,
+    ) -> DockShip200Response:  # noqa: E501
         """Dock Ship  # noqa: E501
 
         Attempt to dock your ship at its current location. Docking will only succeed if your ship is capable of docking at the time of the request.  Docked ships can access elements in their current location, such as the market or a shipyard, but cannot do actions that require the ship to be above surface such as navigating or extracting.  The endpoint is idempotent - successive calls will succeed even if the ship is already docked.  # noqa: E501
@@ -815,14 +954,20 @@ class FleetApi:
                  returns the request thread.
         :rtype: DockShip200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the dock_ship_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.dock_ship_with_http_info(ship_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def dock_ship_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The symbol of the ship.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def dock_ship_with_http_info(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The symbol of the ship.")
+        ],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Dock Ship  # noqa: E501
 
         Attempt to dock your ship at its current location. Docking will only succeed if your ship is capable of docking at the time of the request.  Docked ships can access elements in their current location, such as the market or a shipyard, but cannot do actions that require the ship to be above surface such as navigating or extracting.  The endpoint is idempotent - successive calls will succeed even if the ship is already docked.  # noqa: E501
@@ -861,61 +1006,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method dock_ship" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "DockShip200Response",
+            "200": "DockShip200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/dock', 'POST',
+            "/my/ships/{shipSymbol}/dock",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -924,15 +1068,21 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def extract_resources(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], extract_resources_request : Optional[ExtractResourcesRequest] = None, **kwargs) -> ExtractResources201Response:  # noqa: E501
+    def extract_resources(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        extract_resources_request: Optional[ExtractResourcesRequest] = None,
+        **kwargs,
+    ) -> ExtractResources201Response:  # noqa: E501
         """Extract Resources  # noqa: E501
 
         Extract resources from a waypoint that can be extracted, such as asteroid fields, into your ship. Send an optional survey as the payload to target specific yields.  The ship must be in orbit to be able to extract and must have mining equipments installed that can extract goods, such as the `Gas Siphon` mount for gas-based goods or `Mining Laser` mount for ore-based goods.  The survey property is now deprecated. See the `extract/survey` endpoint for more details.  # noqa: E501
@@ -957,14 +1107,21 @@ class FleetApi:
                  returns the request thread.
         :rtype: ExtractResources201Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the extract_resources_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.extract_resources_with_http_info(ship_symbol, extract_resources_request, **kwargs)  # noqa: E501
+        return self.extract_resources_with_http_info(
+            ship_symbol, extract_resources_request, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def extract_resources_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], extract_resources_request : Optional[ExtractResourcesRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def extract_resources_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        extract_resources_request: Optional[ExtractResourcesRequest] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Extract Resources  # noqa: E501
 
         Extract resources from a waypoint that can be extracted, such as asteroid fields, into your ship. Send an optional survey as the payload to target specific yields.  The ship must be in orbit to be able to extract and must have mining equipments installed that can extract goods, such as the `Gas Siphon` mount for gas-based goods or `Mining Laser` mount for ore-based goods.  The survey property is now deprecated. See the `extract/survey` endpoint for more details.  # noqa: E501
@@ -1005,72 +1162,71 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol',
-            'extract_resources_request'
-        ]
+        _all_params = ["ship_symbol", "extract_resources_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method extract_resources" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['extract_resources_request'] is not None:
-            _body_params = _params['extract_resources_request']
+        if _params["extract_resources_request"] is not None:
+            _body_params = _params["extract_resources_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '201': "ExtractResources201Response",
+            "201": "ExtractResources201Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/extract', 'POST',
+            "/my/ships/{shipSymbol}/extract",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -1079,15 +1235,21 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def extract_resources_with_survey(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], survey : Optional[Survey] = None, **kwargs) -> ExtractResources201Response:  # noqa: E501
+    def extract_resources_with_survey(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        survey: Optional[Survey] = None,
+        **kwargs,
+    ) -> ExtractResources201Response:  # noqa: E501
         """Extract Resources with Survey  # noqa: E501
 
         Use a survey when extracting resources from a waypoint. This endpoint requires a survey as the payload, which allows your ship to extract specific yields.  Send the full survey object as the payload which will be validated according to the signature. If the signature is invalid, or any properties of the survey are changed, the request will fail.  # noqa: E501
@@ -1112,14 +1274,21 @@ class FleetApi:
                  returns the request thread.
         :rtype: ExtractResources201Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the extract_resources_with_survey_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.extract_resources_with_survey_with_http_info(ship_symbol, survey, **kwargs)  # noqa: E501
+        return self.extract_resources_with_survey_with_http_info(
+            ship_symbol, survey, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def extract_resources_with_survey_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], survey : Optional[Survey] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def extract_resources_with_survey_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        survey: Optional[Survey] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Extract Resources with Survey  # noqa: E501
 
         Use a survey when extracting resources from a waypoint. This endpoint requires a survey as the payload, which allows your ship to extract specific yields.  Send the full survey object as the payload which will be validated according to the signature. If the signature is invalid, or any properties of the survey are changed, the request will fail.  # noqa: E501
@@ -1160,72 +1329,71 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol',
-            'survey'
-        ]
+        _all_params = ["ship_symbol", "survey"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method extract_resources_with_survey" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['survey'] is not None:
-            _body_params = _params['survey']
+        if _params["survey"] is not None:
+            _body_params = _params["survey"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '201': "ExtractResources201Response",
+            "201": "ExtractResources201Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/extract/survey', 'POST',
+            "/my/ships/{shipSymbol}/extract/survey",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -1234,15 +1402,20 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_mounts(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship's symbol.")], **kwargs) -> GetMounts200Response:  # noqa: E501
+    def get_mounts(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship's symbol.")],
+        **kwargs,
+    ) -> GetMounts200Response:  # noqa: E501
         """Get Mounts  # noqa: E501
 
         Get the mounts installed on a ship.  # noqa: E501
@@ -1265,14 +1438,18 @@ class FleetApi:
                  returns the request thread.
         :rtype: GetMounts200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_mounts_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_mounts_with_http_info(ship_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_mounts_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship's symbol.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_mounts_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship's symbol.")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get Mounts  # noqa: E501
 
         Get the mounts installed on a ship.  # noqa: E501
@@ -1311,61 +1488,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_mounts" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetMounts200Response",
+            "200": "GetMounts200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/mounts', 'GET',
+            "/my/ships/{shipSymbol}/mounts",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -1374,15 +1550,22 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_my_ship(self, ship_symbol : Annotated[StrictStr, Field(..., description="The symbol of the ship.")], **kwargs) -> GetMyShip200Response:  # noqa: E501
+    def get_my_ship(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The symbol of the ship.")
+        ],
+        **kwargs,
+    ) -> GetMyShip200Response:  # noqa: E501
         """Get Ship  # noqa: E501
 
         Retrieve the details of a ship under your agent's ownership.  # noqa: E501
@@ -1405,14 +1588,20 @@ class FleetApi:
                  returns the request thread.
         :rtype: GetMyShip200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_my_ship_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_my_ship_with_http_info(ship_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_my_ship_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The symbol of the ship.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_my_ship_with_http_info(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The symbol of the ship.")
+        ],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get Ship  # noqa: E501
 
         Retrieve the details of a ship under your agent's ownership.  # noqa: E501
@@ -1451,61 +1640,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_my_ship" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetMyShip200Response",
+            "200": "GetMyShip200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}', 'GET',
+            "/my/ships/{shipSymbol}",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -1514,15 +1702,22 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_my_ship_cargo(self, ship_symbol : Annotated[StrictStr, Field(..., description="The symbol of the ship.")], **kwargs) -> GetMyShipCargo200Response:  # noqa: E501
+    def get_my_ship_cargo(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The symbol of the ship.")
+        ],
+        **kwargs,
+    ) -> GetMyShipCargo200Response:  # noqa: E501
         """Get Ship Cargo  # noqa: E501
 
         Retrieve the cargo of a ship under your agent's ownership.  # noqa: E501
@@ -1545,14 +1740,22 @@ class FleetApi:
                  returns the request thread.
         :rtype: GetMyShipCargo200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_my_ship_cargo_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.get_my_ship_cargo_with_http_info(ship_symbol, **kwargs)  # noqa: E501
+        return self.get_my_ship_cargo_with_http_info(
+            ship_symbol, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def get_my_ship_cargo_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The symbol of the ship.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_my_ship_cargo_with_http_info(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The symbol of the ship.")
+        ],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get Ship Cargo  # noqa: E501
 
         Retrieve the cargo of a ship under your agent's ownership.  # noqa: E501
@@ -1591,61 +1794,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_my_ship_cargo" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetMyShipCargo200Response",
+            "200": "GetMyShipCargo200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/cargo', 'GET',
+            "/my/ships/{shipSymbol}/cargo",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -1654,15 +1856,27 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_my_ships(self, page : Annotated[Optional[conint(strict=True, ge=1)], Field(description="What entry offset to request")] = None, limit : Annotated[Optional[conint(strict=True, le=20, ge=1)], Field(description="How many entries to return per page")] = None, **kwargs) -> GetMyShips200Response:  # noqa: E501
+    def get_my_ships(
+        self,
+        page: Annotated[
+            Optional[conint(strict=True, ge=1)],
+            Field(description="What entry offset to request"),
+        ] = None,
+        limit: Annotated[
+            Optional[conint(strict=True, le=20, ge=1)],
+            Field(description="How many entries to return per page"),
+        ] = None,
+        **kwargs,
+    ) -> GetMyShips200Response:  # noqa: E501
         """List Ships  # noqa: E501
 
         Return a paginated list of all of ships under your agent's ownership.  # noqa: E501
@@ -1687,14 +1901,25 @@ class FleetApi:
                  returns the request thread.
         :rtype: GetMyShips200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_my_ships_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_my_ships_with_http_info(page, limit, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_my_ships_with_http_info(self, page : Annotated[Optional[conint(strict=True, ge=1)], Field(description="What entry offset to request")] = None, limit : Annotated[Optional[conint(strict=True, le=20, ge=1)], Field(description="How many entries to return per page")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_my_ships_with_http_info(
+        self,
+        page: Annotated[
+            Optional[conint(strict=True, ge=1)],
+            Field(description="What entry offset to request"),
+        ] = None,
+        limit: Annotated[
+            Optional[conint(strict=True, le=20, ge=1)],
+            Field(description="How many entries to return per page"),
+        ] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """List Ships  # noqa: E501
 
         Return a paginated list of all of ships under your agent's ownership.  # noqa: E501
@@ -1735,31 +1960,28 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'page',
-            'limit'
-        ]
+        _all_params = ["page", "limit"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_my_ships" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
@@ -1768,32 +1990,34 @@ class FleetApi:
 
         # process the query parameters
         _query_params = []
-        if _params.get('page') is not None:  # noqa: E501
-            _query_params.append(('page', _params['page']))
+        if _params.get("page") is not None:  # noqa: E501
+            _query_params.append(("page", _params["page"]))
 
-        if _params.get('limit') is not None:  # noqa: E501
-            _query_params.append(('limit', _params['limit']))
+        if _params.get("limit") is not None:  # noqa: E501
+            _query_params.append(("limit", _params["limit"]))
 
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetMyShips200Response",
+            "200": "GetMyShips200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships', 'GET',
+            "/my/ships",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -1802,15 +2026,20 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_repair_ship(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> GetRepairShip200Response:  # noqa: E501
+    def get_repair_ship(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> GetRepairShip200Response:  # noqa: E501
         """Get Repair Ship  # noqa: E501
 
         Get the cost of repairing a ship.  # noqa: E501
@@ -1833,14 +2062,18 @@ class FleetApi:
                  returns the request thread.
         :rtype: GetRepairShip200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_repair_ship_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_repair_ship_with_http_info(ship_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_repair_ship_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_repair_ship_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get Repair Ship  # noqa: E501
 
         Get the cost of repairing a ship.  # noqa: E501
@@ -1879,61 +2112,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_repair_ship" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetRepairShip200Response",
+            "200": "GetRepairShip200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/repair', 'GET',
+            "/my/ships/{shipSymbol}/repair",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -1942,15 +2174,20 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_scrap_ship(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> GetScrapShip200Response:  # noqa: E501
+    def get_scrap_ship(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> GetScrapShip200Response:  # noqa: E501
         """Get Scrap Ship  # noqa: E501
 
         Get the amount of value that will be returned when scrapping a ship.  # noqa: E501
@@ -1973,14 +2210,18 @@ class FleetApi:
                  returns the request thread.
         :rtype: GetScrapShip200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_scrap_ship_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_scrap_ship_with_http_info(ship_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_scrap_ship_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_scrap_ship_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get Scrap Ship  # noqa: E501
 
         Get the amount of value that will be returned when scrapping a ship.  # noqa: E501
@@ -2019,61 +2260,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_scrap_ship" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetScrapShip200Response",
+            "200": "GetScrapShip200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/scrap', 'GET',
+            "/my/ships/{shipSymbol}/scrap",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -2082,15 +2322,22 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_ship_cooldown(self, ship_symbol : Annotated[StrictStr, Field(..., description="The symbol of the ship.")], **kwargs) -> GetShipCooldown200Response:  # noqa: E501
+    def get_ship_cooldown(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The symbol of the ship.")
+        ],
+        **kwargs,
+    ) -> GetShipCooldown200Response:  # noqa: E501
         """Get Ship Cooldown  # noqa: E501
 
         Retrieve the details of your ship's reactor cooldown. Some actions such as activating your jump drive, scanning, or extracting resources taxes your reactor and results in a cooldown.  Your ship cannot perform additional actions until your cooldown has expired. The duration of your cooldown is relative to the power consumption of the related modules or mounts for the action taken.  Response returns a 204 status code (no-content) when the ship has no cooldown.  # noqa: E501
@@ -2113,14 +2360,22 @@ class FleetApi:
                  returns the request thread.
         :rtype: GetShipCooldown200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_ship_cooldown_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.get_ship_cooldown_with_http_info(ship_symbol, **kwargs)  # noqa: E501
+        return self.get_ship_cooldown_with_http_info(
+            ship_symbol, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def get_ship_cooldown_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The symbol of the ship.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_ship_cooldown_with_http_info(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The symbol of the ship.")
+        ],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get Ship Cooldown  # noqa: E501
 
         Retrieve the details of your ship's reactor cooldown. Some actions such as activating your jump drive, scanning, or extracting resources taxes your reactor and results in a cooldown.  Your ship cannot perform additional actions until your cooldown has expired. The duration of your cooldown is relative to the power consumption of the related modules or mounts for the action taken.  Response returns a 204 status code (no-content) when the ship has no cooldown.  # noqa: E501
@@ -2159,62 +2414,61 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_ship_cooldown" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetShipCooldown200Response",
-            '204': None,
+            "200": "GetShipCooldown200Response",
+            "204": None,
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/cooldown', 'GET',
+            "/my/ships/{shipSymbol}/cooldown",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -2223,15 +2477,20 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def get_ship_nav(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> GetShipNav200Response:  # noqa: E501
+    def get_ship_nav(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> GetShipNav200Response:  # noqa: E501
         """Get Ship Nav  # noqa: E501
 
         Get the current nav status of a ship.  # noqa: E501
@@ -2254,14 +2513,18 @@ class FleetApi:
                  returns the request thread.
         :rtype: GetShipNav200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_ship_nav_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.get_ship_nav_with_http_info(ship_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_ship_nav_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_ship_nav_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Get Ship Nav  # noqa: E501
 
         Get the current nav status of a ship.  # noqa: E501
@@ -2300,61 +2563,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_ship_nav" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetShipNav200Response",
+            "200": "GetShipNav200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/nav', 'GET',
+            "/my/ships/{shipSymbol}/nav",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -2363,15 +2625,21 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def install_mount(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship's symbol.")], install_mount_request : Optional[InstallMountRequest] = None, **kwargs) -> InstallMount201Response:  # noqa: E501
+    def install_mount(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship's symbol.")],
+        install_mount_request: Optional[InstallMountRequest] = None,
+        **kwargs,
+    ) -> InstallMount201Response:  # noqa: E501
         """Install Mount  # noqa: E501
 
         Install a mount on a ship.  In order to install a mount, the ship must be docked and located in a waypoint that has a `Shipyard` trait. The ship also must have the mount to install in its cargo hold.  An installation fee will be deduced by the Shipyard for installing the mount on the ship.   # noqa: E501
@@ -2396,14 +2664,21 @@ class FleetApi:
                  returns the request thread.
         :rtype: InstallMount201Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the install_mount_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.install_mount_with_http_info(ship_symbol, install_mount_request, **kwargs)  # noqa: E501
+        return self.install_mount_with_http_info(
+            ship_symbol, install_mount_request, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def install_mount_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship's symbol.")], install_mount_request : Optional[InstallMountRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def install_mount_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship's symbol.")],
+        install_mount_request: Optional[InstallMountRequest] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Install Mount  # noqa: E501
 
         Install a mount on a ship.  In order to install a mount, the ship must be docked and located in a waypoint that has a `Shipyard` trait. The ship also must have the mount to install in its cargo hold.  An installation fee will be deduced by the Shipyard for installing the mount on the ship.   # noqa: E501
@@ -2444,72 +2719,71 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol',
-            'install_mount_request'
-        ]
+        _all_params = ["ship_symbol", "install_mount_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method install_mount" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['install_mount_request'] is not None:
-            _body_params = _params['install_mount_request']
+        if _params["install_mount_request"] is not None:
+            _body_params = _params["install_mount_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '201': "InstallMount201Response",
+            "201": "InstallMount201Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/mounts/install', 'POST',
+            "/my/ships/{shipSymbol}/mounts/install",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -2518,15 +2792,21 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def jettison(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], jettison_request : Optional[JettisonRequest] = None, **kwargs) -> Jettison200Response:  # noqa: E501
+    def jettison(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        jettison_request: Optional[JettisonRequest] = None,
+        **kwargs,
+    ) -> Jettison200Response:  # noqa: E501
         """Jettison Cargo  # noqa: E501
 
         Jettison cargo from your ship's cargo hold.  # noqa: E501
@@ -2551,14 +2831,21 @@ class FleetApi:
                  returns the request thread.
         :rtype: Jettison200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the jettison_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.jettison_with_http_info(ship_symbol, jettison_request, **kwargs)  # noqa: E501
+        return self.jettison_with_http_info(
+            ship_symbol, jettison_request, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def jettison_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], jettison_request : Optional[JettisonRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def jettison_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        jettison_request: Optional[JettisonRequest] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Jettison Cargo  # noqa: E501
 
         Jettison cargo from your ship's cargo hold.  # noqa: E501
@@ -2599,72 +2886,71 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol',
-            'jettison_request'
-        ]
+        _all_params = ["ship_symbol", "jettison_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method jettison" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['jettison_request'] is not None:
-            _body_params = _params['jettison_request']
+        if _params["jettison_request"] is not None:
+            _body_params = _params["jettison_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "Jettison200Response",
+            "200": "Jettison200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/jettison', 'POST',
+            "/my/ships/{shipSymbol}/jettison",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -2673,15 +2959,21 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def jump_ship(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], jump_ship_request : Optional[JumpShipRequest] = None, **kwargs) -> JumpShip200Response:  # noqa: E501
+    def jump_ship(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        jump_ship_request: Optional[JumpShipRequest] = None,
+        **kwargs,
+    ) -> JumpShip200Response:  # noqa: E501
         """Jump Ship  # noqa: E501
 
         Jump your ship instantly to a target connected waypoint. The ship must be in orbit to execute a jump.  A unit of antimatter is purchased and consumed from the market when jumping. The price of antimatter is determined by the market and is subject to change. A ship can only jump to connected waypoints  # noqa: E501
@@ -2706,14 +2998,21 @@ class FleetApi:
                  returns the request thread.
         :rtype: JumpShip200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the jump_ship_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.jump_ship_with_http_info(ship_symbol, jump_ship_request, **kwargs)  # noqa: E501
+        return self.jump_ship_with_http_info(
+            ship_symbol, jump_ship_request, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def jump_ship_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], jump_ship_request : Optional[JumpShipRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def jump_ship_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        jump_ship_request: Optional[JumpShipRequest] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Jump Ship  # noqa: E501
 
         Jump your ship instantly to a target connected waypoint. The ship must be in orbit to execute a jump.  A unit of antimatter is purchased and consumed from the market when jumping. The price of antimatter is determined by the market and is subject to change. A ship can only jump to connected waypoints  # noqa: E501
@@ -2754,72 +3053,71 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol',
-            'jump_ship_request'
-        ]
+        _all_params = ["ship_symbol", "jump_ship_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method jump_ship" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['jump_ship_request'] is not None:
-            _body_params = _params['jump_ship_request']
+        if _params["jump_ship_request"] is not None:
+            _body_params = _params["jump_ship_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "JumpShip200Response",
+            "200": "JumpShip200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/jump', 'POST',
+            "/my/ships/{shipSymbol}/jump",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -2828,15 +3126,21 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def navigate_ship(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], navigate_ship_request : Optional[NavigateShipRequest] = None, **kwargs) -> NavigateShip200Response:  # noqa: E501
+    def navigate_ship(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        navigate_ship_request: Optional[NavigateShipRequest] = None,
+        **kwargs,
+    ) -> NavigateShip200Response:  # noqa: E501
         """Navigate Ship  # noqa: E501
 
         Navigate to a target destination. The ship must be in orbit to use this function. The destination waypoint must be within the same system as the ship's current location. Navigating will consume the necessary fuel from the ship's manifest based on the distance to the target waypoint.  The returned response will detail the route information including the expected time of arrival. Most ship actions are unavailable until the ship has arrived at it's destination.  To travel between systems, see the ship's Warp or Jump actions.  # noqa: E501
@@ -2848,7 +3152,7 @@ class FleetApi:
 
         :param ship_symbol: The ship symbol. (required)
         :type ship_symbol: str
-        :param navigate_ship_request: 
+        :param navigate_ship_request:
         :type navigate_ship_request: NavigateShipRequest
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -2861,14 +3165,21 @@ class FleetApi:
                  returns the request thread.
         :rtype: NavigateShip200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the navigate_ship_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.navigate_ship_with_http_info(ship_symbol, navigate_ship_request, **kwargs)  # noqa: E501
+        return self.navigate_ship_with_http_info(
+            ship_symbol, navigate_ship_request, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def navigate_ship_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], navigate_ship_request : Optional[NavigateShipRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def navigate_ship_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        navigate_ship_request: Optional[NavigateShipRequest] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Navigate Ship  # noqa: E501
 
         Navigate to a target destination. The ship must be in orbit to use this function. The destination waypoint must be within the same system as the ship's current location. Navigating will consume the necessary fuel from the ship's manifest based on the distance to the target waypoint.  The returned response will detail the route information including the expected time of arrival. Most ship actions are unavailable until the ship has arrived at it's destination.  To travel between systems, see the ship's Warp or Jump actions.  # noqa: E501
@@ -2880,7 +3191,7 @@ class FleetApi:
 
         :param ship_symbol: The ship symbol. (required)
         :type ship_symbol: str
-        :param navigate_ship_request: 
+        :param navigate_ship_request:
         :type navigate_ship_request: NavigateShipRequest
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -2909,72 +3220,71 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol',
-            'navigate_ship_request'
-        ]
+        _all_params = ["ship_symbol", "navigate_ship_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method navigate_ship" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['navigate_ship_request'] is not None:
-            _body_params = _params['navigate_ship_request']
+        if _params["navigate_ship_request"] is not None:
+            _body_params = _params["navigate_ship_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "NavigateShip200Response",
+            "200": "NavigateShip200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/navigate', 'POST',
+            "/my/ships/{shipSymbol}/navigate",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -2983,15 +3293,20 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def negotiate_contract(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship's symbol.")], **kwargs) -> NegotiateContract200Response:  # noqa: E501
+    def negotiate_contract(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship's symbol.")],
+        **kwargs,
+    ) -> NegotiateContract200Response:  # noqa: E501
         """Negotiate Contract  # noqa: E501
 
         Negotiate a new contract with the HQ.  In order to negotiate a new contract, an agent must not have ongoing or offered contracts over the allowed maximum amount. Currently the maximum contracts an agent can have at a time is 1.  Once a contract is negotiated, it is added to the list of contracts offered to the agent, which the agent can then accept.   The ship must be present at any waypoint with a faction present to negotiate a contract with that faction.  # noqa: E501
@@ -3014,14 +3329,20 @@ class FleetApi:
                  returns the request thread.
         :rtype: NegotiateContract200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the negotiate_contract_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.negotiate_contract_with_http_info(ship_symbol, **kwargs)  # noqa: E501
+        return self.negotiate_contract_with_http_info(
+            ship_symbol, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def negotiate_contract_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship's symbol.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def negotiate_contract_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship's symbol.")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Negotiate Contract  # noqa: E501
 
         Negotiate a new contract with the HQ.  In order to negotiate a new contract, an agent must not have ongoing or offered contracts over the allowed maximum amount. Currently the maximum contracts an agent can have at a time is 1.  Once a contract is negotiated, it is added to the list of contracts offered to the agent, which the agent can then accept.   The ship must be present at any waypoint with a faction present to negotiate a contract with that faction.  # noqa: E501
@@ -3060,61 +3381,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method negotiate_contract" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '201': "NegotiateContract200Response",
+            "201": "NegotiateContract200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/negotiate/contract', 'POST',
+            "/my/ships/{shipSymbol}/negotiate/contract",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -3123,15 +3443,22 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def orbit_ship(self, ship_symbol : Annotated[StrictStr, Field(..., description="The symbol of the ship.")], **kwargs) -> OrbitShip200Response:  # noqa: E501
+    def orbit_ship(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The symbol of the ship.")
+        ],
+        **kwargs,
+    ) -> OrbitShip200Response:  # noqa: E501
         """Orbit Ship  # noqa: E501
 
         Attempt to move your ship into orbit at its current location. The request will only succeed if your ship is capable of moving into orbit at the time of the request.  Orbiting ships are able to do actions that require the ship to be above surface such as navigating or extracting, but cannot access elements in their current waypoint, such as the market or a shipyard.  The endpoint is idempotent - successive calls will succeed even if the ship is already in orbit.  # noqa: E501
@@ -3154,14 +3481,20 @@ class FleetApi:
                  returns the request thread.
         :rtype: OrbitShip200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the orbit_ship_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.orbit_ship_with_http_info(ship_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def orbit_ship_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The symbol of the ship.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def orbit_ship_with_http_info(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The symbol of the ship.")
+        ],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Orbit Ship  # noqa: E501
 
         Attempt to move your ship into orbit at its current location. The request will only succeed if your ship is capable of moving into orbit at the time of the request.  Orbiting ships are able to do actions that require the ship to be above surface such as navigating or extracting, but cannot access elements in their current waypoint, such as the market or a shipyard.  The endpoint is idempotent - successive calls will succeed even if the ship is already in orbit.  # noqa: E501
@@ -3200,61 +3533,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method orbit_ship" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "OrbitShip200Response",
+            "200": "OrbitShip200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/orbit', 'POST',
+            "/my/ships/{shipSymbol}/orbit",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -3263,15 +3595,21 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def patch_ship_nav(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], patch_ship_nav_request : Optional[PatchShipNavRequest] = None, **kwargs) -> GetShipNav200Response:  # noqa: E501
+    def patch_ship_nav(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        patch_ship_nav_request: Optional[PatchShipNavRequest] = None,
+        **kwargs,
+    ) -> GetShipNav200Response:  # noqa: E501
         """Patch Ship Nav  # noqa: E501
 
         Update the nav configuration of a ship.  Currently only supports configuring the Flight Mode of the ship, which affects its speed and fuel consumption.  # noqa: E501
@@ -3296,14 +3634,21 @@ class FleetApi:
                  returns the request thread.
         :rtype: GetShipNav200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the patch_ship_nav_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.patch_ship_nav_with_http_info(ship_symbol, patch_ship_nav_request, **kwargs)  # noqa: E501
+        return self.patch_ship_nav_with_http_info(
+            ship_symbol, patch_ship_nav_request, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def patch_ship_nav_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], patch_ship_nav_request : Optional[PatchShipNavRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def patch_ship_nav_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        patch_ship_nav_request: Optional[PatchShipNavRequest] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Patch Ship Nav  # noqa: E501
 
         Update the nav configuration of a ship.  Currently only supports configuring the Flight Mode of the ship, which affects its speed and fuel consumption.  # noqa: E501
@@ -3344,72 +3689,71 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol',
-            'patch_ship_nav_request'
-        ]
+        _all_params = ["ship_symbol", "patch_ship_nav_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method patch_ship_nav" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['patch_ship_nav_request'] is not None:
-            _body_params = _params['patch_ship_nav_request']
+        if _params["patch_ship_nav_request"] is not None:
+            _body_params = _params["patch_ship_nav_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetShipNav200Response",
+            "200": "GetShipNav200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/nav', 'PATCH',
+            "/my/ships/{shipSymbol}/nav",
+            "PATCH",
             _path_params,
             _query_params,
             _header_params,
@@ -3418,15 +3762,21 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def purchase_cargo(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship's symbol.")], purchase_cargo_request : Optional[PurchaseCargoRequest] = None, **kwargs) -> PurchaseCargo201Response:  # noqa: E501
+    def purchase_cargo(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship's symbol.")],
+        purchase_cargo_request: Optional[PurchaseCargoRequest] = None,
+        **kwargs,
+    ) -> PurchaseCargo201Response:  # noqa: E501
         """Purchase Cargo  # noqa: E501
 
         Purchase cargo from a market.  The ship must be docked in a waypoint that has `Marketplace` trait, and the market must be selling a good to be able to purchase it.  The maximum amount of units of a good that can be purchased in each transaction are denoted by the `tradeVolume` value of the good, which can be viewed by using the Get Market action.  Purchased goods are added to the ship's cargo hold.  # noqa: E501
@@ -3451,14 +3801,21 @@ class FleetApi:
                  returns the request thread.
         :rtype: PurchaseCargo201Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the purchase_cargo_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.purchase_cargo_with_http_info(ship_symbol, purchase_cargo_request, **kwargs)  # noqa: E501
+        return self.purchase_cargo_with_http_info(
+            ship_symbol, purchase_cargo_request, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def purchase_cargo_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship's symbol.")], purchase_cargo_request : Optional[PurchaseCargoRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def purchase_cargo_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship's symbol.")],
+        purchase_cargo_request: Optional[PurchaseCargoRequest] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Purchase Cargo  # noqa: E501
 
         Purchase cargo from a market.  The ship must be docked in a waypoint that has `Marketplace` trait, and the market must be selling a good to be able to purchase it.  The maximum amount of units of a good that can be purchased in each transaction are denoted by the `tradeVolume` value of the good, which can be viewed by using the Get Market action.  Purchased goods are added to the ship's cargo hold.  # noqa: E501
@@ -3499,72 +3856,71 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol',
-            'purchase_cargo_request'
-        ]
+        _all_params = ["ship_symbol", "purchase_cargo_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method purchase_cargo" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['purchase_cargo_request'] is not None:
-            _body_params = _params['purchase_cargo_request']
+        if _params["purchase_cargo_request"] is not None:
+            _body_params = _params["purchase_cargo_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '201': "PurchaseCargo201Response",
+            "201": "PurchaseCargo201Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/purchase', 'POST',
+            "/my/ships/{shipSymbol}/purchase",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -3573,15 +3929,18 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def purchase_ship(self, purchase_ship_request : Optional[PurchaseShipRequest] = None, **kwargs) -> PurchaseShip201Response:  # noqa: E501
+    def purchase_ship(
+        self, purchase_ship_request: Optional[PurchaseShipRequest] = None, **kwargs
+    ) -> PurchaseShip201Response:  # noqa: E501
         """Purchase Ship  # noqa: E501
 
         Purchase a ship from a Shipyard. In order to use this function, a ship under your agent's ownership must be in a waypoint that has the `Shipyard` trait, and the Shipyard must sell the type of the desired ship.  Shipyards typically offer ship types, which are predefined templates of ships that have dedicated roles. A template comes with a preset of an engine, a reactor, and a frame. It may also include a few modules and mounts.  # noqa: E501
@@ -3604,14 +3963,18 @@ class FleetApi:
                  returns the request thread.
         :rtype: PurchaseShip201Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the purchase_ship_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.purchase_ship_with_http_info(purchase_ship_request, **kwargs)  # noqa: E501
+        return self.purchase_ship_with_http_info(
+            purchase_ship_request, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def purchase_ship_with_http_info(self, purchase_ship_request : Optional[PurchaseShipRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def purchase_ship_with_http_info(
+        self, purchase_ship_request: Optional[PurchaseShipRequest] = None, **kwargs
+    ) -> ApiResponse:  # noqa: E501
         """Purchase Ship  # noqa: E501
 
         Purchase a ship from a Shipyard. In order to use this function, a ship under your agent's ownership must be in a waypoint that has the `Shipyard` trait, and the Shipyard must sell the type of the desired ship.  Shipyards typically offer ship types, which are predefined templates of ships that have dedicated roles. A template comes with a preset of an engine, a reactor, and a frame. It may also include a few modules and mounts.  # noqa: E501
@@ -3650,30 +4013,28 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'purchase_ship_request'
-        ]
+        _all_params = ["purchase_ship_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method purchase_ship" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
@@ -3683,35 +4044,38 @@ class FleetApi:
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['purchase_ship_request'] is not None:
-            _body_params = _params['purchase_ship_request']
+        if _params["purchase_ship_request"] is not None:
+            _body_params = _params["purchase_ship_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '201': "PurchaseShip201Response",
+            "201": "PurchaseShip201Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships', 'POST',
+            "/my/ships",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -3720,15 +4084,21 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def refuel_ship(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], refuel_ship_request : Optional[RefuelShipRequest] = None, **kwargs) -> RefuelShip200Response:  # noqa: E501
+    def refuel_ship(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        refuel_ship_request: Optional[RefuelShipRequest] = None,
+        **kwargs,
+    ) -> RefuelShip200Response:  # noqa: E501
         """Refuel Ship  # noqa: E501
 
         Refuel your ship by buying fuel from the local market.  Requires the ship to be docked in a waypoint that has the `Marketplace` trait, and the market must be selling fuel in order to refuel.  Each fuel bought from the market replenishes 100 units in your ship's fuel.  Ships will always be refuel to their frame's maximum fuel capacity when using this action.  # noqa: E501
@@ -3753,14 +4123,21 @@ class FleetApi:
                  returns the request thread.
         :rtype: RefuelShip200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the refuel_ship_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.refuel_ship_with_http_info(ship_symbol, refuel_ship_request, **kwargs)  # noqa: E501
+        return self.refuel_ship_with_http_info(
+            ship_symbol, refuel_ship_request, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def refuel_ship_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], refuel_ship_request : Optional[RefuelShipRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def refuel_ship_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        refuel_ship_request: Optional[RefuelShipRequest] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Refuel Ship  # noqa: E501
 
         Refuel your ship by buying fuel from the local market.  Requires the ship to be docked in a waypoint that has the `Marketplace` trait, and the market must be selling fuel in order to refuel.  Each fuel bought from the market replenishes 100 units in your ship's fuel.  Ships will always be refuel to their frame's maximum fuel capacity when using this action.  # noqa: E501
@@ -3801,72 +4178,71 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol',
-            'refuel_ship_request'
-        ]
+        _all_params = ["ship_symbol", "refuel_ship_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method refuel_ship" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['refuel_ship_request'] is not None:
-            _body_params = _params['refuel_ship_request']
+        if _params["refuel_ship_request"] is not None:
+            _body_params = _params["refuel_ship_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "RefuelShip200Response",
+            "200": "RefuelShip200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/refuel', 'POST',
+            "/my/ships/{shipSymbol}/refuel",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -3875,15 +4251,21 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def remove_mount(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship's symbol.")], remove_mount_request : Optional[RemoveMountRequest] = None, **kwargs) -> RemoveMount201Response:  # noqa: E501
+    def remove_mount(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship's symbol.")],
+        remove_mount_request: Optional[RemoveMountRequest] = None,
+        **kwargs,
+    ) -> RemoveMount201Response:  # noqa: E501
         """Remove Mount  # noqa: E501
 
         Remove a mount from a ship.  The ship must be docked in a waypoint that has the `Shipyard` trait, and must have the desired mount that it wish to remove installed.  A removal fee will be deduced from the agent by the Shipyard.  # noqa: E501
@@ -3908,14 +4290,21 @@ class FleetApi:
                  returns the request thread.
         :rtype: RemoveMount201Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the remove_mount_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.remove_mount_with_http_info(ship_symbol, remove_mount_request, **kwargs)  # noqa: E501
+        return self.remove_mount_with_http_info(
+            ship_symbol, remove_mount_request, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def remove_mount_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship's symbol.")], remove_mount_request : Optional[RemoveMountRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def remove_mount_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship's symbol.")],
+        remove_mount_request: Optional[RemoveMountRequest] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Remove Mount  # noqa: E501
 
         Remove a mount from a ship.  The ship must be docked in a waypoint that has the `Shipyard` trait, and must have the desired mount that it wish to remove installed.  A removal fee will be deduced from the agent by the Shipyard.  # noqa: E501
@@ -3956,72 +4345,71 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol',
-            'remove_mount_request'
-        ]
+        _all_params = ["ship_symbol", "remove_mount_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method remove_mount" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['remove_mount_request'] is not None:
-            _body_params = _params['remove_mount_request']
+        if _params["remove_mount_request"] is not None:
+            _body_params = _params["remove_mount_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '201': "RemoveMount201Response",
+            "201": "RemoveMount201Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/mounts/remove', 'POST',
+            "/my/ships/{shipSymbol}/mounts/remove",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -4030,15 +4418,20 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def repair_ship(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> RepairShip200Response:  # noqa: E501
+    def repair_ship(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> RepairShip200Response:  # noqa: E501
         """Repair Ship  # noqa: E501
 
         Repair a ship, restoring the ship to maximum condition. The ship must be docked at a waypoint that has the `Shipyard` trait in order to use this function. To preview the cost of repairing the ship, use the Get action.  # noqa: E501
@@ -4061,14 +4454,18 @@ class FleetApi:
                  returns the request thread.
         :rtype: RepairShip200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the repair_ship_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.repair_ship_with_http_info(ship_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def repair_ship_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def repair_ship_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Repair Ship  # noqa: E501
 
         Repair a ship, restoring the ship to maximum condition. The ship must be docked at a waypoint that has the `Shipyard` trait in order to use this function. To preview the cost of repairing the ship, use the Get action.  # noqa: E501
@@ -4107,61 +4504,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method repair_ship" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "RepairShip200Response",
+            "200": "RepairShip200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/repair', 'POST',
+            "/my/ships/{shipSymbol}/repair",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -4170,15 +4566,20 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def scrap_ship(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> ScrapShip200Response:  # noqa: E501
+    def scrap_ship(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> ScrapShip200Response:  # noqa: E501
         """Scrap Ship  # noqa: E501
 
         Scrap a ship, removing it from the game and returning a portion of the ship's value to the agent. The ship must be docked in a waypoint that has the `Shipyard` trait in order to use this function. To preview the amount of value that will be returned, use the Get Ship action.  # noqa: E501
@@ -4201,14 +4602,18 @@ class FleetApi:
                  returns the request thread.
         :rtype: ScrapShip200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the scrap_ship_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.scrap_ship_with_http_info(ship_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def scrap_ship_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def scrap_ship_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Scrap Ship  # noqa: E501
 
         Scrap a ship, removing it from the game and returning a portion of the ship's value to the agent. The ship must be docked in a waypoint that has the `Shipyard` trait in order to use this function. To preview the amount of value that will be returned, use the Get Ship action.  # noqa: E501
@@ -4247,61 +4652,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method scrap_ship" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "ScrapShip200Response",
+            "200": "ScrapShip200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/scrap', 'POST',
+            "/my/ships/{shipSymbol}/scrap",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -4310,15 +4714,21 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def sell_cargo(self, ship_symbol : Annotated[StrictStr, Field(..., description="Symbol of a ship.")], sell_cargo_request : Optional[SellCargoRequest] = None, **kwargs) -> SellCargo201Response:  # noqa: E501
+    def sell_cargo(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="Symbol of a ship.")],
+        sell_cargo_request: Optional[SellCargoRequest] = None,
+        **kwargs,
+    ) -> SellCargo201Response:  # noqa: E501
         """Sell Cargo  # noqa: E501
 
         Sell cargo in your ship to a market that trades this cargo. The ship must be docked in a waypoint that has the `Marketplace` trait in order to use this function.  # noqa: E501
@@ -4343,14 +4753,21 @@ class FleetApi:
                  returns the request thread.
         :rtype: SellCargo201Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the sell_cargo_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.sell_cargo_with_http_info(ship_symbol, sell_cargo_request, **kwargs)  # noqa: E501
+        return self.sell_cargo_with_http_info(
+            ship_symbol, sell_cargo_request, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def sell_cargo_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="Symbol of a ship.")], sell_cargo_request : Optional[SellCargoRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def sell_cargo_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="Symbol of a ship.")],
+        sell_cargo_request: Optional[SellCargoRequest] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Sell Cargo  # noqa: E501
 
         Sell cargo in your ship to a market that trades this cargo. The ship must be docked in a waypoint that has the `Marketplace` trait in order to use this function.  # noqa: E501
@@ -4391,72 +4808,71 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol',
-            'sell_cargo_request'
-        ]
+        _all_params = ["ship_symbol", "sell_cargo_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method sell_cargo" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['sell_cargo_request'] is not None:
-            _body_params = _params['sell_cargo_request']
+        if _params["sell_cargo_request"] is not None:
+            _body_params = _params["sell_cargo_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '201': "SellCargo201Response",
+            "201": "SellCargo201Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/sell', 'POST',
+            "/my/ships/{shipSymbol}/sell",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -4465,15 +4881,23 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def ship_refine(self, ship_symbol : Annotated[StrictStr, Field(..., description="The symbol of the ship.")], ship_refine_request : Optional[ShipRefineRequest] = None, **kwargs) -> ShipRefine201Response:  # noqa: E501
+    def ship_refine(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The symbol of the ship.")
+        ],
+        ship_refine_request: Optional[ShipRefineRequest] = None,
+        **kwargs,
+    ) -> ShipRefine201Response:  # noqa: E501
         """Ship Refine  # noqa: E501
 
         Attempt to refine the raw materials on your ship. The request will only succeed if your ship is capable of refining at the time of the request. In order to be able to refine, a ship must have goods that can be refined and have installed a `Refinery` module that can refine it.  When refining, 30 basic goods will be converted into 10 processed goods.  # noqa: E501
@@ -4498,14 +4922,23 @@ class FleetApi:
                  returns the request thread.
         :rtype: ShipRefine201Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the ship_refine_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.ship_refine_with_http_info(ship_symbol, ship_refine_request, **kwargs)  # noqa: E501
+        return self.ship_refine_with_http_info(
+            ship_symbol, ship_refine_request, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def ship_refine_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The symbol of the ship.")], ship_refine_request : Optional[ShipRefineRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def ship_refine_with_http_info(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The symbol of the ship.")
+        ],
+        ship_refine_request: Optional[ShipRefineRequest] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Ship Refine  # noqa: E501
 
         Attempt to refine the raw materials on your ship. The request will only succeed if your ship is capable of refining at the time of the request. In order to be able to refine, a ship must have goods that can be refined and have installed a `Refinery` module that can refine it.  When refining, 30 basic goods will be converted into 10 processed goods.  # noqa: E501
@@ -4546,72 +4979,71 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol',
-            'ship_refine_request'
-        ]
+        _all_params = ["ship_symbol", "ship_refine_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method ship_refine" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['ship_refine_request'] is not None:
-            _body_params = _params['ship_refine_request']
+        if _params["ship_refine_request"] is not None:
+            _body_params = _params["ship_refine_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '201': "ShipRefine201Response",
+            "201": "ShipRefine201Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/refine', 'POST',
+            "/my/ships/{shipSymbol}/refine",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -4620,15 +5052,20 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def siphon_resources(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> SiphonResources201Response:  # noqa: E501
+    def siphon_resources(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> SiphonResources201Response:  # noqa: E501
         """Siphon Resources  # noqa: E501
 
         Siphon gases, such as hydrocarbon, from gas giants.  The ship must be in orbit to be able to siphon and must have siphon mounts and a gas processor installed.  # noqa: E501
@@ -4651,14 +5088,18 @@ class FleetApi:
                  returns the request thread.
         :rtype: SiphonResources201Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the siphon_resources_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
         return self.siphon_resources_with_http_info(ship_symbol, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def siphon_resources_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def siphon_resources_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Siphon Resources  # noqa: E501
 
         Siphon gases, such as hydrocarbon, from gas giants.  The ship must be in orbit to be able to siphon and must have siphon mounts and a gas processor installed.  # noqa: E501
@@ -4697,61 +5138,60 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol'
-        ]
+        _all_params = ["ship_symbol"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method siphon_resources" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '201': "SiphonResources201Response",
+            "201": "SiphonResources201Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/siphon', 'POST',
+            "/my/ships/{shipSymbol}/siphon",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -4760,15 +5200,23 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def transfer_cargo(self, ship_symbol : Annotated[StrictStr, Field(..., description="The transferring ship's symbol.")], transfer_cargo_request : Optional[TransferCargoRequest] = None, **kwargs) -> TransferCargo200Response:  # noqa: E501
+    def transfer_cargo(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The transferring ship's symbol.")
+        ],
+        transfer_cargo_request: Optional[TransferCargoRequest] = None,
+        **kwargs,
+    ) -> TransferCargo200Response:  # noqa: E501
         """Transfer Cargo  # noqa: E501
 
         Transfer cargo between ships.  The receiving ship must be in the same waypoint as the transferring ship, and it must able to hold the additional cargo after the transfer is complete. Both ships also must be in the same state, either both are docked or both are orbiting.  The response body's cargo shows the cargo of the transferring ship after the transfer is complete.  # noqa: E501
@@ -4793,14 +5241,23 @@ class FleetApi:
                  returns the request thread.
         :rtype: TransferCargo200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the transfer_cargo_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.transfer_cargo_with_http_info(ship_symbol, transfer_cargo_request, **kwargs)  # noqa: E501
+        return self.transfer_cargo_with_http_info(
+            ship_symbol, transfer_cargo_request, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def transfer_cargo_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The transferring ship's symbol.")], transfer_cargo_request : Optional[TransferCargoRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def transfer_cargo_with_http_info(
+        self,
+        ship_symbol: Annotated[
+            StrictStr, Field(..., description="The transferring ship's symbol.")
+        ],
+        transfer_cargo_request: Optional[TransferCargoRequest] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Transfer Cargo  # noqa: E501
 
         Transfer cargo between ships.  The receiving ship must be in the same waypoint as the transferring ship, and it must able to hold the additional cargo after the transfer is complete. Both ships also must be in the same state, either both are docked or both are orbiting.  The response body's cargo shows the cargo of the transferring ship after the transfer is complete.  # noqa: E501
@@ -4841,72 +5298,71 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol',
-            'transfer_cargo_request'
-        ]
+        _all_params = ["ship_symbol", "transfer_cargo_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method transfer_cargo" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['transfer_cargo_request'] is not None:
-            _body_params = _params['transfer_cargo_request']
+        if _params["transfer_cargo_request"] is not None:
+            _body_params = _params["transfer_cargo_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "TransferCargo200Response",
+            "200": "TransferCargo200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/transfer', 'POST',
+            "/my/ships/{shipSymbol}/transfer",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -4915,15 +5371,21 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def warp_ship(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], navigate_ship_request : Optional[NavigateShipRequest] = None, **kwargs) -> WarpShip200Response:  # noqa: E501
+    def warp_ship(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        navigate_ship_request: Optional[NavigateShipRequest] = None,
+        **kwargs,
+    ) -> WarpShip200Response:  # noqa: E501
         """Warp Ship  # noqa: E501
 
         Warp your ship to a target destination in another system. The ship must be in orbit to use this function and must have the `Warp Drive` module installed. Warping will consume the necessary fuel from the ship's manifest.  The returned response will detail the route information including the expected time of arrival. Most ship actions are unavailable until the ship has arrived at its destination.  # noqa: E501
@@ -4935,7 +5397,7 @@ class FleetApi:
 
         :param ship_symbol: The ship symbol. (required)
         :type ship_symbol: str
-        :param navigate_ship_request: 
+        :param navigate_ship_request:
         :type navigate_ship_request: NavigateShipRequest
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -4948,14 +5410,21 @@ class FleetApi:
                  returns the request thread.
         :rtype: WarpShip200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the warp_ship_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.warp_ship_with_http_info(ship_symbol, navigate_ship_request, **kwargs)  # noqa: E501
+        return self.warp_ship_with_http_info(
+            ship_symbol, navigate_ship_request, **kwargs
+        )  # noqa: E501
 
     @validate_arguments
-    def warp_ship_with_http_info(self, ship_symbol : Annotated[StrictStr, Field(..., description="The ship symbol.")], navigate_ship_request : Optional[NavigateShipRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def warp_ship_with_http_info(
+        self,
+        ship_symbol: Annotated[StrictStr, Field(..., description="The ship symbol.")],
+        navigate_ship_request: Optional[NavigateShipRequest] = None,
+        **kwargs,
+    ) -> ApiResponse:  # noqa: E501
         """Warp Ship  # noqa: E501
 
         Warp your ship to a target destination in another system. The ship must be in orbit to use this function and must have the `Warp Drive` module installed. Warping will consume the necessary fuel from the ship's manifest.  The returned response will detail the route information including the expected time of arrival. Most ship actions are unavailable until the ship has arrived at its destination.  # noqa: E501
@@ -4967,7 +5436,7 @@ class FleetApi:
 
         :param ship_symbol: The ship symbol. (required)
         :type ship_symbol: str
-        :param navigate_ship_request: 
+        :param navigate_ship_request:
         :type navigate_ship_request: NavigateShipRequest
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -4996,72 +5465,71 @@ class FleetApi:
 
         _params = locals()
 
-        _all_params = [
-            'ship_symbol',
-            'navigate_ship_request'
-        ]
+        _all_params = ["ship_symbol", "navigate_ship_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method warp_ship" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
         _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
-        if _params['ship_symbol'] is not None:
-            _path_params['shipSymbol'] = _params['ship_symbol']
-
+        if _params["ship_symbol"] is not None:
+            _path_params["shipSymbol"] = _params["ship_symbol"]
 
         # process the query parameters
         _query_params = []
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
         _form_params = []
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['navigate_ship_request'] is not None:
-            _body_params = _params['navigate_ship_request']
+        if _params["navigate_ship_request"] is not None:
+            _body_params = _params["navigate_ship_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "WarpShip200Response",
+            "200": "WarpShip200Response",
         }
 
         return self.api_client.call_api(
-            '/my/ships/{shipSymbol}/warp', 'POST',
+            "/my/ships/{shipSymbol}/warp",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -5070,9 +5538,10 @@ class FleetApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )

@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -22,19 +22,28 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field, StrictStr, conint
 
+
 class ShipModificationTransaction(BaseModel):
     """
     Result of a transaction for a ship modification, such as installing a mount or a module.  # noqa: E501
     """
-    waypoint_symbol: StrictStr = Field(default=..., alias="waypointSymbol", description="The symbol of the waypoint where the transaction took place.")
-    ship_symbol: StrictStr = Field(default=..., alias="shipSymbol", description="The symbol of the ship that made the transaction.")
+
+    waypoint_symbol: StrictStr = Field(
+        default=..., alias="waypointSymbol", description="The symbol of the waypoint where the transaction took place."
+    )
+    ship_symbol: StrictStr = Field(
+        default=..., alias="shipSymbol", description="The symbol of the ship that made the transaction."
+    )
     trade_symbol: StrictStr = Field(default=..., alias="tradeSymbol", description="The symbol of the trade good.")
-    total_price: conint(strict=True, ge=0) = Field(default=..., alias="totalPrice", description="The total price of the transaction.")
+    total_price: conint(strict=True, ge=0) = Field(
+        default=..., alias="totalPrice", description="The total price of the transaction."
+    )
     timestamp: datetime = Field(default=..., description="The timestamp of the transaction.")
     __properties = ["waypointSymbol", "shipSymbol", "tradeSymbol", "totalPrice", "timestamp"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -53,10 +62,7 @@ class ShipModificationTransaction(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         return _dict
 
     @classmethod
@@ -68,13 +74,13 @@ class ShipModificationTransaction(BaseModel):
         if not isinstance(obj, dict):
             return ShipModificationTransaction.parse_obj(obj)
 
-        _obj = ShipModificationTransaction.parse_obj({
-            "waypoint_symbol": obj.get("waypointSymbol"),
-            "ship_symbol": obj.get("shipSymbol"),
-            "trade_symbol": obj.get("tradeSymbol"),
-            "total_price": obj.get("totalPrice"),
-            "timestamp": obj.get("timestamp")
-        })
+        _obj = ShipModificationTransaction.parse_obj(
+            {
+                "waypoint_symbol": obj.get("waypointSymbol"),
+                "ship_symbol": obj.get("shipSymbol"),
+                "trade_symbol": obj.get("tradeSymbol"),
+                "total_price": obj.get("totalPrice"),
+                "timestamp": obj.get("timestamp"),
+            }
+        )
         return _obj
-
-

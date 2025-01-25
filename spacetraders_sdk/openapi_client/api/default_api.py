@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -21,15 +21,19 @@ from pydantic import validate_arguments, ValidationError
 
 from typing import Optional
 
-from openapi_client.models.get_status200_response import GetStatus200Response
-from openapi_client.models.register201_response import Register201Response
-from openapi_client.models.register_request import RegisterRequest
+from spacetraders_sdk.openapi_client.models.get_status200_response import (
+    GetStatus200Response,
+)
+from spacetraders_sdk.openapi_client.models.register201_response import (
+    Register201Response,
+)
+from spacetraders_sdk.openapi_client.models.register_request import RegisterRequest
 
-from openapi_client.api_client import ApiClient
-from openapi_client.api_response import ApiResponse
-from openapi_client.exceptions import (  # noqa: F401
+from spacetraders_sdk.openapi_client.api_client import ApiClient
+from spacetraders_sdk.openapi_client.api_response import ApiResponse
+from spacetraders_sdk.openapi_client.exceptions import (  # noqa: F401
     ApiTypeError,
-    ApiValueError
+    ApiValueError,
 )
 
 
@@ -67,11 +71,11 @@ class DefaultApi:
                  returns the request thread.
         :rtype: GetStatus200Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the get_status_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.get_status_with_http_info(**kwargs)  # noqa: E501
+        return self.get_status_with_http_info(**kwargs)  # type: ignore
 
     @validate_arguments
     def get_status_with_http_info(self, **kwargs) -> ApiResponse:  # noqa: E501
@@ -111,57 +115,58 @@ class DefaultApi:
 
         _params = locals()
 
-        _all_params = [
-        ]
+        _all_params = []
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_status" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
-        _collection_formats = {}
+        _collection_formats = {}  # type: ignore
 
         # process the path parameters
-        _path_params = {}
+        _path_params = {}  # type: ignore
 
         # process the query parameters
-        _query_params = []
+        _query_params = []  # type: ignore
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
+        _form_params = []  # type: ignore
+        _files = {}  # type: ignore
         # process the body parameter
         _body_params = None
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['AgentToken']  # noqa: E501
+        _auth_settings = ["AgentToken"]  # noqa: E501
 
         _response_types_map = {
-            '200': "GetStatus200Response",
+            "200": "GetStatus200Response",
         }
 
         return self.api_client.call_api(
-            '/', 'GET',
+            "/",
+            "GET",
             _path_params,
             _query_params,
             _header_params,
@@ -170,15 +175,18 @@ class DefaultApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )
 
     @validate_arguments
-    def register(self, register_request : Optional[RegisterRequest] = None, **kwargs) -> Register201Response:  # noqa: E501
+    def register(
+        self, register_request: Optional[RegisterRequest] = None, **kwargs
+    ) -> Register201Response:  # noqa: E501
         """Register New Agent  # noqa: E501
 
         Creates a new agent and ties it to an account.  The agent symbol must consist of a 3-14 character string, and will be used to represent your agent. This symbol will prefix the symbol of every ship you own. Agent symbols will be cast to all uppercase characters.  This new agent will be tied to a starting faction of your choice, which determines your starting location, and will be granted an authorization token, a contract with their starting faction, a command ship that can fly across space with advanced capabilities, a small probe ship that can be used for reconnaissance, and 150,000 credits.  > #### Keep your token safe and secure > > Save your token during the alpha phase. There is no way to regenerate this token without starting a new agent. In the future you will be able to generate and manage your tokens from the SpaceTraders website.  If you are new to SpaceTraders, It is recommended to register with the COSMIC faction, a faction that is well connected to the rest of the universe. After registering, you should try our interactive [quickstart guide](https://docs.spacetraders.io/quickstart/new-game) which will walk you through basic API requests in just a few minutes.  # noqa: E501
@@ -188,7 +196,7 @@ class DefaultApi:
         >>> thread = api.register(register_request, async_req=True)
         >>> result = thread.get()
 
-        :param register_request: 
+        :param register_request:
         :type register_request: RegisterRequest
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -201,14 +209,16 @@ class DefaultApi:
                  returns the request thread.
         :rtype: Register201Response
         """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
+        kwargs["_return_http_data_only"] = True
+        if "_preload_content" in kwargs:
             message = "Error! Please call the register_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.register_with_http_info(register_request, **kwargs)  # noqa: E501
+        return self.register_with_http_info(register_request, **kwargs)  # type: ignore
 
     @validate_arguments
-    def register_with_http_info(self, register_request : Optional[RegisterRequest] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def register_with_http_info(
+        self, register_request: Optional[RegisterRequest] = None, **kwargs
+    ) -> ApiResponse:  # noqa: E501
         """Register New Agent  # noqa: E501
 
         Creates a new agent and ties it to an account.  The agent symbol must consist of a 3-14 character string, and will be used to represent your agent. This symbol will prefix the symbol of every ship you own. Agent symbols will be cast to all uppercase characters.  This new agent will be tied to a starting faction of your choice, which determines your starting location, and will be granted an authorization token, a contract with their starting faction, a command ship that can fly across space with advanced capabilities, a small probe ship that can be used for reconnaissance, and 150,000 credits.  > #### Keep your token safe and secure > > Save your token during the alpha phase. There is no way to regenerate this token without starting a new agent. In the future you will be able to generate and manage your tokens from the SpaceTraders website.  If you are new to SpaceTraders, It is recommended to register with the COSMIC faction, a faction that is well connected to the rest of the universe. After registering, you should try our interactive [quickstart guide](https://docs.spacetraders.io/quickstart/new-game) which will walk you through basic API requests in just a few minutes.  # noqa: E501
@@ -218,7 +228,7 @@ class DefaultApi:
         >>> thread = api.register_with_http_info(register_request, async_req=True)
         >>> result = thread.get()
 
-        :param register_request: 
+        :param register_request:
         :type register_request: RegisterRequest
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -247,68 +257,69 @@ class DefaultApi:
 
         _params = locals()
 
-        _all_params = [
-            'register_request'
-        ]
+        _all_params = ["register_request"]
         _all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
+                "_request_auth",
+                "_content_type",
+                "_headers",
             ]
         )
 
         # validate the arguments
-        for _key, _val in _params['kwargs'].items():
+        for _key, _val in _params["kwargs"].items():
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method register" % _key
                 )
             _params[_key] = _val
-        del _params['kwargs']
+        del _params["kwargs"]
 
-        _collection_formats = {}
+        _collection_formats = {}  # type: ignore
 
         # process the path parameters
-        _path_params = {}
+        _path_params = {}  # type: ignore
 
         # process the query parameters
-        _query_params = []
+        _query_params = []  # type: ignore
         # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
+        _header_params = dict(_params.get("_headers", {}))
         # process the form parameters
-        _form_params = []
-        _files = {}
+        _form_params = []  # type: ignore
+        _files = {}  # type: ignore
         # process the body parameter
         _body_params = None
-        if _params['register_request'] is not None:
-            _body_params = _params['register_request']
+        if _params["register_request"] is not None:
+            _body_params = _params["register_request"]
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
+        _content_types_list = _params.get(
+            "_content_type",
+            self.api_client.select_header_content_type(["application/json"]),
+        )
         if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+            _header_params["Content-Type"] = _content_types_list
 
         # authentication setting
-        _auth_settings = []  # noqa: E501
+        _auth_settings = []  # type: ignore
 
         _response_types_map = {
-            '201': "Register201Response",
+            "201": "Register201Response",
         }
 
         return self.api_client.call_api(
-            '/register', 'POST',
+            "/register",
+            "POST",
             _path_params,
             _query_params,
             _header_params,
@@ -317,9 +328,10 @@ class DefaultApi:
             files=_files,
             response_types_map=_response_types_map,
             auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
+            async_req=_params.get("async_req"),
+            _return_http_data_only=_params.get("_return_http_data_only"),  # noqa: E501
+            _preload_content=_params.get("_preload_content", True),
+            _request_timeout=_params.get("_request_timeout"),
             collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
+            _request_auth=_params.get("_request_auth"),
+        )

@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -21,23 +21,28 @@ import json
 
 from typing import List
 from pydantic import BaseModel, Field, conlist
-from openapi_client.models.agent import Agent
-from openapi_client.models.ship_cargo import ShipCargo
-from openapi_client.models.ship_modification_transaction import ShipModificationTransaction
-from openapi_client.models.ship_mount import ShipMount
+from .agent import Agent
+from .ship_cargo import ShipCargo
+from .ship_modification_transaction import ShipModificationTransaction
+from .ship_mount import ShipMount
+
 
 class RemoveMount201ResponseData(BaseModel):
     """
     RemoveMount201ResponseData
     """
+
     agent: Agent = Field(...)
-    mounts: conlist(ShipMount) = Field(default=..., description="List of installed mounts after the removal of the selected mount.")
+    mounts: conlist(ShipMount) = Field(
+        default=..., description="List of installed mounts after the removal of the selected mount."
+    )
     cargo: ShipCargo = Field(...)
     transaction: ShipModificationTransaction = Field(...)
     __properties = ["agent", "mounts", "cargo", "transaction"]
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -56,26 +61,23 @@ class RemoveMount201ResponseData(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of agent
         if self.agent:
-            _dict['agent'] = self.agent.to_dict()
+            _dict["agent"] = self.agent.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in mounts (list)
         _items = []
         if self.mounts:
             for _item in self.mounts:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['mounts'] = _items
+            _dict["mounts"] = _items
         # override the default output from pydantic by calling `to_dict()` of cargo
         if self.cargo:
-            _dict['cargo'] = self.cargo.to_dict()
+            _dict["cargo"] = self.cargo.to_dict()
         # override the default output from pydantic by calling `to_dict()` of transaction
         if self.transaction:
-            _dict['transaction'] = self.transaction.to_dict()
+            _dict["transaction"] = self.transaction.to_dict()
         return _dict
 
     @classmethod
@@ -87,12 +89,18 @@ class RemoveMount201ResponseData(BaseModel):
         if not isinstance(obj, dict):
             return RemoveMount201ResponseData.parse_obj(obj)
 
-        _obj = RemoveMount201ResponseData.parse_obj({
-            "agent": Agent.from_dict(obj.get("agent")) if obj.get("agent") is not None else None,
-            "mounts": [ShipMount.from_dict(_item) for _item in obj.get("mounts")] if obj.get("mounts") is not None else None,
-            "cargo": ShipCargo.from_dict(obj.get("cargo")) if obj.get("cargo") is not None else None,
-            "transaction": ShipModificationTransaction.from_dict(obj.get("transaction")) if obj.get("transaction") is not None else None
-        })
+        _obj = RemoveMount201ResponseData.parse_obj(
+            {
+                "agent": Agent.from_dict(obj.get("agent")) if obj.get("agent") is not None else None,
+                "mounts": (
+                    [ShipMount.from_dict(_item) for _item in obj.get("mounts")] if obj.get("mounts") is not None else None
+                ),
+                "cargo": ShipCargo.from_dict(obj.get("cargo")) if obj.get("cargo") is not None else None,
+                "transaction": (
+                    ShipModificationTransaction.from_dict(obj.get("transaction"))
+                    if obj.get("transaction") is not None
+                    else None
+                ),
+            }
+        )
         return _obj
-
-

@@ -3,7 +3,7 @@
 """
     SpaceTraders API
 
-    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you can share your projects, ask questions, and get help from other players.   
+    SpaceTraders is an open-universe game and learning platform that offers a set of HTTP endpoints to control a fleet of ships and explore a multiplayer universe.  The API is documented using [OpenAPI](https://github.com/SpaceTradersAPI/api-docs). You can send your first request right here in your browser to check the status of the game server.  ```json http {   \"method\": \"GET\",   \"url\": \"https://api.spacetraders.io/v2\", } ```  Unlike a traditional game, SpaceTraders does not have a first-party client or app to play the game. Instead, you can use the API to build your own client, write a script to automate your ships, or try an app built by the community.  We have a [Discord channel](https://discord.com/invite/jh6zurdWk5) where you cfroman share your projects, ask questions, and get help from other players.
 
     The version of the OpenAPI document: 2.0.0
     Contact: joel@spacetraders.io
@@ -21,19 +21,23 @@ import json
 
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictInt, conlist, constr
-from openapi_client.models.chart import Chart
-from openapi_client.models.waypoint_faction import WaypointFaction
-from openapi_client.models.waypoint_orbital import WaypointOrbital
-from openapi_client.models.waypoint_trait import WaypointTrait
-from openapi_client.models.waypoint_type import WaypointType
+from .chart import Chart
+from .waypoint_faction import WaypointFaction
+from .waypoint_orbital import WaypointOrbital
+from .waypoint_trait import WaypointTrait
+from .waypoint_type import WaypointType
+
 
 class ScannedWaypoint(BaseModel):
     """
     A waypoint that was scanned by a ship.  # noqa: E501
     """
+
     symbol: constr(strict=True, min_length=1) = Field(default=..., description="The symbol of the waypoint.")
     type: WaypointType = Field(...)
-    system_symbol: constr(strict=True, min_length=1) = Field(default=..., alias="systemSymbol", description="The symbol of the system.")
+    system_symbol: constr(strict=True, min_length=1) = Field(
+        default=..., alias="systemSymbol", description="The symbol of the system."
+    )
     x: StrictInt = Field(default=..., description="Position in the universe in the x axis.")
     y: StrictInt = Field(default=..., description="Position in the universe in the y axis.")
     orbitals: conlist(WaypointOrbital) = Field(default=..., description="List of waypoints that orbit this waypoint.")
@@ -44,6 +48,7 @@ class ScannedWaypoint(BaseModel):
 
     class Config:
         """Pydantic configuration"""
+
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -62,30 +67,27 @@ class ScannedWaypoint(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
         # override the default output from pydantic by calling `to_dict()` of each item in orbitals (list)
         _items = []
         if self.orbitals:
             for _item in self.orbitals:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['orbitals'] = _items
+            _dict["orbitals"] = _items
         # override the default output from pydantic by calling `to_dict()` of faction
         if self.faction:
-            _dict['faction'] = self.faction.to_dict()
+            _dict["faction"] = self.faction.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in traits (list)
         _items = []
         if self.traits:
             for _item in self.traits:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['traits'] = _items
+            _dict["traits"] = _items
         # override the default output from pydantic by calling `to_dict()` of chart
         if self.chart:
-            _dict['chart'] = self.chart.to_dict()
+            _dict["chart"] = self.chart.to_dict()
         return _dict
 
     @classmethod
@@ -97,17 +99,23 @@ class ScannedWaypoint(BaseModel):
         if not isinstance(obj, dict):
             return ScannedWaypoint.parse_obj(obj)
 
-        _obj = ScannedWaypoint.parse_obj({
-            "symbol": obj.get("symbol"),
-            "type": obj.get("type"),
-            "system_symbol": obj.get("systemSymbol"),
-            "x": obj.get("x"),
-            "y": obj.get("y"),
-            "orbitals": [WaypointOrbital.from_dict(_item) for _item in obj.get("orbitals")] if obj.get("orbitals") is not None else None,
-            "faction": WaypointFaction.from_dict(obj.get("faction")) if obj.get("faction") is not None else None,
-            "traits": [WaypointTrait.from_dict(_item) for _item in obj.get("traits")] if obj.get("traits") is not None else None,
-            "chart": Chart.from_dict(obj.get("chart")) if obj.get("chart") is not None else None
-        })
+        _obj = ScannedWaypoint.parse_obj(
+            {
+                "symbol": obj.get("symbol"),
+                "type": obj.get("type"),
+                "system_symbol": obj.get("systemSymbol"),
+                "x": obj.get("x"),
+                "y": obj.get("y"),
+                "orbitals": (
+                    [WaypointOrbital.from_dict(_item) for _item in obj.get("orbitals")]
+                    if obj.get("orbitals") is not None
+                    else None
+                ),
+                "faction": WaypointFaction.from_dict(obj.get("faction")) if obj.get("faction") is not None else None,
+                "traits": (
+                    [WaypointTrait.from_dict(_item) for _item in obj.get("traits")] if obj.get("traits") is not None else None
+                ),
+                "chart": Chart.from_dict(obj.get("chart")) if obj.get("chart") is not None else None,
+            }
+        )
         return _obj
-
-
