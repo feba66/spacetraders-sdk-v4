@@ -1,2 +1,4 @@
 [flake8]
-extend-ignore = F401,E501
+extend-ignore = F401
+max-line-length=127
+exclude = .git,.mypy_cache,__pycache__,docs,.venv,tmp,spacetraders_sdk/openapi_client

@@ -37,6 +37,11 @@ matplotlib = "^3.10.0"
 classifiers = [
     "License :: OSI Approved :: GNU Affero General Public License v3",
 ]
+[tool.pytest.ini_options]
+testpaths = ["test"]
+
+[tool.black]
+line-length = 127
 
 [project.urls]
 Repository = "https://github.com/feba66/spacetraders-sdk-v4"
