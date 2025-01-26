@@ -161,6 +161,16 @@ class SDK:
             return {k.decode(): Shipyard.from_json(v) for k, v in jsn.items()}
         return None
 
+    def _set_market(self, market: Market):
+        self.markets[market.symbol] = market
+        self.red.hset(f"{self.REDIS_PREFIX}:markets", f"{market.symbol}", market.to_json())
+
+    def _get_market(self, waypoint: Waypoint):
+        jsn = self.red.hget(f"{self.REDIS_PREFIX}:markets", f"{waypoint.symbol}")
+        if jsn:
+            return Market.from_json(jsn)
+        return None
+
     def register(self, username: str, faction: FactionSymbol | str = FactionSymbol.ASTRO):  # noqa
         if isinstance(faction, str):
             faction = FactionSymbol(faction)
@@ -246,13 +256,14 @@ class SDK:
         self.logger.info(f"Negotiated contract {r.data.contract.id}")
         return r.data.contract
 
-    def get_ships(self):
-        if not self.agent:
-            self.get_agent()
-        ships = self._get_ships()
-        if ships and len(ships) == self.agent.ship_count:
-            self.ships = ships
-            return ships
+    def get_ships(self, force=False):
+        if not force:
+            if not self.agent:
+                self.get_agent()
+            ships = self._get_ships()
+            if ships and len(ships) == self.agent.ship_count:
+                self.ships = ships
+                return ships
 
         page, total = 1, 1
         while page <= total:
@@ -317,11 +328,8 @@ class SDK:
         if ship.nav.waypoint_symbol == waypoint.symbol:
             return None
 
-        if ship.nav.status != ShipNavStatus.IN_ORBIT:
-            self.orbit(ship)
-        if ship.cooldown.expiration and ship.cooldown.expiration > datetime.now(timezone.utc):
-            self.logger.info(f"Ship {ship.symbol} is on cooldown")
-            time.sleep((ship.cooldown.expiration - datetime.now(timezone.utc)).seconds)
+        self.check_nav_status(ship, ShipNavStatus.IN_ORBIT)
+
         r = self.api.fleet_api.navigate_ship(ship.symbol, NavigateShipRequest(waypointSymbol=waypoint.symbol))
         r.data.nav.route.arrival - r.data.nav.route.departure_time
         ship.nav = r.data.nav
@@ -341,13 +349,18 @@ class SDK:
 
         return r.data
 
-    def get_market(self, system: System | str, waypoint: Waypoint | str):
+    def get_market(self, system: System | str, waypoint: Waypoint | str, force=False):
         if isinstance(system, str):
             system = self.systems[system]
         if isinstance(waypoint, str):
             waypoint = self.waypoints[waypoint]
+        if not force:
+            market = self._get_market(waypoint)
+            if market:
+                self.markets[waypoint.symbol] = market
+                return market
         r = self.api.systems_api.get_market(system.symbol, waypoint.symbol)
-        self.markets[waypoint.symbol] = r.data  # TODO redis
+        self._set_market(r.data)
         return r.data
 
     def buy_good(self, ship: Ship | str, trade_good: TradeSymbol | str, units: int):
@@ -368,6 +381,7 @@ class SDK:
     def refuel(self, ship: Ship | str, units: int | None = None, from_cargo: bool = False):
         if isinstance(ship, str):
             ship = self.ships[ship]
+        self.check_nav_status(ship, ShipNavStatus.DOCKED)
         r = self.api.fleet_api.refuel_ship(ship.symbol, RefuelShipRequest(units=units, fromCargo=from_cargo))
         self._set_agent(r.data.agent)
         self.ships[ship.symbol].fuel = r.data.fuel
@@ -376,21 +390,42 @@ class SDK:
         return r.data
 
     def check_nav_status(self, ship: Ship, wanted_status: ShipNavStatus | str):
+        ship = self.ships[ship.symbol]
         if ship.nav.status == ShipNavStatus.IN_TRANSIT:
-            t = (ship.nav.route.arrival - datetime.now(timezone.utc)).total_seconds()
+            # add 1s to make sure we are not too early
+            t = (ship.nav.route.arrival - datetime.now(timezone.utc)).total_seconds() + 1
             self.logger.info(f"Ship {ship.symbol} is in transit, waiting {t:.2f}s")
             time.sleep(t)
         if ship.nav.status != wanted_status:
-            if ship.nav.status == ShipNavStatus.DOCKED:
+            if wanted_status == ShipNavStatus.IN_ORBIT:
                 self.orbit(ship)
-            if ship.nav.status == ShipNavStatus.IN_ORBIT:
+            elif wanted_status == ShipNavStatus.DOCKED:
                 self.dock(ship)
+            else:
+                raise Exception(f"What status did you want? You're imagining things: {wanted_status}")
 
     def check_cooldown(self, ship: Ship):
         if ship.cooldown.expiration and ship.cooldown.expiration > datetime.now(timezone.utc):
             t = (ship.cooldown.expiration - datetime.now(timezone.utc)).seconds
             self.logger.info(f"Ship {ship.symbol} is on cooldown, waiting {t:.2f}s")
             time.sleep(t)
+
+    def filter_markets(self, good: TradeSymbol | str):
+        if isinstance(good, str):
+            good = TradeSymbol(good)
+
+        have_good = []
+        for market in self.markets.values():
+            for im in market.imports:
+                if im.symbol == good:
+                    have_good.append(("im", market))
+            for ex in market.exports:
+                if ex.symbol == good:
+                    have_good.append(("ou", market))
+            for exchange in market.exchange:
+                if exchange.symbol == good:
+                    have_good.append(("ex", market))
+        return have_good
 
     class Helpers:
         @staticmethod

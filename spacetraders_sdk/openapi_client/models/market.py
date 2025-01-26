@@ -21,6 +21,8 @@ import json
 
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictStr, conlist
+
+from spacetraders_sdk.json import default
 from .market_trade_good import MarketTradeGood
 from .market_transaction import MarketTransaction
 from .trade_good import TradeGood
@@ -65,7 +67,7 @@ class Market(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(self.to_dict(), default=default)
 
     @classmethod
     def from_json(cls, json_str: str) -> Market:
