@@ -2,6 +2,8 @@ from datetime import datetime, timezone
 import os
 import time
 import logging
+
+from .astar import dist, AStarNode, CostNode, AStarSearch
 from .openapi_client import (
     Agent,
     AgentsApi,
@@ -327,7 +329,8 @@ class SDK:
             waypoint = self.waypoints[waypoint]
         if ship.nav.waypoint_symbol == waypoint.symbol:
             return None
-
+        if ship.fuel.capacity < dist(self.waypoints[ship.nav.waypoint_symbol], waypoint):
+            raise Exception("Not enough range")
         self.check_nav_status(ship, ShipNavStatus.IN_ORBIT)
 
         r = self.api.fleet_api.navigate_ship(ship.symbol, NavigateShipRequest(waypointSymbol=waypoint.symbol))
@@ -335,6 +338,9 @@ class SDK:
         ship.nav = r.data.nav
         ship.fuel = r.data.fuel
         self._set_ship(ship)
+        self.logger.info(
+            f"Ship {ship.symbol} is navigating to {waypoint.symbol} t={(ship.nav.route.arrival - ship.nav.route.departure_time).total_seconds():.2f}s fuel={ship.fuel.consumed.amount} d={dist(ship.nav.route.destination, ship.nav.route.origin):.2f}"
+        )
         return r.data
 
     def buy_ship(self, waypoint: Waypoint | str, ship_type: ShipType | str):
@@ -376,6 +382,21 @@ class SDK:
         self.ships[ship.symbol].cargo = r.data.cargo
         self._set_ship(self.ships[ship.symbol])
         self.logger.info(f"Bought {units} units of {trade_good} {r.data.transaction}")
+        return r.data
+
+    def sell_good(self, ship: Ship | str, trade_good: TradeSymbol | str, units: int):
+        if isinstance(ship, str):
+            ship = self.ships[ship]
+        if isinstance(trade_good, str):
+            trade_good = TradeSymbol(trade_good)
+
+        self.check_nav_status(ship, ShipNavStatus.DOCKED)
+
+        r = self.api.fleet_api.sell_cargo(ship.symbol, PurchaseCargoRequest(symbol=trade_good, units=units))
+        self._set_agent(r.data.agent)
+        self.ships[ship.symbol].cargo = r.data.cargo
+        self._set_ship(self.ships[ship.symbol])
+        self.logger.info(f"Sold {units} units of {trade_good} {r.data.transaction}")
         return r.data
 
     def refuel(self, ship: Ship | str, units: int | None = None, from_cargo: bool = False):
@@ -431,3 +452,16 @@ class SDK:
         @staticmethod
         def dist(a: Waypoint | System, b: Waypoint | System):
             return ((a.x - b.x) ** 2 + (a.y - b.y) ** 2) ** 0.5
+
+        @staticmethod
+        def assemble_node_list(system, radius, markets: list[str] | None = None):
+            node_list = []
+            for wp in system.waypoints:
+                if markets and wp.symbol not in markets:
+                    continue
+                connections = []
+                for wp2 in system.waypoints:
+                    if wp.symbol != wp2.symbol and dist(wp, wp2) < radius:
+                        connections.append(CostNode(wp2.symbol, SDK.Helpers.dist(wp, wp2)))
+                node_list.append(AStarNode(wp.symbol, connections, wp.x, wp.y))
+            return node_list
