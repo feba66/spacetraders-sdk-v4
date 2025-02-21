@@ -201,7 +201,7 @@ class RESTClientObject:
                     request_body = None
                     if body is not None:
                         request_body = json.dumps(body)
-                    r = self.pool_manager.request(
+                    r = self.pool_manager.request(  # FIXME: ProtocolError Connection aborted, remotedisconnect 
                         method,
                         url,
                         body=request_body,
