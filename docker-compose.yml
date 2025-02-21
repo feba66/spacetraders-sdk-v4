@@ -1,9 +1,8 @@
-
 version: "3.9"
 services:
   redis:
     image: redis:6.2-alpine
-    container_name: redis
+    container_name: redis_st
     restart: unless-stopped
     ports:
       - "6379:6379"
@@ -13,10 +12,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    volumes: 
+    volumes:
       - "./redis:/data"
   postgres:
-    container_name: postgres
+    container_name: postgres_st
     image: postgres:17.2-alpine
     ports:
       - "5432:5432"
@@ -24,7 +23,7 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
-      - './postgres:/var/lib/postgresql/data'
+      - "./postgres:/var/lib/postgresql/data"
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready"]
@@ -33,6 +32,25 @@ services:
       retries: 5
     secrets:
       - db_password
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb_st
+    restart: unless-stopped
+    profiles: ["dbs", "all"]
+    ports:
+      - "8086:8086"
+    volumes:
+      - ./influxdb2/config:/etc/influxdb2
+      - ./influxdb2/db:/var/lib/influxdb2
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana_st
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/data:/var/lib/grafana
+      # - ./grafana/config:/etc/grafana
 secrets:
   db_password:
     file: db_pw.txt

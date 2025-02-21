@@ -11,5 +11,8 @@ __pycache__
 
 redis
 postgres
+influxdb2
+grafana
 tmp
 client
+spacetraders_sdk/config.py
