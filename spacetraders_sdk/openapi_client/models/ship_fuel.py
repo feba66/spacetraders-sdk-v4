@@ -21,6 +21,8 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel, Field, conint
+
+from spacetraders_sdk.json import default
 from .ship_fuel_consumed import ShipFuelConsumed
 
 
@@ -48,7 +50,7 @@ class ShipFuel(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(self.to_dict(), default=default)
 
     @classmethod
     def from_json(cls, json_str: str) -> ShipFuel:

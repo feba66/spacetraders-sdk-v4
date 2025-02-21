@@ -20,6 +20,8 @@ import json
 
 
 from pydantic import BaseModel, Field, constr
+
+from spacetraders_sdk.json import default
 from .ship_nav_flight_mode import ShipNavFlightMode
 from .ship_nav_route import ShipNavRoute
 from .ship_nav_status import ShipNavStatus
@@ -53,7 +55,7 @@ class ShipNav(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        return json.dumps(self.to_dict())
+        return json.dumps(self.to_dict(), default=default)
 
     @classmethod
     def from_json(cls, json_str: str) -> ShipNav:
