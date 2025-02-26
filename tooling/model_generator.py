@@ -64,7 +64,10 @@ for file in os.listdir(models_path):
             string += f"        return {file.split('.')[0]}(json.loads(json_str))\n"
 
         else:
-            pass  # Systen and waypoint symbols
+            string = f"class {file.split('.')[0]}(str):\n"
+            string += add_description(1, description, title=True)
+            string += f"    pass"
+            # pass  # Systen and waypoint symbols
         print(file)
     elif typ and typ == "object":
         string = "import json\nfrom pydantic import BaseModel\n\n\n"
